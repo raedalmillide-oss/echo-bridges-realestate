@@ -8,8 +8,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- Library for HTML to Image rendering -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,8 +81,50 @@
     </div>
   </header>
 
+  <!-- Interactive Analytics Bar (Stats) -->
+  <section class="max-w-7xl mx-auto px-4 pt-6 w-full">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div class="bg-brand-darkCard border border-brand-darkBorder p-4 rounded-2xl flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center shrink-0">
+          <i data-lucide="building-2" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="block text-[11px] text-zinc-500">إجمالي العروض</span>
+          <span id="stat-total" class="text-lg font-bold text-white">0</span>
+        </div>
+      </div>
+      <div class="bg-brand-darkCard border border-brand-darkBorder p-4 rounded-2xl flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0">
+          <i data-lucide="home" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="block text-[11px] text-zinc-500">الشقق والفلل</span>
+          <span id="stat-residential" class="text-lg font-bold text-white">0</span>
+        </div>
+      </div>
+      <div class="bg-brand-darkCard border border-brand-darkBorder p-4 rounded-2xl flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+          <i data-lucide="trees" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="block text-[11px] text-zinc-500">الأراضي والمزارع</span>
+          <span id="stat-lands" class="text-lg font-bold text-white">0</span>
+        </div>
+      </div>
+      <div class="bg-brand-darkCard border border-brand-darkBorder p-4 rounded-2xl flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0">
+          <i data-lucide="badge-percent" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="block text-[11px] text-zinc-500">للبيع / للإيجار</span>
+          <span id="stat-sale-rent" class="text-sm font-bold text-white">0 / 0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Filter & Search Bar -->
-  <section class="max-w-7xl mx-auto px-4 py-6 w-full">
+  <section class="max-w-7xl mx-auto px-4 py-4 w-full">
     <div class="bg-brand-darkCard border border-brand-darkBorder rounded-2xl p-4 shadow-xl flex flex-col md:flex-row gap-3">
       <div class="relative flex-1">
         <i data-lucide="search" class="w-4 h-4 absolute top-3.5 right-3.5 text-zinc-400"></i>
@@ -122,7 +162,7 @@
   <div id="property-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-4xl max-h-[92vh] rounded-2xl overflow-y-auto custom-scrollbar flex flex-col relative shadow-2xl">
       
-      <!-- Top Action Bar -->
+      <!-- Top Bar -->
       <div class="sticky top-0 bg-brand-darkCard/95 backdrop-blur border-b border-brand-darkBorder p-4 flex items-center justify-between z-20">
         <div>
           <span id="modal-serial" class="text-xs font-title text-brand-gold bg-brand-gold/10 px-2.5 py-1 rounded-md border border-brand-gold/30"></span>
@@ -132,7 +172,7 @@
           <button id="modal-print-btn" onclick="window.print()" class="text-zinc-400 hover:text-brand-gold p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition" title="طباعة بطاقة العرض">
             <i data-lucide="printer" class="w-4 h-4"></i>
           </button>
-          <button id="modal-share-menu-btn" onclick="toggleShareDropdown()" class="text-brand-gold bg-brand-gold/10 border border-brand-gold/40 p-2 rounded-xl transition flex items-center gap-1.5 text-xs font-bold" title="مشاركة كصورة">
+          <button id="modal-share-menu-btn" onclick="toggleShareDropdown()" class="text-brand-gold bg-brand-gold/10 border border-brand-gold/40 p-2 rounded-xl transition flex items-center gap-1.5 text-xs font-bold" title="مشاركة">
             <i data-lucide="share-2" class="w-4 h-4"></i>
             <span class="hidden sm:inline">مشاركة العرض</span>
           </button>
@@ -162,21 +202,8 @@
         </div>
       </div>
 
-      <!-- Printable & Exportable Canvas Container -->
-      <div id="capture-card-area" class="p-6 space-y-6 bg-brand-darkCard">
-        
-        <!-- Watermark Header for Image Export -->
-        <div class="hidden export-watermark flex justify-between items-center border-b border-brand-darkBorder pb-3">
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-brand-gold flex items-center justify-center text-black font-title font-bold text-sm">EB</div>
-            <div>
-              <h4 class="font-title text-sm font-bold gold-gradient-text">ECHO BRIDGES</h4>
-              <p class="text-[9px] text-zinc-400">منظومة التسويق العقاري الفاخر</p>
-            </div>
-          </div>
-          <span id="export-serial" class="text-xs font-title text-brand-gold bg-black px-2.5 py-1 rounded border border-brand-gold/40"></span>
-        </div>
-
+      <!-- Modal Content -->
+      <div class="p-6 space-y-6 bg-brand-darkCard">
         <!-- Gallery -->
         <div class="space-y-3">
           <div class="relative h-64 md:h-96 w-full rounded-2xl overflow-hidden bg-black/50 border border-brand-darkBorder">
@@ -210,7 +237,7 @@
           <p id="modal-desc" class="text-sm text-zinc-300 leading-relaxed bg-[#1A1A22] p-4 rounded-xl border border-brand-darkBorder whitespace-pre-line"></p>
         </div>
 
-        <!-- Protected Info (Excluded during image generation) -->
+        <!-- Protected Info -->
         <div id="modal-protected-section" class="border-t border-brand-darkBorder pt-4 space-y-3 hidden">
           <h3 class="text-sm font-semibold text-rose-400 flex items-center gap-2">
             <i data-lucide="shield-alert" class="w-4 h-4"></i>
@@ -721,6 +748,18 @@
       setupEventListeners();
     });
 
+    function updateStats(props) {
+      document.getElementById('stat-total').textContent = props.length;
+      const resCount = props.filter(p => p.type === 'apartment' || p.type === 'villa').length;
+      const landCount = props.filter(p => p.type === 'land').length;
+      const saleCount = props.filter(p => p.status === 'sale').length;
+      const rentCount = props.filter(p => p.status === 'rent').length;
+
+      document.getElementById('stat-residential').textContent = resCount;
+      document.getElementById('stat-lands').textContent = landCount;
+      document.getElementById('stat-sale-rent').textContent = `${saleCount} بيع / ${rentCount} إيجار`;
+    }
+
     function toggleFormFieldsByType() {
       const type = document.getElementById('prop-type').value;
       const resFields = document.getElementById('residential-fields');
@@ -870,7 +909,6 @@
           const owner_phone = document.getElementById('prop-owner-phone').value.trim();
           const general_notes = document.getElementById('prop-desc').value.trim();
 
-          // Residential Specs
           const floor = document.getElementById('prop-floor').value;
           const orientation = document.getElementById('prop-orientation').value;
           const rooms = parseInt(document.getElementById('prop-rooms').value) || 0;
@@ -880,10 +918,8 @@
           const sunlight = document.getElementById('prop-ac').value;
           const furnishing_details = document.getElementById('prop-heating').value;
 
-          // Services Checkboxes
           const services = Array.from(document.querySelectorAll('.service-cb:checked')).map(cb => cb.value);
 
-          // Land Specs
           const land_category = document.getElementById('prop-land-cat').value;
           const deed_shares = document.getElementById('prop-deed-shares').value;
           const road_frontage = document.getElementById('prop-road-front').value.trim();
@@ -904,7 +940,6 @@
             building_status: fence_info
           };
 
-          // Images
           const imageFiles = document.getElementById('prop-images').files;
           if (imageFiles.length > 0) {
             let imageUrls = [];
@@ -920,7 +955,6 @@
             propData.images = imageUrls;
           }
 
-          // Deed
           const deedFileInput = document.getElementById('prop-deed-file');
           if (deedFileInput.files.length > 0) {
             const dFile = deedFileInput.files[0];
@@ -960,7 +994,7 @@
         }
       });
 
-      // Add New User (Admin Only)
+      // Add New User Form
       document.getElementById('add-user-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const u = document.getElementById('new-user-name').value.trim();
@@ -987,10 +1021,12 @@
       
       if (error || !data || data.length === 0) {
         grid.innerHTML = `<div class="col-span-full py-20 text-center text-zinc-500"><i data-lucide="home" class="w-10 h-10 mx-auto mb-2 opacity-30"></i><p>لا توجد عقارات منشورة حالياً في المنصة.</p></div>`;
+        updateStats([]);
         lucide.createIcons();
         return;
       }
       allProperties = data;
+      updateStats(allProperties);
       renderProperties(allProperties);
     }
 
@@ -1037,7 +1073,6 @@
       currentModalProperty = p;
 
       document.getElementById('modal-serial').textContent = `#${p.serial_code}`;
-      document.getElementById('export-serial').textContent = `#${p.serial_code}`;
       document.getElementById('modal-title').textContent = p.title;
       document.getElementById('modal-desc').textContent = p.general_notes || 'لا توجد ملاحظات إضافية.';
       
@@ -1045,7 +1080,6 @@
       badge.textContent = p.status === 'rent' ? 'للإيجار' : 'للبيع';
       badge.className = `absolute top-4 left-4 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg text-white ${p.status === 'rent' ? 'bg-amber-600' : 'bg-emerald-600'}`;
 
-      // Gallery
       const imgs = p.images && p.images.length > 0 ? p.images : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800'];
       const mainImg = document.getElementById('modal-main-image');
       mainImg.src = imgs[0];
@@ -1060,7 +1094,6 @@
         thumbs.appendChild(thumb);
       });
 
-      // Specifications Grid
       const specsContainer = document.getElementById('modal-specs');
       specsContainer.innerHTML = '';
 
@@ -1103,7 +1136,6 @@
         addSpecItem('نظام التدفئة', p.furnishing_details, 'flame');
       }
 
-      // Services List
       const sContainer = document.getElementById('modal-services-container');
       const sList = document.getElementById('modal-services-list');
       sList.innerHTML = '';
@@ -1116,7 +1148,6 @@
         sContainer.classList.add('hidden');
       }
 
-      // Contact Buttons
       document.getElementById('modal-call-btn').href = `tel:${p.owner_phone || ''}`;
       
       const cleanPhone = p.owner_phone ? p.owner_phone.replace(/[^0-9]/g, '') : '';
@@ -1124,12 +1155,10 @@
       document.getElementById('modal-whatsapp-btn').href = cleanPhone ? `https://wa.me/${cleanPhone}?text=${waMsg}` : '#';
       document.getElementById('modal-whatsapp-btn').style.display = cleanPhone ? 'flex' : 'none';
 
-      // Map Button
       const mapBtn = document.getElementById('modal-map-btn');
       if (p.location_url) { mapBtn.style.display = 'flex'; mapBtn.href = p.location_url; }
       else { mapBtn.style.display = 'none'; }
 
-      // Inquiry Form Button
       document.getElementById('modal-inquiry-btn').onclick = () => {
         document.getElementById('inquiry-property-id').value = p.id;
         document.getElementById('inquiry-serial-code').value = p.serial_code;
@@ -1137,7 +1166,6 @@
         openModal('inquiry-modal');
       };
 
-      // Protected Info
       const isPrivileged = currentUser && (currentUser.role === 'developer' || currentUser.role === 'admin' || currentUser.username === p.created_by);
       const protSection = document.getElementById('modal-protected-section');
       if (isPrivileged) {
@@ -1158,75 +1186,189 @@
       openModal('property-modal');
     }
 
-    // High Quality Image Generation & Sharing
+    // High Quality Native Canvas Poster Generator
     async function generateAndShareImage(shouldShareDirectly = true) {
       if (!currentModalProperty) return;
       toggleShareDropdown();
-      showToast('جاري تجهيز صورة بطاقة العقار بدقة عالية...', 'warning');
+      showToast('جاري رسم بوستر العقار باحترافية...', 'warning');
 
-      const captureArea = document.getElementById('capture-card-area');
-      const watermark = captureArea.querySelector('.export-watermark');
-      const thumbs = document.getElementById('modal-thumbnails');
-      const protSection = document.getElementById('modal-protected-section');
+      const p = currentModalProperty;
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
 
-      // Prepare UI for clean snapshot
-      watermark.classList.remove('hidden');
-      thumbs.classList.add('hidden');
-      const wasProtHidden = protSection.classList.contains('hidden');
-      protSection.classList.add('hidden');
+      canvas.width = 1080;
+      canvas.height = 1350;
 
-      try {
-        const canvas = await html2canvas(captureArea, {
-          backgroundColor: '#141418',
-          scale: 2, // High resolution retina scale
-          useCORS: true,
-          logging: false
+      // Dark background
+      ctx.fillStyle = '#0B0B0D';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      const coverUrl = (p.images && p.images.length > 0) ? p.images[0] : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800';
+
+      img.onload = () => {
+        // Draw Property Image
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(30, 110, 1020, 640);
+        ctx.clip();
+        
+        const scale = Math.max(1020 / img.width, 640 / img.height);
+        const x = 30 + (1020 - img.width * scale) / 2;
+        const y = 110 + (640 - img.height * scale) / 2;
+        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        ctx.restore();
+
+        // Branding
+        ctx.fillStyle = '#D4AF37';
+        ctx.font = 'bold 34px "Cairo", sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('ECHO BRIDGES REAL ESTATE', 1050, 65);
+
+        ctx.fillStyle = '#9CA3AF';
+        ctx.font = '20px "Cairo", sans-serif';
+        ctx.fillText('منظومة التسويق والاستثمار العقاري الفاخر', 1050, 95);
+
+        // Code Tag
+        ctx.fillStyle = '#141418';
+        ctx.strokeStyle = '#D4AF37';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(30, 40, 180, 50, 10);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#D4AF37';
+        ctx.font = 'bold 24px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(`#${p.serial_code}`, 120, 74);
+
+        // Status Badge
+        const isRent = p.status === 'rent';
+        ctx.fillStyle = isRent ? '#D97706' : '#059669';
+        ctx.beginPath();
+        ctx.roundRect(60, 140, 120, 45, 8);
+        ctx.fill();
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 22px "Cairo", sans-serif';
+        ctx.fillText(isRent ? 'للإيجار' : 'للبيع', 120, 172);
+
+        // Title & Price
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 36px "Cairo", sans-serif';
+        ctx.fillText(p.title, 1050, 810);
+
+        ctx.fillStyle = '#D4AF37';
+        ctx.font = 'bold 38px "Cairo", sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(`${Number(p.price).toLocaleString()} $`, 40, 810);
+
+        // Specs Grid
+        const specs = [
+          { label: 'المساحة', val: `${p.area} م²` },
+          { label: 'المدينة / الحي', val: p.city || '-' },
+          { label: 'النوع', val: p.type === 'apartment' ? 'شقة' : p.type === 'land' ? 'أرض' : p.type === 'villa' ? 'فيلا' : 'عقار' },
+          { label: p.type === 'land' ? 'الطابو' : 'الطابق', val: p.type === 'land' ? (p.deed_shares || 'طابو نظامي') : (p.floor || 'طابق متكرر') }
+        ];
+
+        specs.forEach((item, idx) => {
+          const boxW = 235;
+          const boxH = 95;
+          const boxX = 30 + (idx * 260);
+          const boxY = 850;
+
+          ctx.fillStyle = '#141418';
+          ctx.strokeStyle = '#27272F';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.roundRect(boxX, boxY, boxW, boxH, 14);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.textAlign = 'center';
+          ctx.fillStyle = '#9CA3AF';
+          ctx.font = '18px "Cairo", sans-serif';
+          ctx.fillText(item.label, boxX + boxW / 2, boxY + 36);
+
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = 'bold 22px "Cairo", sans-serif';
+          ctx.fillText(item.val, boxX + boxW / 2, boxY + 74);
         });
 
-        // Restore UI
-        watermark.classList.add('hidden');
-        thumbs.classList.remove('hidden');
-        if (!wasProtHidden) protSection.classList.remove('hidden');
+        // Description Box
+        ctx.fillStyle = '#141418';
+        ctx.strokeStyle = '#27272F';
+        ctx.beginPath();
+        ctx.roundRect(30, 970, 1020, 240, 16);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#D4AF37';
+        ctx.font = 'bold 22px "Cairo", sans-serif';
+        ctx.fillText('المواصفات والتفاصيل:', 1020, 1015);
+
+        ctx.fillStyle = '#E5E7EB';
+        ctx.font = '20px "Cairo", sans-serif';
+        const note = p.general_notes || 'عقار مميز بمواصفات حصرية وموقع استراتيجي متكامل الخدمات.';
+        ctx.fillText(note.substring(0, 160), 1020, 1060);
+
+        let extraDetail = '';
+        if (p.type === 'land') {
+          extraDetail = `الواجهة: ${p.road_frontage || '-'} | الطريق: ${p.road_type || '-'} | الري: ${p.water_source || '-'}`;
+        } else {
+          extraDetail = `الاتجاه: ${p.orientation || '-'} | التكييف: ${p.sunlight || '-'} | التدفئة: ${p.furnishing_details || '-'}`;
+        }
+        ctx.fillStyle = '#9CA3AF';
+        ctx.font = '19px "Cairo", sans-serif';
+        ctx.fillText(extraDetail, 1020, 1110);
+
+        // Footer CTA
+        ctx.fillStyle = '#D4AF37';
+        ctx.beginPath();
+        ctx.roundRect(30, 1240, 1020, 75, 16);
+        ctx.fill();
+
+        ctx.fillStyle = '#0B0B0D';
+        ctx.font = 'bold 24px "Cairo", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(`للتواصل والاستفسار عن العرض: ${p.owner_phone || '+963...'} | كود العرض: #${p.serial_code}`, 540, 1286);
 
         canvas.toBlob(async (blob) => {
           if (!blob) {
-            showToast('تعذر إنشاء الصورة.', 'error');
+            showToast('تعذر استخراج الصورة', 'error');
             return;
           }
-
-          const fileName = `EchoBridges_${currentModalProperty.serial_code}.png`;
+          const fileName = `EchoBridges_${p.serial_code}.png`;
           const file = new File([blob], fileName, { type: 'image/png' });
 
-          // Web Share API (Mobile WhatsApp/Telegram native file sharing)
           if (shouldShareDirectly && navigator.canShare && navigator.canShare({ files: [file] })) {
             try {
               await navigator.share({
                 files: [file],
-                title: currentModalProperty.title,
-                text: `عقار فاخر: ${currentModalProperty.title} - السعر: ${currentModalProperty.price}$ | الكود: #${currentModalProperty.serial_code}`
+                title: p.title,
+                text: `عقار فاخر: ${p.title} - كود #${p.serial_code}`
               });
-              showToast('تمت مشاركة صورة العقار بنجاح!');
+              showToast('تمت مشاركة البوستر بنجاح!');
               return;
-            } catch (shareErr) {
-              console.log('Share canceled or fallback to download');
-            }
+            } catch(e) {}
           }
 
-          // Fallback: Direct Download
-          const link = document.createElement('a');
-          link.href = URL.createObjectURL(blob);
-          link.download = fileName;
-          link.click();
-          showToast('تم تنزيل بطاقة العقار كصورة بنجاح!');
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = fileName;
+          a.click();
+          showToast('تم تحميل بوستر العقار بدقة فائقة وبخط عربي سليم!');
         }, 'image/png');
+      };
 
-      } catch (err) {
-        console.error(err);
-        watermark.classList.add('hidden');
-        thumbs.classList.remove('hidden');
-        if (!wasProtHidden) protSection.classList.remove('hidden');
-        showToast('حدث خطأ أثناء تصدير الصورة.', 'error');
-      }
+      img.onerror = () => {
+        showToast('تعذر تحميل صورة العقار لإنشاء البوستر', 'error');
+      };
+
+      img.src = coverUrl;
     }
 
     function shareViaWhatsAppText() {
@@ -1405,12 +1547,30 @@
               <div class="text-[10px] text-zinc-500 uppercase">${u.role}</div>
             </div>
           </div>
-          <div class="text-xs bg-black px-2.5 py-1 rounded-lg text-brand-gold border border-brand-darkBorder font-mono flex items-center gap-1.5" title="كلمة المرور">
-            <i data-lucide="key" class="w-3.5 h-3.5"></i> ${u.password}
+          <div class="flex items-center gap-2">
+            <div class="text-xs bg-black px-2.5 py-1 rounded-lg text-brand-gold border border-brand-darkBorder font-mono flex items-center gap-1.5" title="كلمة المرور">
+              <i data-lucide="key" class="w-3.5 h-3.5"></i> ${u.password}
+            </div>
+            <button onclick="deleteUser('${u.id}', '${u.username}')" class="p-1.5 bg-rose-950/40 hover:bg-rose-900 text-rose-400 rounded-lg text-xs transition" title="حذف المدون">
+              <i data-lucide="user-x" class="w-4 h-4"></i>
+            </button>
           </div>
         </div>
       `).join('');
       lucide.createIcons();
+    }
+
+    function deleteUser(id, username) {
+      showConfirm('حذف ناشر', `هل أنت متأكد من رغبتك في إلغاء تفعيل وحذف حساب الناشر (${username})؟`, async () => {
+        try {
+          const { error } = await supabaseClient.from('app_users').delete().eq('id', id);
+          if (error) throw error;
+          showToast(`تم حذف حساب الناشر ${username} بنجاح.`);
+          loadUsersList();
+        } catch(e) {
+          showToast('تعذر حذف الناشر.', 'error');
+        }
+      });
     }
 
     function openAddPropertyModal() {
