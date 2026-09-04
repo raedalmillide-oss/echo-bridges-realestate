@@ -61,14 +61,11 @@
 </head>
 <body class="min-h-screen flex flex-col custom-scrollbar select-none">
 
-  <!-- Header with Perfect Visual Balance -->
+  <!-- Header -->
   <header class="bg-brand-darkCard/95 backdrop-blur-md border-b border-brand-darkBorder sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
       
-      <!-- Brand Identity Section -->
       <div class="flex items-center gap-3.5 cursor-pointer" onclick="window.location.reload()">
-        
-        <!-- Logo Box -->
         <div class="w-12 h-12 rounded-2xl bg-[#141418] border border-brand-gold/30 flex items-center justify-center overflow-hidden shadow-lg shadow-brand-gold/10 shrink-0 p-1">
           <img id="main-brand-logo" src="logo.png" alt="Echo Bridges" class="w-full h-full object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
           <div id="logo-fallback" class="w-full h-full bg-gradient-to-br from-brand-gold to-brand-goldDark items-center justify-center text-black font-title font-bold text-lg hidden">
@@ -76,7 +73,6 @@
           </div>
         </div>
 
-        <!-- Company Name (Harmonized Gold) -->
         <div class="flex flex-col justify-center">
           <h1 class="font-title text-base sm:text-lg font-bold tracking-wider gold-gradient-text leading-tight">
             ECHO BRIDGES
@@ -86,10 +82,8 @@
           </span>
         </div>
 
-        <!-- Sleek Vertical Line -->
         <div class="h-8 w-[1.5px] bg-brand-darkBorder mx-0.5 sm:mx-1"></div>
 
-        <!-- Description (Unified Elegant Gray) -->
         <div class="flex flex-col justify-center">
           <p class="text-[9px] sm:text-[10px] text-zinc-400 tracking-[0.2em] font-semibold uppercase leading-tight font-title">
             REAL ESTATE PLATFORM
@@ -98,10 +92,8 @@
             منصة العقارات والاستثمار
           </p>
         </div>
-
       </div>
 
-      <!-- User Authentication Action -->
       <div class="flex items-center space-x-2 space-x-reverse">
         <button id="auth-btn" onclick="handleAuthClick()" class="border border-brand-gold/50 text-brand-gold hover:bg-brand-gold/10 text-xs sm:text-sm px-4 py-2 rounded-xl flex items-center gap-2 transition shadow-sm">
           <i id="auth-icon" data-lucide="user" class="w-4 h-4"></i>
@@ -112,7 +104,7 @@
     </div>
   </header>
 
-  <!-- Interactive Analytics Bar (Stats) -->
+  <!-- Stats Bar -->
   <section class="max-w-7xl mx-auto px-4 pt-6 w-full">
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
       <div class="bg-brand-darkCard border border-brand-darkBorder p-4 rounded-2xl flex items-center gap-3">
@@ -203,18 +195,16 @@
           <button id="modal-print-btn" onclick="window.print()" class="text-zinc-400 hover:text-brand-gold p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition" title="طباعة بطاقة العرض">
             <i data-lucide="printer" class="w-4 h-4"></i>
           </button>
-          <button id="modal-share-menu-btn" onclick="toggleShareDropdown()" class="text-brand-gold bg-brand-gold/10 border border-brand-gold/40 p-2 rounded-xl transition flex items-center gap-1.5 text-xs font-bold" title="مشاركة">
+          
+          <button id="modal-share-menu-btn" onclick="toggleShareDropdown()" class="text-brand-gold bg-brand-gold/10 border border-brand-gold/40 p-2 rounded-xl transition flex items-center gap-1.5 text-xs font-bold">
             <i data-lucide="share-2" class="w-4 h-4"></i>
             <span class="hidden sm:inline">مشاركة العرض</span>
           </button>
           
-          <!-- Share Dropdown -->
+          <!-- Unified Single Share Dropdown -->
           <div id="share-dropdown" class="absolute left-0 top-12 w-56 bg-[#1A1A22] border border-brand-darkBorder rounded-2xl shadow-2xl py-2 hidden flex-col z-30">
-            <button onclick="generateAndShareImage(true)" class="w-full text-right px-4 py-2.5 text-xs font-bold text-brand-gold hover:bg-brand-gold/10 flex items-center gap-2.5 transition">
-              <i data-lucide="image" class="w-4 h-4"></i> مشاركة كبوستر احترافي
-            </button>
-            <button onclick="generateAndShareImage(false)" class="w-full text-right px-4 py-2.5 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2.5 transition border-b border-brand-darkBorder">
-              <i data-lucide="download" class="w-4 h-4"></i> تنزيل البوستر كصورة (PNG)
+            <button onclick="generateAndShareImage()" class="w-full text-right px-4 py-2.5 text-xs font-bold text-brand-gold hover:bg-brand-gold/10 flex items-center gap-2.5 transition">
+              <i data-lucide="image" class="w-4 h-4"></i> مشاركة وتحميل البوستر
             </button>
             <button onclick="shareViaWhatsAppText()" class="w-full text-right px-4 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2.5 transition">
               <i data-lucide="message-circle" class="w-4 h-4"></i> إرسال نصي عبر واتساب
@@ -233,24 +223,27 @@
         </div>
       </div>
 
-      <!-- Modal Content -->
+      <!-- Modal Body -->
       <div class="p-6 space-y-6 bg-brand-darkCard">
-        <!-- Gallery -->
+        <!-- Gallery with Click-to-Fullscreen Zoom -->
         <div class="space-y-3">
-          <div class="relative h-64 md:h-96 w-full rounded-2xl overflow-hidden bg-black/50 border border-brand-darkBorder">
-            <img id="modal-main-image" crossOrigin="anonymous" src="" alt="العقار" class="w-full h-full object-cover">
+          <div class="relative h-64 md:h-96 w-full rounded-2xl overflow-hidden bg-black/50 border border-brand-darkBorder cursor-zoom-in group" onclick="openLightbox()">
+            <img id="modal-main-image" crossOrigin="anonymous" src="" alt="العقار" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
             <div id="modal-status-badge" class="absolute top-4 left-4 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg"></div>
+            <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur text-white px-3 py-1 rounded-lg text-xs flex items-center gap-1.5 opacity-90 group-hover:opacity-100">
+              <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> تكبير الصورة
+            </div>
           </div>
           <div id="modal-thumbnails" class="flex gap-2 overflow-x-auto py-2 custom-scrollbar"></div>
         </div>
 
-        <!-- Video Player Section (If Video exists) -->
+        <!-- Video Player Section -->
         <div id="modal-video-container" class="hidden space-y-2">
           <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider flex items-center gap-2">
-            <i data-lucide="play-circle" class="w-4 h-4"></i> الفيديو الترويجي للعقار
+            <i data-lucide="film" class="w-4 h-4"></i> الفيديو الترويجي للعقار
           </h3>
-          <div class="rounded-2xl overflow-hidden bg-black border border-brand-darkBorder">
-            <video id="modal-video-player" controls class="w-full max-h-96 object-contain"></video>
+          <div class="rounded-2xl overflow-hidden bg-black border border-brand-darkBorder relative aspect-video max-h-96">
+            <video id="modal-video-player" controls class="w-full h-full object-contain" preload="metadata"></video>
           </div>
         </div>
 
@@ -306,7 +299,15 @@
     </div>
   </div>
 
-  <!-- Profile & Management Dashboard -->
+  <!-- Fullscreen Image Lightbox Modal -->
+  <div id="lightbox-modal" class="fixed inset-0 bg-black/95 z-[120] hidden flex items-center justify-center p-2 sm:p-4" onclick="closeLightbox()">
+    <button onclick="closeLightbox()" class="absolute top-4 left-4 text-zinc-400 hover:text-white bg-zinc-900/80 p-2.5 rounded-full border border-zinc-700 z-10">
+      <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
+    <img id="lightbox-img" src="" alt="صورة ملء الشاشة" class="max-w-full max-h-[92vh] object-contain rounded-xl shadow-2xl" onclick="event.stopPropagation()">
+  </div>
+
+  <!-- Management Dashboard Modal -->
   <div id="profile-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-5xl max-h-[90vh] h-[90vh] rounded-2xl flex flex-col shadow-2xl relative">
       <div class="bg-brand-darkCard border-b border-brand-darkBorder p-4 sm:p-6 flex flex-wrap gap-4 items-center justify-between rounded-t-2xl z-10 shrink-0">
@@ -647,20 +648,19 @@
           </div>
         </div>
 
-        <!-- Google Maps Link -->
         <div>
           <label class="block text-xs text-zinc-400 mb-1.5">رابط خرائط جوجل (Google Maps Link)</label>
           <input id="prop-map" type="url" placeholder="https://maps.app.goo.gl/..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
         </div>
 
-        <!-- Photos -->
+        <!-- Photos Upload -->
         <div class="p-4 bg-[#1A1A22] border border-brand-darkBorder rounded-2xl space-y-2">
-          <label class="block text-sm font-bold text-brand-gold">صور العقار (يمكن تحديد مجموعة صور):</label>
+          <label class="block text-sm font-bold text-brand-gold">صور العقار (يمكن تحديد عدة صور):</label>
           <input id="prop-images" type="file" multiple accept="image/*" class="w-full text-sm text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-gold file:text-black hover:file:bg-brand-goldDark cursor-pointer">
           <p class="text-[10px] text-zinc-500">في حالة تعديل عقار منشور سابقاً، ترك هذا الحقل فارغاً يحتفظ بالصور السابقة.</p>
         </div>
 
-        <!-- Promotional Video Upload (Max 1 min, Max 25 MB) -->
+        <!-- Video Upload (Max 1 min, Max 25 MB) -->
         <div class="p-4 bg-[#1A1A22] border border-brand-darkBorder rounded-2xl space-y-2">
           <div class="flex items-center justify-between">
             <label class="block text-sm font-bold text-brand-gold flex items-center gap-2">
@@ -736,7 +736,7 @@
     </div>
   </div>
 
-  <!-- Inquiry Modal (Client) -->
+  <!-- Inquiry Modal -->
   <div id="inquiry-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-[70] hidden flex items-center justify-center p-4">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-md rounded-2xl p-6 relative shadow-2xl">
       <button onclick="closeModal('inquiry-modal')" class="absolute top-4 left-4 text-zinc-400 hover:text-white">
@@ -783,7 +783,7 @@
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-xl font-bold text-sm shadow-2xl transition-all duration-300 translate-y-24 opacity-0 z-[100] flex items-center gap-2 pointer-events-none">
+  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-xl font-bold text-sm shadow-2xl transition-all duration-300 translate-y-24 opacity-0 z-[130] flex items-center gap-2 pointer-events-none">
     <i id="toast-icon" data-lucide="info" class="w-5 h-5"></i>
     <span id="toast-msg"></span>
   </div>
@@ -835,7 +835,7 @@
       const icon = document.getElementById('toast-icon');
       document.getElementById('toast-msg').textContent = msg;
       
-      toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-xl font-bold text-sm shadow-2xl transition-all duration-300 z-[100] flex items-center gap-2';
+      toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-xl font-bold text-sm shadow-2xl transition-all duration-300 z-[130] flex items-center gap-2';
       if(type === 'error') {
         toast.classList.add('bg-rose-500', 'text-white');
         icon.setAttribute('data-lucide', 'alert-circle');
@@ -870,8 +870,19 @@
       if (id === 'property-modal') {
         document.getElementById('share-dropdown').classList.add('hidden');
         const vPlayer = document.getElementById('modal-video-player');
-        if (vPlayer) vPlayer.pause();
+        if (vPlayer) { vPlayer.pause(); vPlayer.src = ''; }
       }
+    }
+
+    // Fullscreen Lightbox
+    function openLightbox() {
+      const currentSrc = document.getElementById('modal-main-image').src;
+      if (!currentSrc) return;
+      document.getElementById('lightbox-img').src = currentSrc;
+      document.getElementById('lightbox-modal').classList.remove('hidden');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox-modal').classList.add('hidden');
     }
 
     function toggleShareDropdown() {
@@ -880,7 +891,6 @@
       dd.classList.toggle('flex');
     }
 
-    // Validate video file duration and size (Client-side)
     function validateVideoFile(file) {
       return new Promise((resolve) => {
         const maxSize = 25 * 1024 * 1024; // 25 MB
@@ -893,14 +903,14 @@
         video.preload = 'metadata';
         video.onloadedmetadata = function() {
           window.URL.revokeObjectURL(video.src);
-          if (video.duration > 61) { // 60 seconds (with 1 second buffer)
-            resolve({ valid: false, error: `مدة الفيديو (${Math.round(video.duration)} ثانية) تتجاوز الحد المسموح (دقيقة واحدة فقط).` });
+          if (video.duration > 61) {
+            resolve({ valid: false, error: `مدة الفيديو (${Math.round(video.duration)} ثانية) تتجاوز الحد المسموح به (دقيقة واحدة فقط).` });
           } else {
             resolve({ valid: true });
           }
         };
         video.onerror = function() {
-          resolve({ valid: false, error: 'تعذر فحص صيغة الفيديو. يرجى اختيار ملف MP4 صالح.' });
+          resolve({ valid: false, error: 'تعذر التحقق من صيغة الفيديو. يرجى اختيار ملف MP4 صالح.' });
         };
         video.src = URL.createObjectURL(file);
       });
@@ -911,7 +921,7 @@
       document.getElementById('filter-type').addEventListener('change', applyFilters);
       document.getElementById('filter-status').addEventListener('change', applyFilters);
 
-      // Video Input Change Validation
+      // Video Input Validation
       document.getElementById('prop-video').addEventListener('change', async (e) => {
         const file = e.target.files[0];
         const errorEl = document.getElementById('video-error-msg');
@@ -1043,7 +1053,7 @@
             building_status: fence_info
           };
 
-          // Images Upload
+          // Upload Images
           const imageFiles = document.getElementById('prop-images').files;
           if (imageFiles.length > 0) {
             let imageUrls = [];
@@ -1059,25 +1069,20 @@
             propData.images = imageUrls;
           }
 
-          // Video Upload
+          // Upload Video (If selected)
           const videoFile = document.getElementById('prop-video').files[0];
           if (videoFile) {
-            const vCheck = await validateVideoFile(videoFile);
-            if (!vCheck.valid) {
-              showToast(vCheck.error, 'error');
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = `<span>حفظ ونشر العرض سحابياً</span>`;
-              return;
-            }
             const vPath = `${prop_id}/video_${Date.now()}_${videoFile.name}`;
             const { error: vErr } = await supabaseClient.storage.from('property-videos').upload(vPath, videoFile);
             if (!vErr) {
               const { data: vData } = supabaseClient.storage.from('property-videos').getPublicUrl(vPath);
               propData.video_url = vData.publicUrl;
+            } else {
+              console.error('Video upload error:', vErr);
             }
           }
 
-          // Deed Upload
+          // Upload Deed
           const deedFileInput = document.getElementById('prop-deed-file');
           if (deedFileInput.files.length > 0) {
             const dFile = deedFileInput.files[0];
@@ -1109,7 +1114,7 @@
           
         } catch (err) {
           console.error(err);
-          showToast('حدث خطأ أثناء الحفظ.', 'error');
+          showToast('حدث خطأ أثناء الحفظ. تأكد من إعدادات قاعدة البيانات.', 'error');
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerHTML = `<i data-lucide="upload-cloud" class="w-5 h-5"></i> <span>حفظ ونشر العرض سحابياً</span>`;
@@ -1117,7 +1122,7 @@
         }
       });
 
-      // Add New User Form
+      // Add User Form
       document.getElementById('add-user-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const u = document.getElementById('new-user-name').value.trim();
@@ -1126,7 +1131,6 @@
         btn.innerHTML = 'جاري الإنشاء...';
         
         const { error } = await supabaseClient.from('app_users').insert([{ username: u, password: p, role: 'agent' }]);
-        
         if(error) {
           showToast('تعذر الإنشاء، ربما اسم المستخدم مسجل مسبقاً', 'error');
         } else {
@@ -1168,7 +1172,7 @@
               <img src="${coverImg}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
               <div class="absolute top-3 right-3 bg-brand-darkCard/90 border border-brand-gold/40 text-brand-gold text-xs font-title px-2.5 py-1 rounded-md shadow">#${p.serial_code}</div>
               <div class="absolute bottom-3 left-3 ${stClass} text-white text-xs font-bold px-3 py-1 rounded-lg shadow">${stLabel}</div>
-              ${p.video_url ? `<div class="absolute bottom-3 right-3 bg-black/80 border border-brand-gold/50 text-brand-gold p-1.5 rounded-lg shadow"><i data-lucide="play" class="w-3.5 h-3.5 fill-brand-gold"></i></div>` : ''}
+              ${p.video_url ? `<div class="absolute bottom-3 right-3 bg-black/80 border border-brand-gold/50 text-brand-gold px-2 py-1 rounded-lg shadow flex items-center gap-1 text-[11px] font-bold"><i data-lucide="play" class="w-3.5 h-3.5 fill-brand-gold"></i> فيديو</div>` : ''}
             </div>
             <div class="p-4 space-y-2 flex-1 flex flex-col">
               <div class="flex justify-between items-center text-xs">
@@ -1204,7 +1208,7 @@
       badge.textContent = p.status === 'rent' ? 'للإيجار' : 'للبيع';
       badge.className = `absolute top-4 left-4 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg text-white ${p.status === 'rent' ? 'bg-amber-600' : 'bg-emerald-600'}`;
 
-      // Gallery Images
+      // Gallery
       const imgs = p.images && p.images.length > 0 ? p.images : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800'];
       const mainImg = document.getElementById('modal-main-image');
       mainImg.src = imgs[0];
@@ -1219,10 +1223,10 @@
         thumbs.appendChild(thumb);
       });
 
-      // Video Player Setup
+      // Video Section
       const vContainer = document.getElementById('modal-video-container');
       const vPlayer = document.getElementById('modal-video-player');
-      if (p.video_url) {
+      if (p.video_url && p.video_url.trim() !== '') {
         vContainer.classList.remove('hidden');
         vPlayer.src = p.video_url;
       } else {
@@ -1230,7 +1234,7 @@
         vPlayer.src = '';
       }
 
-      // Specifications Grid
+      // Specs
       const specsContainer = document.getElementById('modal-specs');
       specsContainer.innerHTML = '';
 
@@ -1273,7 +1277,7 @@
         addSpecItem('نظام التدفئة', p.furnishing_details, 'flame');
       }
 
-      // Services List
+      // Services
       const sContainer = document.getElementById('modal-services-container');
       const sList = document.getElementById('modal-services-list');
       sList.innerHTML = '';
@@ -1286,18 +1290,19 @@
         sContainer.classList.add('hidden');
       }
 
-      // Action Buttons
+      // Call & WhatsApp
       document.getElementById('modal-call-btn').href = `tel:${p.owner_phone || ''}`;
-      
       const cleanPhone = p.owner_phone ? p.owner_phone.replace(/[^0-9]/g, '') : '';
       const waMsg = encodeURIComponent(`مرحباً، أود الاستفسار عن العقار رقم #${p.serial_code} (${p.title}) المعروض بسعر ${p.price}$`);
       document.getElementById('modal-whatsapp-btn').href = cleanPhone ? `https://wa.me/${cleanPhone}?text=${waMsg}` : '#';
       document.getElementById('modal-whatsapp-btn').style.display = cleanPhone ? 'flex' : 'none';
 
+      // Map Button
       const mapBtn = document.getElementById('modal-map-btn');
       if (p.location_url) { mapBtn.style.display = 'flex'; mapBtn.href = p.location_url; }
       else { mapBtn.style.display = 'none'; }
 
+      // Inquiry
       document.getElementById('modal-inquiry-btn').onclick = () => {
         document.getElementById('inquiry-property-id').value = p.id;
         document.getElementById('inquiry-serial-code').value = p.serial_code;
@@ -1305,6 +1310,7 @@
         openModal('inquiry-modal');
       };
 
+      // Protected Info
       const isPrivileged = currentUser && (currentUser.role === 'developer' || currentUser.role === 'admin' || currentUser.username === p.created_by);
       const protSection = document.getElementById('modal-protected-section');
       if (isPrivileged) {
@@ -1325,19 +1331,20 @@
       openModal('property-modal');
     }
 
-    // High Quality Native Canvas Poster Generator
-    async function generateAndShareImage(shouldShareDirectly = true) {
+    // Engineered High-Precision Native Poster Generator
+    async function generateAndShareImage() {
       if (!currentModalProperty) return;
       toggleShareDropdown();
-      showToast('جاري رسم بوستر العقار باحترافية...', 'warning');
+      showToast('جاري رسم البوستر بهندسة متطابقة وبأعلى دقة...', 'warning');
 
       const p = currentModalProperty;
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
 
       canvas.width = 1080;
-      canvas.height = 1350;
+      canvas.height = 1400;
 
+      // Dark Luxury Background
       ctx.fillStyle = '#0B0B0D';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -1346,106 +1353,144 @@
       const coverUrl = (p.images && p.images.length > 0) ? p.images[0] : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800';
 
       img.onload = () => {
+        // 1. Property Image Area
         ctx.save();
         ctx.beginPath();
-        ctx.rect(30, 110, 1020, 640);
+        ctx.roundRect(40, 120, 1000, 620, 20);
         ctx.clip();
         
-        const scale = Math.max(1020 / img.width, 640 / img.height);
-        const x = 30 + (1020 - img.width * scale) / 2;
-        const y = 110 + (640 - img.height * scale) / 2;
+        const scale = Math.max(1000 / img.width, 620 / img.height);
+        const x = 40 + (1000 - img.width * scale) / 2;
+        const y = 120 + (620 - img.height * scale) / 2;
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
         ctx.restore();
 
+        // 2. Header Branding
         ctx.fillStyle = '#D4AF37';
-        ctx.font = 'bold 34px "Cairo", sans-serif';
+        ctx.font = 'bold 32px "Cairo", sans-serif';
         ctx.textAlign = 'right';
-        ctx.fillText('ECHO BRIDGES REAL ESTATE', 1050, 65);
+        ctx.fillText('ECHO BRIDGES REAL ESTATE', 1040, 65);
 
         ctx.fillStyle = '#9CA3AF';
-        ctx.font = '20px "Cairo", sans-serif';
-        ctx.fillText('منظومة التسويق والاستثمار العقاري الفاخر', 1050, 95);
+        ctx.font = '19px "Cairo", sans-serif';
+        ctx.fillText('منظومة التسويق والاستثمار العقاري الفاخر', 1040, 96);
 
+        // Code Badge (Top Left)
         ctx.fillStyle = '#141418';
         ctx.strokeStyle = '#D4AF37';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1.8;
         ctx.beginPath();
-        ctx.roundRect(30, 40, 180, 50, 10);
+        ctx.roundRect(40, 42, 170, 48, 12);
         ctx.fill();
         ctx.stroke();
 
         ctx.fillStyle = '#D4AF37';
-        ctx.font = 'bold 24px monospace';
+        ctx.font = 'bold 22px monospace';
         ctx.textAlign = 'center';
-        ctx.fillText(`#${p.serial_code}`, 120, 74);
+        ctx.fillText(`#${p.serial_code}`, 125, 74);
 
+        // Status Badge (On Image)
         const isRent = p.status === 'rent';
         ctx.fillStyle = isRent ? '#D97706' : '#059669';
         ctx.beginPath();
-        ctx.roundRect(60, 140, 120, 45, 8);
+        ctx.roundRect(65, 145, 115, 42, 10);
         ctx.fill();
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 22px "Cairo", sans-serif';
-        ctx.fillText(isRent ? 'للإيجار' : 'للبيع', 120, 172);
+        ctx.font = 'bold 20px "Cairo", sans-serif';
+        ctx.fillText(isRent ? 'للإيجار' : 'للبيع', 122, 174);
 
+        // 3. Title and Price Section
         ctx.textAlign = 'right';
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 36px "Cairo", sans-serif';
-        ctx.fillText(p.title, 1050, 810);
+        ctx.font = 'bold 34px "Cairo", sans-serif';
+        const displayTitle = p.title.length > 38 ? p.title.substring(0, 38) + '...' : p.title;
+        ctx.fillText(displayTitle, 1040, 790);
 
         ctx.fillStyle = '#D4AF37';
-        ctx.font = 'bold 38px "Cairo", sans-serif';
+        ctx.font = 'bold 36px "Cairo", sans-serif';
         ctx.textAlign = 'left';
-        ctx.fillText(`${Number(p.price).toLocaleString()} $`, 40, 810);
+        ctx.fillText(`${Number(p.price).toLocaleString()} $`, 40, 790);
 
+        // 4. Exact Right-To-Left 4-Box Technical Spec Grid
         const specs = [
-          { label: 'المساحة', val: `${p.area} م²` },
-          { label: 'المدينة / الحي', val: p.city || '-' },
+          { label: p.type === 'land' ? 'الطابو' : 'الطابق', val: p.type === 'land' ? (p.deed_shares || 'طابو تامة') : (p.floor || 'طابق متكرر') },
           { label: 'النوع', val: p.type === 'apartment' ? 'شقة' : p.type === 'land' ? 'أرض' : p.type === 'villa' ? 'فيلا' : 'عقار' },
-          { label: p.type === 'land' ? 'الطابو' : 'الطابق', val: p.type === 'land' ? (p.deed_shares || 'طابو نظامي') : (p.floor || 'طابق متكرر') }
+          { label: 'المدينة / الحي', val: p.city || '-' },
+          { label: 'المساحة', val: `${p.area} م²` }
         ];
 
+        const boxW = 232;
+        const boxH = 95;
+        const gap = 24;
+        const startX = 40;
+        const boxY = 825;
+
+        // Render from right to left perfectly
         specs.forEach((item, idx) => {
-          const boxW = 235;
-          const boxH = 95;
-          const boxX = 30 + (idx * 260);
-          const boxY = 850;
+          const bX = startX + ((3 - idx) * (boxW + gap));
 
           ctx.fillStyle = '#141418';
           ctx.strokeStyle = '#27272F';
           ctx.lineWidth = 1.5;
           ctx.beginPath();
-          ctx.roundRect(boxX, boxY, boxW, boxH, 14);
+          ctx.roundRect(bX, boxY, boxW, boxH, 14);
           ctx.fill();
           ctx.stroke();
 
+          // Label
           ctx.textAlign = 'center';
           ctx.fillStyle = '#9CA3AF';
-          ctx.font = '18px "Cairo", sans-serif';
-          ctx.fillText(item.label, boxX + boxW / 2, boxY + 36);
+          ctx.font = '16px "Cairo", sans-serif';
+          ctx.fillText(item.label, bX + boxW / 2, boxY + 34);
 
+          // Value with Auto-Fit Scaling
           ctx.fillStyle = '#FFFFFF';
-          ctx.font = 'bold 22px "Cairo", sans-serif';
-          ctx.fillText(item.val, boxX + boxW / 2, boxY + 74);
+          let fontSize = 20;
+          let txt = item.val.toString();
+          if (txt.length > 18) txt = txt.substring(0, 18) + '...';
+          if (txt.length > 12) fontSize = 17;
+          if (txt.length > 15) fontSize = 15;
+
+          ctx.font = `bold ${fontSize}px "Cairo", sans-serif`;
+          ctx.fillText(txt, bX + boxW / 2, boxY + 72);
         });
 
+        // 5. General Description Box
         ctx.fillStyle = '#141418';
         ctx.strokeStyle = '#27272F';
         ctx.beginPath();
-        ctx.roundRect(30, 970, 1020, 240, 16);
+        ctx.roundRect(40, 945, 1000, 290, 18);
         ctx.fill();
         ctx.stroke();
 
         ctx.textAlign = 'right';
         ctx.fillStyle = '#D4AF37';
         ctx.font = 'bold 22px "Cairo", sans-serif';
-        ctx.fillText('المواصفات والتفاصيل:', 1020, 1015);
+        ctx.fillText('المواصفات والتفاصيل:', 1010, 990);
 
+        // Word-wrap description cleanly
         ctx.fillStyle = '#E5E7EB';
-        ctx.font = '20px "Cairo", sans-serif';
-        const note = p.general_notes || 'عقار مميز بمواصفات حصرية وموقع استراتيجي متكامل الخدمات.';
-        ctx.fillText(note.substring(0, 160), 1020, 1060);
+        ctx.font = '18px "Cairo", sans-serif';
+        const noteText = p.general_notes || 'عقار مميز بمواصفات حصرية وموقع استراتيجي متكامل الخدمات.';
+        
+        const words = noteText.split(' ');
+        let line = '';
+        let lineY = 1030;
+        for (let n = 0; n < words.length; n++) {
+          let testLine = line + words[n] + ' ';
+          let metrics = ctx.measureText(testLine);
+          if (metrics.width > 930 && n > 0) {
+            ctx.fillText(line, 1010, lineY);
+            line = words[n] + ' ';
+            lineY += 32;
+            if (lineY > 1130) { line += '...'; break; }
+          } else {
+            line = testLine;
+          }
+        }
+        ctx.fillText(line, 1010, lineY);
 
+        // Technical Sub-line
         let extraDetail = '';
         if (p.type === 'land') {
           extraDetail = `الواجهة: ${p.road_frontage || '-'} | الطريق: ${p.road_type || '-'} | الري: ${p.water_source || '-'}`;
@@ -1453,19 +1498,21 @@
           extraDetail = `الاتجاه: ${p.orientation || '-'} | التكييف: ${p.sunlight || '-'} | التدفئة: ${p.furnishing_details || '-'}`;
         }
         ctx.fillStyle = '#9CA3AF';
-        ctx.font = '19px "Cairo", sans-serif';
-        ctx.fillText(extraDetail, 1020, 1110);
+        ctx.font = '17px "Cairo", sans-serif';
+        ctx.fillText(extraDetail, 1010, 1195);
 
+        // 6. Footer CTA Bar
         ctx.fillStyle = '#D4AF37';
         ctx.beginPath();
-        ctx.roundRect(30, 1240, 1020, 75, 16);
+        ctx.roundRect(40, 1265, 1000, 75, 16);
         ctx.fill();
 
         ctx.fillStyle = '#0B0B0D';
-        ctx.font = 'bold 24px "Cairo", sans-serif';
+        ctx.font = 'bold 23px "Cairo", sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(`للتواصل والاستفسار عن العرض: ${p.owner_phone || '+963...'} | كود العرض: #${p.serial_code}`, 540, 1286);
+        ctx.fillText(`للتواصل والاستفسار عن العرض: ${p.owner_phone || '+963...'} | كود العرض: #${p.serial_code}`, 540, 1312);
 
+        // Output to Image & Share
         canvas.toBlob(async (blob) => {
           if (!blob) {
             showToast('تعذر استخراج الصورة', 'error');
@@ -1474,28 +1521,29 @@
           const fileName = `EchoBridges_${p.serial_code}.png`;
           const file = new File([blob], fileName, { type: 'image/png' });
 
-          if (shouldShareDirectly && navigator.canShare && navigator.canShare({ files: [file] })) {
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
             try {
               await navigator.share({
                 files: [file],
                 title: p.title,
-                text: `عقار فاخر: ${p.title} - كود #${p.serial_code}`
+                text: `عقار فاخر من Echo Bridges - كود #${p.serial_code}`
               });
               showToast('تمت مشاركة البوستر بنجاح!');
               return;
             } catch(e) {}
           }
 
+          // Direct Download fallback
           const a = document.createElement('a');
           a.href = URL.createObjectURL(blob);
           a.download = fileName;
           a.click();
-          showToast('تم تحميل بوستر العقار بدقة فائقة وبخط عربي سليم!');
+          showToast('تم حفظ وتنزيل بوستر العقار بدقة فائقة وبترتيب كامل!');
         }, 'image/png');
       };
 
       img.onerror = () => {
-        showToast('تعذر تحميل صورة العقار لإنشاء البوستر', 'error');
+        showToast('تعذر جلب صورة العقار لإنشاء البوستر', 'error');
       };
 
       img.src = coverUrl;
@@ -1677,8 +1725,13 @@
               <div class="text-[10px] text-zinc-500 uppercase">${u.role}</div>
             </div>
           </div>
-          <div class="text-xs bg-black px-2.5 py-1 rounded-lg text-brand-gold border border-brand-darkBorder font-mono flex items-center gap-1.5" title="كلمة المرور">
-            <i data-lucide="key" class="w-3.5 h-3.5"></i> ${u.password}
+          <div class="flex items-center gap-2">
+            <div class="text-xs bg-black px-2.5 py-1 rounded-lg text-brand-gold border border-brand-darkBorder font-mono flex items-center gap-1.5" title="كلمة المرور">
+              <i data-lucide="key" class="w-3.5 h-3.5"></i> ${u.password}
+            </div>
+            <button onclick="deleteUser('${u.id}', '${u.username}')" class="p-1.5 bg-rose-950/40 hover:bg-rose-900 text-rose-400 rounded-lg text-xs transition" title="حذف المدون">
+              <i data-lucide="user-x" class="w-4 h-4"></i>
+            </button>
           </div>
         </div>
       `).join('');
