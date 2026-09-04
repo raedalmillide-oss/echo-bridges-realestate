@@ -61,37 +61,37 @@
 </head>
 <body class="min-h-screen flex flex-col custom-scrollbar select-none">
 
-  <!-- Header with Bilingual Identity & Real Logo -->
-  <header class="bg-brand-darkCard/90 backdrop-blur-md border-b border-brand-darkBorder sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+  <!-- Header with Perfect Visual Balance -->
+  <header class="bg-brand-darkCard/95 backdrop-blur-md border-b border-brand-darkBorder sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
       
-      <!-- Brand Identity (Logo + Bilingual Names + Vertical Divider) -->
-      <div class="flex items-center space-x-3.5 space-x-reverse cursor-pointer" onclick="window.location.reload()">
+      <!-- Brand Identity Section -->
+      <div class="flex items-center gap-3.5 cursor-pointer" onclick="window.location.reload()">
         
-        <!-- Real Company Logo Container -->
-        <div class="w-11 h-11 rounded-xl bg-[#1A1A22] border border-brand-gold/30 flex items-center justify-center overflow-hidden shadow-lg shadow-brand-gold/10 shrink-0">
-          <img id="main-brand-logo" src="logo.png" alt="Echo Bridges Logo" class="w-full h-full object-contain p-1" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
+        <!-- Logo Box -->
+        <div class="w-12 h-12 rounded-2xl bg-[#141418] border border-brand-gold/30 flex items-center justify-center overflow-hidden shadow-lg shadow-brand-gold/10 shrink-0 p-1">
+          <img id="main-brand-logo" src="logo.png" alt="Echo Bridges" class="w-full h-full object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
           <div id="logo-fallback" class="w-full h-full bg-gradient-to-br from-brand-gold to-brand-goldDark items-center justify-center text-black font-title font-bold text-lg hidden">
             EB
           </div>
         </div>
 
-        <!-- Bilingual Company Name -->
+        <!-- Company Name (Harmonized Gold) -->
         <div class="flex flex-col justify-center">
-          <h1 class="font-title text-lg sm:text-xl font-bold tracking-wider gold-gradient-text leading-none">
+          <h1 class="font-title text-base sm:text-lg font-bold tracking-wider gold-gradient-text leading-tight">
             ECHO BRIDGES
           </h1>
-          <span class="text-xs sm:text-sm font-bold text-zinc-200 tracking-wide mt-1">
+          <span class="text-xs sm:text-sm font-semibold text-brand-gold/90 tracking-wide mt-0.5">
             صدى الجسور
           </span>
         </div>
 
-        <!-- Vertical Divider -->
-        <div class="h-8 w-[1.5px] bg-gradient-to-b from-transparent via-brand-gold/50 to-transparent mx-1 sm:mx-2"></div>
+        <!-- Sleek Vertical Line -->
+        <div class="h-8 w-[1.5px] bg-brand-darkBorder mx-0.5 sm:mx-1"></div>
 
-        <!-- Platform Specialty (EN / AR) -->
+        <!-- Description (Unified Elegant Gray) -->
         <div class="flex flex-col justify-center">
-          <p class="text-[9px] sm:text-[10px] text-brand-gold tracking-[0.2em] font-medium uppercase leading-tight font-title">
+          <p class="text-[9px] sm:text-[10px] text-zinc-400 tracking-[0.2em] font-semibold uppercase leading-tight font-title">
             REAL ESTATE PLATFORM
           </p>
           <p class="text-[10px] sm:text-[11px] text-zinc-400 font-light tracking-normal mt-0.5">
@@ -101,7 +101,7 @@
 
       </div>
 
-      <!-- Right Action Button (Profile / Login) -->
+      <!-- User Authentication Action -->
       <div class="flex items-center space-x-2 space-x-reverse">
         <button id="auth-btn" onclick="handleAuthClick()" class="border border-brand-gold/50 text-brand-gold hover:bg-brand-gold/10 text-xs sm:text-sm px-4 py-2 rounded-xl flex items-center gap-2 transition shadow-sm">
           <i id="auth-icon" data-lucide="user" class="w-4 h-4"></i>
@@ -211,10 +211,10 @@
           <!-- Share Dropdown -->
           <div id="share-dropdown" class="absolute left-0 top-12 w-56 bg-[#1A1A22] border border-brand-darkBorder rounded-2xl shadow-2xl py-2 hidden flex-col z-30">
             <button onclick="generateAndShareImage(true)" class="w-full text-right px-4 py-2.5 text-xs font-bold text-brand-gold hover:bg-brand-gold/10 flex items-center gap-2.5 transition">
-              <i data-lucide="image" class="w-4 h-4"></i> مشاركة كصورة احترافية
+              <i data-lucide="image" class="w-4 h-4"></i> مشاركة كبوستر احترافي
             </button>
             <button onclick="generateAndShareImage(false)" class="w-full text-right px-4 py-2.5 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2.5 transition border-b border-brand-darkBorder">
-              <i data-lucide="download" class="w-4 h-4"></i> تنزيل البطاقة كصورة (PNG)
+              <i data-lucide="download" class="w-4 h-4"></i> تنزيل البوستر كصورة (PNG)
             </button>
             <button onclick="shareViaWhatsAppText()" class="w-full text-right px-4 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2.5 transition">
               <i data-lucide="message-circle" class="w-4 h-4"></i> إرسال نصي عبر واتساب
@@ -233,8 +233,9 @@
         </div>
       </div>
 
-      <!-- Content -->
+      <!-- Modal Content -->
       <div class="p-6 space-y-6 bg-brand-darkCard">
+        <!-- Gallery -->
         <div class="space-y-3">
           <div class="relative h-64 md:h-96 w-full rounded-2xl overflow-hidden bg-black/50 border border-brand-darkBorder">
             <img id="modal-main-image" crossOrigin="anonymous" src="" alt="العقار" class="w-full h-full object-cover">
@@ -243,6 +244,17 @@
           <div id="modal-thumbnails" class="flex gap-2 overflow-x-auto py-2 custom-scrollbar"></div>
         </div>
 
+        <!-- Video Player Section (If Video exists) -->
+        <div id="modal-video-container" class="hidden space-y-2">
+          <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider flex items-center gap-2">
+            <i data-lucide="play-circle" class="w-4 h-4"></i> الفيديو الترويجي للعقار
+          </h3>
+          <div class="rounded-2xl overflow-hidden bg-black border border-brand-darkBorder">
+            <video id="modal-video-player" controls class="w-full max-h-96 object-contain"></video>
+          </div>
+        </div>
+
+        <!-- Technical Specs -->
         <div>
           <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-3 flex items-center gap-2">
             <i data-lucide="cpu" class="w-4 h-4"></i> المواصفات الفنية والهندسية
@@ -250,6 +262,7 @@
           <div id="modal-specs" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5"></div>
         </div>
 
+        <!-- Services -->
         <div id="modal-services-container" class="hidden">
           <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-2.5 flex items-center gap-2">
             <i data-lucide="check-circle-2" class="w-4 h-4"></i> المرافق والخدمات المتوفرة
@@ -257,6 +270,7 @@
           <div id="modal-services-list" class="flex flex-wrap gap-2"></div>
         </div>
 
+        <!-- Description -->
         <div>
           <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-2 flex items-center gap-2">
             <i data-lucide="align-right" class="w-4 h-4"></i> الوصف والتفاصيل
@@ -264,6 +278,7 @@
           <p id="modal-desc" class="text-sm text-zinc-300 leading-relaxed bg-[#1A1A22] p-4 rounded-xl border border-brand-darkBorder whitespace-pre-line"></p>
         </div>
 
+        <!-- Protected Info -->
         <div id="modal-protected-section" class="border-t border-brand-darkBorder pt-4 space-y-3 hidden">
           <h3 class="text-sm font-semibold text-rose-400 flex items-center gap-2">
             <i data-lucide="shield-alert" class="w-4 h-4"></i>
@@ -632,17 +647,32 @@
           </div>
         </div>
 
+        <!-- Google Maps Link -->
         <div>
           <label class="block text-xs text-zinc-400 mb-1.5">رابط خرائط جوجل (Google Maps Link)</label>
           <input id="prop-map" type="url" placeholder="https://maps.app.goo.gl/..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
         </div>
 
+        <!-- Photos -->
         <div class="p-4 bg-[#1A1A22] border border-brand-darkBorder rounded-2xl space-y-2">
           <label class="block text-sm font-bold text-brand-gold">صور العقار (يمكن تحديد مجموعة صور):</label>
           <input id="prop-images" type="file" multiple accept="image/*" class="w-full text-sm text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-gold file:text-black hover:file:bg-brand-goldDark cursor-pointer">
           <p class="text-[10px] text-zinc-500">في حالة تعديل عقار منشور سابقاً، ترك هذا الحقل فارغاً يحتفظ بالصور السابقة.</p>
         </div>
 
+        <!-- Promotional Video Upload (Max 1 min, Max 25 MB) -->
+        <div class="p-4 bg-[#1A1A22] border border-brand-darkBorder rounded-2xl space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="block text-sm font-bold text-brand-gold flex items-center gap-2">
+              <i data-lucide="video" class="w-4 h-4"></i> فيديو ترويجي للعقار (اختياري):
+            </label>
+            <span class="text-[11px] text-zinc-400">الحد الأقصى: دقيقة واحدة (≤ 25 ميغابايت)</span>
+          </div>
+          <input id="prop-video" type="file" accept="video/mp4,video/webm" class="w-full text-sm text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#0B0B0D] file:text-brand-gold file:border file:border-brand-gold/30 hover:file:bg-brand-gold/10 cursor-pointer">
+          <p id="video-error-msg" class="text-[11px] text-rose-400 hidden"></p>
+        </div>
+
+        <!-- Protected Info -->
         <div class="p-4 bg-rose-950/10 border border-rose-900/30 rounded-2xl space-y-4">
           <h4 class="text-sm font-bold text-rose-400 flex items-center gap-2">
             <i data-lucide="shield" class="w-4 h-4"></i> بيانات المالك وسند الطابو (محمية ومخفية عن الزوار)
@@ -839,6 +869,8 @@
       document.getElementById(id).classList.add('hidden');
       if (id === 'property-modal') {
         document.getElementById('share-dropdown').classList.add('hidden');
+        const vPlayer = document.getElementById('modal-video-player');
+        if (vPlayer) vPlayer.pause();
       }
     }
 
@@ -848,10 +880,55 @@
       dd.classList.toggle('flex');
     }
 
+    // Validate video file duration and size (Client-side)
+    function validateVideoFile(file) {
+      return new Promise((resolve) => {
+        const maxSize = 25 * 1024 * 1024; // 25 MB
+        if (file.size > maxSize) {
+          resolve({ valid: false, error: 'حجم الفيديو يتجاوز الحد المسموح به (25 ميغابايت).' });
+          return;
+        }
+
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+        video.onloadedmetadata = function() {
+          window.URL.revokeObjectURL(video.src);
+          if (video.duration > 61) { // 60 seconds (with 1 second buffer)
+            resolve({ valid: false, error: `مدة الفيديو (${Math.round(video.duration)} ثانية) تتجاوز الحد المسموح (دقيقة واحدة فقط).` });
+          } else {
+            resolve({ valid: true });
+          }
+        };
+        video.onerror = function() {
+          resolve({ valid: false, error: 'تعذر فحص صيغة الفيديو. يرجى اختيار ملف MP4 صالح.' });
+        };
+        video.src = URL.createObjectURL(file);
+      });
+    }
+
     function setupEventListeners() {
       document.getElementById('search-input').addEventListener('input', applyFilters);
       document.getElementById('filter-type').addEventListener('change', applyFilters);
       document.getElementById('filter-status').addEventListener('change', applyFilters);
+
+      // Video Input Change Validation
+      document.getElementById('prop-video').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        const errorEl = document.getElementById('video-error-msg');
+        if (!file) {
+          errorEl.classList.add('hidden');
+          return;
+        }
+        const check = await validateVideoFile(file);
+        if (!check.valid) {
+          errorEl.textContent = check.error;
+          errorEl.classList.remove('hidden');
+          e.target.value = '';
+        } else {
+          errorEl.classList.add('hidden');
+          showToast('الفيديو مطابق للمواصفات (أقل من دقيقة وأصغر من 25MB)');
+        }
+      });
 
       // Login Logic
       document.getElementById('login-form').addEventListener('submit', async (e) => {
@@ -919,7 +996,7 @@
         e.preventDefault();
         const submitBtn = document.getElementById('save-prop-submit');
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> <span>جاري حفظ العقار ورفع الصور...</span>`;
+        submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> <span>جاري حفظ العقار ورفع الملفات...</span>`;
         lucide.createIcons();
 
         try {
@@ -966,6 +1043,7 @@
             building_status: fence_info
           };
 
+          // Images Upload
           const imageFiles = document.getElementById('prop-images').files;
           if (imageFiles.length > 0) {
             let imageUrls = [];
@@ -981,6 +1059,25 @@
             propData.images = imageUrls;
           }
 
+          // Video Upload
+          const videoFile = document.getElementById('prop-video').files[0];
+          if (videoFile) {
+            const vCheck = await validateVideoFile(videoFile);
+            if (!vCheck.valid) {
+              showToast(vCheck.error, 'error');
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = `<span>حفظ ونشر العرض سحابياً</span>`;
+              return;
+            }
+            const vPath = `${prop_id}/video_${Date.now()}_${videoFile.name}`;
+            const { error: vErr } = await supabaseClient.storage.from('property-videos').upload(vPath, videoFile);
+            if (!vErr) {
+              const { data: vData } = supabaseClient.storage.from('property-videos').getPublicUrl(vPath);
+              propData.video_url = vData.publicUrl;
+            }
+          }
+
+          // Deed Upload
           const deedFileInput = document.getElementById('prop-deed-file');
           if (deedFileInput.files.length > 0) {
             const dFile = deedFileInput.files[0];
@@ -1071,6 +1168,7 @@
               <img src="${coverImg}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
               <div class="absolute top-3 right-3 bg-brand-darkCard/90 border border-brand-gold/40 text-brand-gold text-xs font-title px-2.5 py-1 rounded-md shadow">#${p.serial_code}</div>
               <div class="absolute bottom-3 left-3 ${stClass} text-white text-xs font-bold px-3 py-1 rounded-lg shadow">${stLabel}</div>
+              ${p.video_url ? `<div class="absolute bottom-3 right-3 bg-black/80 border border-brand-gold/50 text-brand-gold p-1.5 rounded-lg shadow"><i data-lucide="play" class="w-3.5 h-3.5 fill-brand-gold"></i></div>` : ''}
             </div>
             <div class="p-4 space-y-2 flex-1 flex flex-col">
               <div class="flex justify-between items-center text-xs">
@@ -1106,6 +1204,7 @@
       badge.textContent = p.status === 'rent' ? 'للإيجار' : 'للبيع';
       badge.className = `absolute top-4 left-4 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg text-white ${p.status === 'rent' ? 'bg-amber-600' : 'bg-emerald-600'}`;
 
+      // Gallery Images
       const imgs = p.images && p.images.length > 0 ? p.images : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800'];
       const mainImg = document.getElementById('modal-main-image');
       mainImg.src = imgs[0];
@@ -1120,6 +1219,18 @@
         thumbs.appendChild(thumb);
       });
 
+      // Video Player Setup
+      const vContainer = document.getElementById('modal-video-container');
+      const vPlayer = document.getElementById('modal-video-player');
+      if (p.video_url) {
+        vContainer.classList.remove('hidden');
+        vPlayer.src = p.video_url;
+      } else {
+        vContainer.classList.add('hidden');
+        vPlayer.src = '';
+      }
+
+      // Specifications Grid
       const specsContainer = document.getElementById('modal-specs');
       specsContainer.innerHTML = '';
 
@@ -1162,6 +1273,7 @@
         addSpecItem('نظام التدفئة', p.furnishing_details, 'flame');
       }
 
+      // Services List
       const sContainer = document.getElementById('modal-services-container');
       const sList = document.getElementById('modal-services-list');
       sList.innerHTML = '';
@@ -1174,6 +1286,7 @@
         sContainer.classList.add('hidden');
       }
 
+      // Action Buttons
       document.getElementById('modal-call-btn').href = `tel:${p.owner_phone || ''}`;
       
       const cleanPhone = p.owner_phone ? p.owner_phone.replace(/[^0-9]/g, '') : '';
@@ -1564,13 +1677,8 @@
               <div class="text-[10px] text-zinc-500 uppercase">${u.role}</div>
             </div>
           </div>
-          <div class="flex items-center gap-2">
-            <div class="text-xs bg-black px-2.5 py-1 rounded-lg text-brand-gold border border-brand-darkBorder font-mono flex items-center gap-1.5" title="كلمة المرور">
-              <i data-lucide="key" class="w-3.5 h-3.5"></i> ${u.password}
-            </div>
-            <button onclick="deleteUser('${u.id}', '${u.username}')" class="p-1.5 bg-rose-950/40 hover:bg-rose-900 text-rose-400 rounded-lg text-xs transition" title="حذف المدون">
-              <i data-lucide="user-x" class="w-4 h-4"></i>
-            </button>
+          <div class="text-xs bg-black px-2.5 py-1 rounded-lg text-brand-gold border border-brand-darkBorder font-mono flex items-center gap-1.5" title="كلمة المرور">
+            <i data-lucide="key" class="w-3.5 h-3.5"></i> ${u.password}
           </div>
         </div>
       `).join('');
@@ -1594,6 +1702,7 @@
       document.getElementById('add-property-form').reset();
       document.getElementById('edit-prop-id').value = '';
       document.getElementById('add-modal-title').textContent = 'إضافة عقار جديد';
+      document.getElementById('video-error-msg').classList.add('hidden');
       document.querySelectorAll('.service-cb').forEach(cb => cb.checked = false);
       toggleFormFieldsByType();
       closeModal('profile-modal');
