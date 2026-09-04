@@ -5,13 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Echo Bridges - For Real Estate</title>
   
-  <!-- Tailwind CSS & Lucide Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Supabase Client Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -40,30 +37,15 @@
   </script>
 
   <style>
-    body {
-      background-color: #0B0B0D;
-      color: #F3F4F6;
-      font-family: 'Cairo', sans-serif;
-    }
+    body { background-color: #0B0B0D; color: #F3F4F6; font-family: 'Cairo', sans-serif; }
     .gold-gradient-text {
       background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA7C11 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .gold-border-gradient {
-      border-image: linear-gradient(to bottom right, #D4AF37, #27272F) 1;
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #27272F;
-      border-radius: 4px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #D4AF37;
-    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #27272F; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col custom-scrollbar">
@@ -71,7 +53,6 @@
   <!-- Header -->
   <header class="bg-brand-darkCard/90 backdrop-blur-md border-b border-brand-darkBorder sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-      <!-- Typography Luxury Logo -->
       <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="window.location.reload()">
         <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-gold to-brand-goldDark flex items-center justify-center text-black font-title font-bold text-xl shadow-lg shadow-brand-gold/20">
           EB
@@ -82,14 +63,13 @@
         </div>
       </div>
 
-      <!-- Action Buttons -->
       <div class="flex items-center space-x-3 space-x-reverse">
-        <button id="add-property-btn" class="hidden bg-gradient-to-r from-brand-gold to-brand-goldDark hover:opacity-95 text-black font-semibold text-sm px-4 py-2 rounded-lg items-center gap-1.5 shadow-md shadow-brand-gold/10 transition">
+        <button id="add-property-btn" onclick="openAddPropertyModal()" class="hidden bg-gradient-to-r from-brand-gold to-brand-goldDark hover:opacity-95 text-black font-semibold text-sm px-4 py-2 rounded-lg items-center gap-1.5 shadow-md transition">
           <i data-lucide="plus-circle" class="w-4 h-4"></i>
           <span>إضافة عقار</span>
         </button>
 
-        <button id="auth-btn" onclick="openLoginModal()" class="border border-brand-gold/50 text-brand-gold hover:bg-brand-gold/10 text-sm px-4 py-2 rounded-lg flex items-center gap-1.5 transition">
+        <button id="auth-btn" onclick="handleAuthClick()" class="border border-brand-gold/50 text-brand-gold hover:bg-brand-gold/10 text-sm px-4 py-2 rounded-lg flex items-center gap-1.5 transition">
           <i data-lucide="user" class="w-4 h-4"></i>
           <span id="auth-btn-text">تسجيل الدخول</span>
         </button>
@@ -112,10 +92,9 @@
           <option value="building">عمارة كاملة</option>
           <option value="villa">فيلا</option>
           <option value="shop">محل تجاري</option>
-          <option value="storehouse">مخزن / مستودع</option>
         </select>
         <select id="filter-status" class="bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2.5 text-zinc-300 focus:outline-none focus:border-brand-gold">
-          <option value="all">للبيع وللإيجار</option>
+          <option value="all">الكل (بيع وإيجار)</option>
           <option value="sale">للبيع</option>
           <option value="rent">للإيجار</option>
         </select>
@@ -126,15 +105,14 @@
   <!-- Main Grid -->
   <main class="max-w-7xl mx-auto px-4 pb-16 flex-1 w-full">
     <div id="properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Loading State -->
       <div class="col-span-full py-16 text-center text-zinc-500 flex flex-col items-center justify-center">
         <div class="w-8 h-8 border-2 border-brand-gold border-t-transparent rounded-full animate-spin mb-3"></div>
-        <p class="text-sm">جاري مزامنة العروض مع السحابة المركزية...</p>
+        <p class="text-sm">جاري جلب البيانات من السحابة...</p>
       </div>
     </div>
   </main>
 
-  <!-- Property Modal (Details) -->
+  <!-- Property View Modal -->
   <div id="property-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-3xl max-h-[90vh] rounded-2xl overflow-y-auto custom-scrollbar flex flex-col">
       <div class="sticky top-0 bg-brand-darkCard border-b border-brand-darkBorder p-4 flex items-center justify-between z-10">
@@ -148,7 +126,6 @@
       </div>
 
       <div class="p-6 space-y-6">
-        <!-- Media Gallery -->
         <div id="modal-gallery" class="space-y-2">
           <div class="relative h-72 md:h-96 w-full rounded-xl overflow-hidden bg-black/50 border border-brand-darkBorder">
             <img id="modal-main-image" src="" alt="العقار" class="w-full h-full object-cover">
@@ -156,42 +133,131 @@
           <div id="modal-thumbnails" class="flex gap-2 overflow-x-auto py-1 custom-scrollbar"></div>
         </div>
 
-        <!-- Specs Grid -->
         <div id="modal-specs" class="grid grid-cols-2 md:grid-cols-3 gap-3"></div>
 
-        <!-- Description -->
         <div>
-          <h3 class="text-sm font-semibold text-brand-gold mb-1">الوصف العام والملاحظات:</h3>
+          <h3 class="text-sm font-semibold text-brand-gold mb-1">الوصف العام:</h3>
           <p id="modal-desc" class="text-sm text-zinc-300 leading-relaxed bg-[#1A1A22] p-3.5 rounded-xl border border-brand-darkBorder whitespace-pre-line"></p>
         </div>
 
-        <!-- Deed & Protected Info (Secured) -->
         <div id="modal-protected-section" class="border-t border-brand-darkBorder pt-4 space-y-3">
           <h3 class="text-sm font-semibold text-brand-gold flex items-center gap-1.5">
             <i data-lucide="shield-check" class="w-4 h-4 text-brand-gold"></i>
-            <span>سند الملكية وبيانات المالك (مشفرة)</span>
+            <span>بيانات المالك والوثائق الرسمية (محمية)</span>
           </h3>
           <div id="modal-protected-content" class="bg-[#1A1A22] p-4 rounded-xl border border-brand-darkBorder text-xs text-zinc-400">
-            بيانات المالك وصك الملكية متاحة فقط للمعلن والإدارة.
+            متاحة فقط للمعلن وإدارة النظام.
           </div>
         </div>
 
-        <!-- Contact & Share Actions -->
         <div class="flex flex-wrap gap-3 pt-2">
           <a id="modal-call-btn" href="#" class="flex-1 min-w-[140px] bg-brand-gold hover:bg-brand-goldDark text-black font-semibold text-sm py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 transition">
             <i data-lucide="phone" class="w-4 h-4"></i>
-            <span>تواصل معنا</span>
+            <span>اتصال بالمسؤول</span>
           </a>
           <button id="modal-inquiry-btn" class="flex-1 min-w-[140px] border border-brand-gold/50 hover:bg-brand-gold/10 text-brand-gold text-sm py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 transition">
             <i data-lucide="mail" class="w-4 h-4"></i>
-            <span>راسلنا</span>
-          </button>
-          <button id="modal-share-post-btn" class="w-full md:w-auto border border-zinc-700 hover:border-zinc-500 text-zinc-300 text-sm py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="share-2" class="w-4 h-4"></i>
-            <span>مشاركة بطاقة العرض</span>
+            <span>إرسال استفسار</span>
           </button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Add Property Modal -->
+  <div id="add-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-2xl max-h-[90vh] rounded-2xl overflow-y-auto custom-scrollbar p-6 relative">
+      <button onclick="closeModal('add-modal')" class="absolute top-4 left-4 text-zinc-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <h3 class="font-title text-xl font-bold gold-gradient-text text-center mb-1">إضافة عقار جديد</h3>
+      <p class="text-xs text-zinc-400 text-center mb-6">يتم الحفظ والتخزين سحابياً بشكل فوري</p>
+
+      <form id="add-property-form" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">عنوان العرض *</label>
+            <input id="prop-title" type="text" required placeholder="مثال: شقة دوبلكس فاخرة" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+          </div>
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">النوع *</label>
+            <select id="prop-type" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+              <option value="apartment">شقة</option>
+              <option value="land">أرض</option>
+              <option value="building">عمارة كاملة</option>
+              <option value="villa">فيلا</option>
+              <option value="shop">محل تجاري</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">الحالة *</label>
+            <select id="prop-status" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+              <option value="sale">للبيع</option>
+              <option value="rent">للإيجار</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">السعر ($) *</label>
+            <input id="prop-price" type="number" required placeholder="150000" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+          </div>
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">المساحة (م²) *</label>
+            <input id="prop-area" type="number" required placeholder="180" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">المدينة / المنطقة *</label>
+            <input id="prop-city" type="text" required placeholder="دمشق، المزة" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+          </div>
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">رابط الموقع الجغرافي (Google Maps)</label>
+            <input id="prop-map" type="url" placeholder="https://maps.google.com/..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+          </div>
+        </div>
+
+        <!-- Media Upload -->
+        <div class="p-3 bg-[#1A1A22] border border-brand-darkBorder rounded-xl space-y-2">
+          <label class="block text-xs font-semibold text-brand-gold">صور العقار (حتى 10 صور):</label>
+          <input id="prop-images" type="file" multiple accept="image/*" class="w-full text-xs text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-gold file:text-black hover:file:bg-brand-goldDark cursor-pointer">
+          <p class="text-[10px] text-zinc-500">يتم رفع الصور تلقائياً إلى مجلد التخزين السحابي.</p>
+        </div>
+
+        <!-- Protected Owner Info -->
+        <div class="p-3 bg-[#1A1A22]/60 border border-brand-gold/30 rounded-xl space-y-3">
+          <h4 class="text-xs font-bold text-brand-gold flex items-center gap-1">
+            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            <span>بيانات المالك وسند الطابو (محمية ومخفية عن الزوار)</span>
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">اسم المالك *</label>
+              <input id="prop-owner-name" type="text" required placeholder="اسم المالك بالكامل" class="w-full bg-[#141418] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">رقم هاتف المالك *</label>
+              <input id="prop-owner-phone" type="tel" required placeholder="+963..." class="w-full bg-[#141418] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold text-left">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">رفع صورة سند الملكية / الطابو (PDF أو صورة)</label>
+            <input id="prop-deed-file" type="file" accept="image/*,.pdf" class="w-full text-xs text-zinc-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-zinc-200 cursor-pointer">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs text-zinc-400 mb-1">الوصف العام والملاحظات</label>
+          <textarea id="prop-desc" rows="3" placeholder="مواصفات العقار، نوع الكسوة، الاتجاه..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold"></textarea>
+        </div>
+
+        <button id="save-prop-submit" type="submit" class="w-full bg-brand-gold hover:bg-brand-goldDark text-black font-bold text-sm py-3 rounded-xl transition flex items-center justify-center gap-2">
+          <span>نشر العقار الآن</span>
+        </button>
+      </form>
     </div>
   </div>
 
@@ -252,16 +318,13 @@
   </div>
 
   <script>
-    // --- SUPABASE CONFIGURATION ---
     const SUPABASE_URL = "https://qtkgmkyyrimunjiykjid.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_Z2KqEyID6aMeyVLlL-Rndg_D8C4BEjw";
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Current State
     let allProperties = [];
     let currentUser = JSON.parse(localStorage.getItem('eb_user') || 'null');
 
-    // Init App
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       updateAuthUI();
@@ -274,13 +337,12 @@
       document.getElementById('filter-type').addEventListener('change', applyFilters);
       document.getElementById('filter-status').addEventListener('change', applyFilters);
 
-      // Login Form
+      // Login handler
       document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const u = document.getElementById('login-username').value.trim();
         const p = document.getElementById('login-password').value.trim();
 
-        // Check developer credentials or users table
         if (u.toLowerCase() === 'raid almelli' && p === 'Haitham2007@') {
           currentUser = { username: 'Raid Almelli', role: 'developer' };
         } else {
@@ -294,7 +356,7 @@
           if (data) {
             currentUser = data;
           } else {
-            alert('اسم المستخدم أو كلمة المرور غير صحيحة');
+            alert('بيانات الدخول غير صحيحة');
             return;
           }
         }
@@ -302,32 +364,89 @@
         localStorage.setItem('eb_user', JSON.stringify(currentUser));
         updateAuthUI();
         closeModal('login-modal');
-        alert(`أهلاً بك: ${currentUser.username}`);
       });
 
-      // Inquiry Form
-      document.getElementById('inquiry-form').addEventListener('submit', async (e) => {
+      // Submit Add Property Form
+      document.getElementById('add-property-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const propId = document.getElementById('inquiry-property-id').value;
-        const serial = document.getElementById('inquiry-serial-code').value;
-        const name = document.getElementById('inquiry-client-name').value.trim();
-        const phone = document.getElementById('inquiry-client-phone').value.trim();
-        const msg = document.getElementById('inquiry-message').value.trim();
+        const submitBtn = document.getElementById('save-prop-submit');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span>جاري الرفع والحفظ...</span>`;
 
-        const { error } = await supabaseClient.from('inquiries').insert([{
-          property_id: propId,
-          serial_code: serial,
-          client_name: name,
-          client_phone: phone,
-          message: msg
-        }]);
+        try {
+          const title = document.getElementById('prop-title').value.trim();
+          const type = document.getElementById('prop-type').value;
+          const status = document.getElementById('prop-status').value;
+          const price = parseFloat(document.getElementById('prop-price').value) || 0;
+          const area = parseFloat(document.getElementById('prop-area').value) || 0;
+          const city = document.getElementById('prop-city').value.trim();
+          const location_url = document.getElementById('prop-map').value.trim();
+          const owner_name = document.getElementById('prop-owner-name').value.trim();
+          const owner_phone = document.getElementById('prop-owner-phone').value.trim();
+          const general_notes = document.getElementById('prop-desc').value.trim();
 
-        if (error) {
-          alert('تعذر إرسال الاستفسار، يرجى المحاولة لاحقاً');
-        } else {
-          alert('تم إرسال استفسارك بنجاح، سيتواصل معك فريقنا قريباً.');
-          closeModal('inquiry-modal');
-          document.getElementById('inquiry-form').reset();
+          const serial_code = 'EB-' + Math.floor(1000 + Math.random() * 9000);
+          const prop_id = 'prop_' + Date.now();
+
+          // Upload Images
+          const imageFiles = document.getElementById('prop-images').files;
+          let imageUrls = [];
+          for (let i = 0; i < imageFiles.length; i++) {
+            const file = imageFiles[i];
+            const filePath = `${prop_id}/${Date.now()}_${file.name}`;
+            const { error: uploadError } = await supabaseClient.storage.from('property-images').upload(filePath, file);
+            if (!uploadError) {
+              const { data: publicUrlData } = supabaseClient.storage.from('property-images').getPublicUrl(filePath);
+              imageUrls.push(publicUrlData.publicUrl);
+            }
+          }
+
+          // Upload Deed if exists
+          const deedFileInput = document.getElementById('prop-deed-file');
+          let deedFileUrl = '';
+          if (deedFileInput.files.length > 0) {
+            const dFile = deedFileInput.files[0];
+            const dPath = `${prop_id}/deed_${Date.now()}_${dFile.name}`;
+            const { error: dUploadError } = await supabaseClient.storage.from('property-deeds').upload(dPath, dFile);
+            if (!dUploadError) {
+              const { data: dUrlData } = supabaseClient.storage.from('property-deeds').getPublicUrl(dPath);
+              deedFileUrl = dUrlData.publicUrl;
+            }
+          }
+
+          // Insert into properties table
+          const { error: insertError } = await supabaseClient.from('properties').insert([{
+            id: prop_id,
+            serial_code: serial_code,
+            title: title,
+            type: type,
+            status: status,
+            price: price,
+            area: area,
+            city: city,
+            location_url: location_url,
+            owner_name: owner_name,
+            owner_phone: owner_phone,
+            general_notes: general_notes,
+            images: imageUrls,
+            deed_file_url: deedFileUrl,
+            created_by: currentUser ? currentUser.username : 'admin'
+          }]);
+
+          if (insertError) {
+            throw insertError;
+          }
+
+          alert(`تم نشر العقار بنجاح! الرمز: #${serial_code}`);
+          closeModal('add-modal');
+          document.getElementById('add-property-form').reset();
+          fetchProperties();
+        } catch (err) {
+          console.error(err);
+          alert('حدث خطأ أثناء الحفظ. تأكد من تشغيل استعلام SQL في Supabase.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<span>نشر العقار الآن</span>`;
         }
       });
     }
@@ -343,7 +462,7 @@
         grid.innerHTML = `
           <div class="col-span-full py-16 text-center text-zinc-500">
             <i data-lucide="home" class="w-10 h-10 mx-auto mb-2 opacity-40"></i>
-            <p>لا توجد عقارات منشورة حالياً في قاعدة البيانات السحابية.</p>
+            <p>لا توجد عقارات منشورة حالياً. اضغط على "إضافة عقار" للبدء.</p>
           </div>
         `;
         lucide.createIcons();
@@ -362,7 +481,6 @@
         const coverImg = (p.images && p.images.length > 0) ? p.images[0] : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800';
         const card = document.createElement('div');
         card.className = 'bg-brand-darkCard border border-brand-darkBorder rounded-2xl overflow-hidden hover:border-brand-gold/40 transition duration-300 flex flex-col justify-between group';
-        
         card.innerHTML = `
           <div>
             <div class="relative h-56 w-full overflow-hidden bg-black/40">
@@ -377,10 +495,10 @@
             <div class="p-4 space-y-2">
               <div class="flex justify-between items-baseline">
                 <span class="text-xs text-brand-gold">${p.city || 'المدينة'}</span>
-                <span class="text-base font-bold text-white">${Number(p.price).toLocaleString()} $ ${p.rent_period ? '/ ' + p.rent_period : ''}</span>
+                <span class="text-base font-bold text-white">${Number(p.price).toLocaleString()} $</span>
               </div>
               <h3 class="font-bold text-white text-base line-clamp-1">${p.title}</h3>
-              <p class="text-xs text-zinc-400 line-clamp-2">${p.general_notes || 'عقار مميز بمواصفات ممتازة وموقع استراتيجي.'}</p>
+              <p class="text-xs text-zinc-400 line-clamp-2">${p.general_notes || 'عقار مميز بمواصفات وموقع استراتيجي.'}</p>
             </div>
           </div>
           <div class="p-4 pt-0">
@@ -403,7 +521,6 @@
       document.getElementById('modal-title').textContent = p.title;
       document.getElementById('modal-desc').textContent = p.general_notes || 'لا توجد ملاحظات إضافية.';
 
-      // Gallery
       const imgs = p.images && p.images.length > 0 ? p.images : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800'];
       const mainImg = document.getElementById('modal-main-image');
       mainImg.src = imgs[0];
@@ -418,7 +535,6 @@
         thumbs.appendChild(thumb);
       });
 
-      // Specs Grid
       const specs = document.getElementById('modal-specs');
       specs.innerHTML = `
         <div class="bg-[#1A1A22] p-2.5 rounded-xl border border-brand-darkBorder text-center">
@@ -430,12 +546,11 @@
           <p class="text-sm font-semibold text-brand-gold">${Number(p.price).toLocaleString()} $</p>
         </div>
         <div class="bg-[#1A1A22] p-2.5 rounded-xl border border-brand-darkBorder text-center">
-          <p class="text-[11px] text-zinc-500">الحالة</p>
-          <p class="text-sm font-semibold text-white">${p.status === 'rent' ? 'للإيجار' : 'للبيع'}</p>
+          <p class="text-[11px] text-zinc-500">النوع</p>
+          <p class="text-sm font-semibold text-white">${p.type}</p>
         </div>
       `;
 
-      // Protected Details (Only Owner/Developer)
       const isPrivileged = currentUser && (currentUser.role === 'developer' || currentUser.username === p.created_by);
       const protSection = document.getElementById('modal-protected-content');
       if (isPrivileged) {
@@ -443,26 +558,15 @@
           <div class="space-y-1 text-zinc-200">
             <p><strong class="text-brand-gold">اسم المالك:</strong> ${p.owner_name || '-'}</p>
             <p><strong class="text-brand-gold">هاتف المالك:</strong> ${p.owner_phone || '-'}</p>
-            <p><strong class="text-brand-gold">ملاحظات سرية:</strong> ${p.owner_notes || 'لا توجد'}</p>
-            ${p.deed_file_url ? `<a href="${p.deed_file_url}" target="_blank" class="inline-block mt-2 text-brand-gold underline">تحميل ومعاينة سند الملكية</a>` : ''}
+            ${p.deed_file_url ? `<a href="${p.deed_file_url}" target="_blank" class="inline-block mt-2 text-brand-gold underline">معاينة سند الملكية</a>` : ''}
           </div>
         `;
       } else {
         protSection.innerHTML = `بيانات المالك وصك الملكية متاحة فقط للمعلن والإدارة.`;
       }
 
-      // Contact Buttons
       document.getElementById('modal-call-btn').href = `tel:${p.owner_phone || ''}`;
-      document.getElementById('modal-inquiry-btn').onclick = () => openInquiryModal(p);
-
       openModal('property-modal');
-    }
-
-    function openInquiryModal(p) {
-      document.getElementById('inquiry-property-id').value = p.id;
-      document.getElementById('inquiry-serial-code').value = p.serial_code;
-      document.getElementById('inquiry-subtitle').textContent = `العقار: ${p.title} (#${p.serial_code})`;
-      openModal('inquiry-modal');
     }
 
     function applyFilters() {
@@ -496,9 +600,28 @@
       }
     }
 
+    function handleAuthClick() {
+      if (currentUser) {
+        if (confirm(`أنت مسجل حالياً باسم ${currentUser.username}. هل تريد تسجيل الخروج؟`)) {
+          localStorage.removeItem('eb_user');
+          currentUser = null;
+          updateAuthUI();
+        }
+      } else {
+        openModal('login-modal');
+      }
+    }
+
+    function openAddPropertyModal() {
+      if (!currentUser) {
+        openModal('login-modal');
+        return;
+      }
+      openModal('add-modal');
+    }
+
     function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
     function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-    function openLoginModal() { openModal('login-modal'); }
   </script>
 </body>
 </html>
