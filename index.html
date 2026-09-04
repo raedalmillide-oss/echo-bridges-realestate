@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Echo Bridges - For Real Estate</title>
+  
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Supabase Client Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#D4AF37',
+              goldLight: '#F3E5AB',
+              goldDark: '#AA7C11',
+              dark: '#0B0B0D',
+              darkCard: '#141418',
+              darkBorder: '#27272F'
+            }
+          },
+          fontFamily: {
+            title: ['Cinzel', 'serif'],
+            sans: ['Cairo', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0B0B0D;
+      color: #F3F4F6;
+      font-family: 'Cairo', sans-serif;
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA7C11 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-border-gradient {
+      border-image: linear-gradient(to bottom right, #D4AF37, #27272F) 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #27272F;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #D4AF37;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col custom-scrollbar">
+
+  <!-- Header -->
+  <header class="bg-brand-darkCard/90 backdrop-blur-md border-b border-brand-darkBorder sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <!-- Typography Luxury Logo -->
+      <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="window.location.reload()">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-gold to-brand-goldDark flex items-center justify-center text-black font-title font-bold text-xl shadow-lg shadow-brand-gold/20">
+          EB
+        </div>
+        <div>
+          <h1 class="font-title text-xl font-bold tracking-wider gold-gradient-text leading-tight">ECHO BRIDGES</h1>
+          <p class="text-[10px] text-zinc-400 tracking-[0.25em] font-light uppercase">For Real Estate</p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center space-x-3 space-x-reverse">
+        <button id="add-property-btn" class="hidden bg-gradient-to-r from-brand-gold to-brand-goldDark hover:opacity-95 text-black font-semibold text-sm px-4 py-2 rounded-lg items-center gap-1.5 shadow-md shadow-brand-gold/10 transition">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>إضافة عقار</span>
+        </button>
+
+        <button id="auth-btn" onclick="openLoginModal()" class="border border-brand-gold/50 text-brand-gold hover:bg-brand-gold/10 text-sm px-4 py-2 rounded-lg flex items-center gap-1.5 transition">
+          <i data-lucide="user" class="w-4 h-4"></i>
+          <span id="auth-btn-text">تسجيل الدخول</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filter & Search Bar -->
+  <section class="max-w-7xl mx-auto px-4 py-6 w-full">
+    <div class="bg-brand-darkCard border border-brand-darkBorder rounded-2xl p-4 shadow-xl flex flex-col md:flex-row gap-3">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="w-4 h-4 absolute top-3.5 right-3 text-zinc-400"></i>
+        <input id="search-input" type="text" placeholder="ابحث برقم الكود (مثال: EB-101)، المدينة، أو نوع العقار..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl pr-9 pl-4 py-2.5 text-white placeholder-zinc-500 focus:outline-none focus:border-brand-gold">
+      </div>
+      <div class="flex gap-2">
+        <select id="filter-type" class="bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2.5 text-zinc-300 focus:outline-none focus:border-brand-gold">
+          <option value="all">كافة العقارات</option>
+          <option value="apartment">شقة</option>
+          <option value="land">أرض</option>
+          <option value="building">عمارة كاملة</option>
+          <option value="villa">فيلا</option>
+          <option value="shop">محل تجاري</option>
+          <option value="storehouse">مخزن / مستودع</option>
+        </select>
+        <select id="filter-status" class="bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2.5 text-zinc-300 focus:outline-none focus:border-brand-gold">
+          <option value="all">للبيع وللإيجار</option>
+          <option value="sale">للبيع</option>
+          <option value="rent">للإيجار</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Grid -->
+  <main class="max-w-7xl mx-auto px-4 pb-16 flex-1 w-full">
+    <div id="properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Loading State -->
+      <div class="col-span-full py-16 text-center text-zinc-500 flex flex-col items-center justify-center">
+        <div class="w-8 h-8 border-2 border-brand-gold border-t-transparent rounded-full animate-spin mb-3"></div>
+        <p class="text-sm">جاري مزامنة العروض مع السحابة المركزية...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Property Modal (Details) -->
+  <div id="property-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-3xl max-h-[90vh] rounded-2xl overflow-y-auto custom-scrollbar flex flex-col">
+      <div class="sticky top-0 bg-brand-darkCard border-b border-brand-darkBorder p-4 flex items-center justify-between z-10">
+        <div>
+          <span id="modal-serial" class="text-xs font-title text-brand-gold bg-brand-gold/10 px-2.5 py-1 rounded-md border border-brand-gold/30">#EB-000</span>
+          <h2 id="modal-title" class="text-lg font-bold text-white mt-1">عنوان العقار</h2>
+        </div>
+        <button onclick="closeModal('property-modal')" class="text-zinc-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-6">
+        <!-- Media Gallery -->
+        <div id="modal-gallery" class="space-y-2">
+          <div class="relative h-72 md:h-96 w-full rounded-xl overflow-hidden bg-black/50 border border-brand-darkBorder">
+            <img id="modal-main-image" src="" alt="العقار" class="w-full h-full object-cover">
+          </div>
+          <div id="modal-thumbnails" class="flex gap-2 overflow-x-auto py-1 custom-scrollbar"></div>
+        </div>
+
+        <!-- Specs Grid -->
+        <div id="modal-specs" class="grid grid-cols-2 md:grid-cols-3 gap-3"></div>
+
+        <!-- Description -->
+        <div>
+          <h3 class="text-sm font-semibold text-brand-gold mb-1">الوصف العام والملاحظات:</h3>
+          <p id="modal-desc" class="text-sm text-zinc-300 leading-relaxed bg-[#1A1A22] p-3.5 rounded-xl border border-brand-darkBorder whitespace-pre-line"></p>
+        </div>
+
+        <!-- Deed & Protected Info (Secured) -->
+        <div id="modal-protected-section" class="border-t border-brand-darkBorder pt-4 space-y-3">
+          <h3 class="text-sm font-semibold text-brand-gold flex items-center gap-1.5">
+            <i data-lucide="shield-check" class="w-4 h-4 text-brand-gold"></i>
+            <span>سند الملكية وبيانات المالك (مشفرة)</span>
+          </h3>
+          <div id="modal-protected-content" class="bg-[#1A1A22] p-4 rounded-xl border border-brand-darkBorder text-xs text-zinc-400">
+            بيانات المالك وصك الملكية متاحة فقط للمعلن والإدارة.
+          </div>
+        </div>
+
+        <!-- Contact & Share Actions -->
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a id="modal-call-btn" href="#" class="flex-1 min-w-[140px] bg-brand-gold hover:bg-brand-goldDark text-black font-semibold text-sm py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 transition">
+            <i data-lucide="phone" class="w-4 h-4"></i>
+            <span>تواصل معنا</span>
+          </a>
+          <button id="modal-inquiry-btn" class="flex-1 min-w-[140px] border border-brand-gold/50 hover:bg-brand-gold/10 text-brand-gold text-sm py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 transition">
+            <i data-lucide="mail" class="w-4 h-4"></i>
+            <span>راسلنا</span>
+          </button>
+          <button id="modal-share-post-btn" class="w-full md:w-auto border border-zinc-700 hover:border-zinc-500 text-zinc-300 text-sm py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 transition">
+            <i data-lucide="share-2" class="w-4 h-4"></i>
+            <span>مشاركة بطاقة العرض</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-md rounded-2xl p-6 relative">
+      <button onclick="closeModal('login-modal')" class="absolute top-4 left-4 text-zinc-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <h3 class="font-title text-xl font-bold gold-gradient-text text-center mb-1">تسجيل الدخول</h3>
+      <p class="text-xs text-zinc-400 text-center mb-6">لوحة تحكم المعلنين والإدارة</p>
+
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="block text-xs text-zinc-400 mb-1">اسم المستخدم</label>
+          <input id="login-username" type="text" required class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+        </div>
+        <div>
+          <label class="block text-xs text-zinc-400 mb-1">كلمة المرور</label>
+          <input id="login-password" type="password" required class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+        </div>
+        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldDark text-black font-semibold text-sm py-2.5 rounded-xl transition">
+          دخول
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Inquiry Modal -->
+  <div id="inquiry-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-md rounded-2xl p-6 relative">
+      <button onclick="closeModal('inquiry-modal')" class="absolute top-4 left-4 text-zinc-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <h3 class="font-title text-lg font-bold text-white mb-1">استفسار عن العقار</h3>
+      <p id="inquiry-subtitle" class="text-xs text-brand-gold mb-4"></p>
+
+      <form id="inquiry-form" class="space-y-3">
+        <input type="hidden" id="inquiry-property-id">
+        <input type="hidden" id="inquiry-serial-code">
+        <div>
+          <label class="block text-xs text-zinc-400 mb-1">الاسم الكريم *</label>
+          <input id="inquiry-client-name" type="text" required class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+        </div>
+        <div>
+          <label class="block text-xs text-zinc-400 mb-1">رقم الهاتف أو الواتساب *</label>
+          <input id="inquiry-client-phone" type="tel" required class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold text-left">
+        </div>
+        <div>
+          <label class="block text-xs text-zinc-400 mb-1">نص الاستفسار</label>
+          <textarea id="inquiry-message" rows="3" required class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldDark text-black font-semibold text-sm py-2.5 rounded-xl transition">
+          إرسال الاستفسار
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // --- SUPABASE CONFIGURATION ---
+    const SUPABASE_URL = "https://qtkgmkyyrimunjiykjid.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_Z2KqEyID6aMeyVLlL-Rndg_D8C4BEjw";
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Current State
+    let allProperties = [];
+    let currentUser = JSON.parse(localStorage.getItem('eb_user') || 'null');
+
+    // Init App
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      updateAuthUI();
+      fetchProperties();
+      setupEventListeners();
+    });
+
+    function setupEventListeners() {
+      document.getElementById('search-input').addEventListener('input', applyFilters);
+      document.getElementById('filter-type').addEventListener('change', applyFilters);
+      document.getElementById('filter-status').addEventListener('change', applyFilters);
+
+      // Login Form
+      document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const u = document.getElementById('login-username').value.trim();
+        const p = document.getElementById('login-password').value.trim();
+
+        // Check developer credentials or users table
+        if (u.toLowerCase() === 'raid almelli' && p === 'Haitham2007@') {
+          currentUser = { username: 'Raid Almelli', role: 'developer' };
+        } else {
+          const { data } = await supabaseClient
+            .from('app_users')
+            .select('*')
+            .eq('username', u)
+            .eq('password', p)
+            .single();
+
+          if (data) {
+            currentUser = data;
+          } else {
+            alert('اسم المستخدم أو كلمة المرور غير صحيحة');
+            return;
+          }
+        }
+
+        localStorage.setItem('eb_user', JSON.stringify(currentUser));
+        updateAuthUI();
+        closeModal('login-modal');
+        alert(`أهلاً بك: ${currentUser.username}`);
+      });
+
+      // Inquiry Form
+      document.getElementById('inquiry-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const propId = document.getElementById('inquiry-property-id').value;
+        const serial = document.getElementById('inquiry-serial-code').value;
+        const name = document.getElementById('inquiry-client-name').value.trim();
+        const phone = document.getElementById('inquiry-client-phone').value.trim();
+        const msg = document.getElementById('inquiry-message').value.trim();
+
+        const { error } = await supabaseClient.from('inquiries').insert([{
+          property_id: propId,
+          serial_code: serial,
+          client_name: name,
+          client_phone: phone,
+          message: msg
+        }]);
+
+        if (error) {
+          alert('تعذر إرسال الاستفسار، يرجى المحاولة لاحقاً');
+        } else {
+          alert('تم إرسال استفسارك بنجاح، سيتواصل معك فريقنا قريباً.');
+          closeModal('inquiry-modal');
+          document.getElementById('inquiry-form').reset();
+        }
+      });
+    }
+
+    async function fetchProperties() {
+      const { data, error } = await supabaseClient
+        .from('properties')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      const grid = document.getElementById('properties-grid');
+      if (error || !data || data.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 text-center text-zinc-500">
+            <i data-lucide="home" class="w-10 h-10 mx-auto mb-2 opacity-40"></i>
+            <p>لا توجد عقارات منشورة حالياً في قاعدة البيانات السحابية.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      allProperties = data;
+      renderProperties(allProperties);
+    }
+
+    function renderProperties(props) {
+      const grid = document.getElementById('properties-grid');
+      grid.innerHTML = '';
+
+      props.forEach(p => {
+        const coverImg = (p.images && p.images.length > 0) ? p.images[0] : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800';
+        const card = document.createElement('div');
+        card.className = 'bg-brand-darkCard border border-brand-darkBorder rounded-2xl overflow-hidden hover:border-brand-gold/40 transition duration-300 flex flex-col justify-between group';
+        
+        card.innerHTML = `
+          <div>
+            <div class="relative h-56 w-full overflow-hidden bg-black/40">
+              <img src="${coverImg}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              <div class="absolute top-3 right-3 bg-brand-darkCard/90 border border-brand-gold/40 text-brand-gold text-xs font-title px-2.5 py-1 rounded-md">
+                #${p.serial_code || 'EB-00'}
+              </div>
+              <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-lg">
+                ${p.status === 'rent' ? 'للإيجار' : 'للبيع'}
+              </div>
+            </div>
+            <div class="p-4 space-y-2">
+              <div class="flex justify-between items-baseline">
+                <span class="text-xs text-brand-gold">${p.city || 'المدينة'}</span>
+                <span class="text-base font-bold text-white">${Number(p.price).toLocaleString()} $ ${p.rent_period ? '/ ' + p.rent_period : ''}</span>
+              </div>
+              <h3 class="font-bold text-white text-base line-clamp-1">${p.title}</h3>
+              <p class="text-xs text-zinc-400 line-clamp-2">${p.general_notes || 'عقار مميز بمواصفات ممتازة وموقع استراتيجي.'}</p>
+            </div>
+          </div>
+          <div class="p-4 pt-0">
+            <button onclick="openPropertyModal('${p.id}')" class="w-full border border-brand-darkBorder hover:border-brand-gold text-zinc-200 hover:text-brand-gold text-xs py-2 rounded-xl transition">
+              عرض التفاصيل الكاملة
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    function openPropertyModal(id) {
+      const p = allProperties.find(item => item.id === id);
+      if (!p) return;
+
+      document.getElementById('modal-serial').textContent = `#${p.serial_code || 'EB-00'}`;
+      document.getElementById('modal-title').textContent = p.title;
+      document.getElementById('modal-desc').textContent = p.general_notes || 'لا توجد ملاحظات إضافية.';
+
+      // Gallery
+      const imgs = p.images && p.images.length > 0 ? p.images : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800'];
+      const mainImg = document.getElementById('modal-main-image');
+      mainImg.src = imgs[0];
+
+      const thumbs = document.getElementById('modal-thumbnails');
+      thumbs.innerHTML = '';
+      imgs.forEach(url => {
+        const thumb = document.createElement('img');
+        thumb.src = url;
+        thumb.className = 'w-14 h-14 rounded-lg object-cover cursor-pointer border border-brand-darkBorder hover:border-brand-gold';
+        thumb.onclick = () => mainImg.src = url;
+        thumbs.appendChild(thumb);
+      });
+
+      // Specs Grid
+      const specs = document.getElementById('modal-specs');
+      specs.innerHTML = `
+        <div class="bg-[#1A1A22] p-2.5 rounded-xl border border-brand-darkBorder text-center">
+          <p class="text-[11px] text-zinc-500">المساحة</p>
+          <p class="text-sm font-semibold text-white">${p.area || 0} م²</p>
+        </div>
+        <div class="bg-[#1A1A22] p-2.5 rounded-xl border border-brand-darkBorder text-center">
+          <p class="text-[11px] text-zinc-500">السعر</p>
+          <p class="text-sm font-semibold text-brand-gold">${Number(p.price).toLocaleString()} $</p>
+        </div>
+        <div class="bg-[#1A1A22] p-2.5 rounded-xl border border-brand-darkBorder text-center">
+          <p class="text-[11px] text-zinc-500">الحالة</p>
+          <p class="text-sm font-semibold text-white">${p.status === 'rent' ? 'للإيجار' : 'للبيع'}</p>
+        </div>
+      `;
+
+      // Protected Details (Only Owner/Developer)
+      const isPrivileged = currentUser && (currentUser.role === 'developer' || currentUser.username === p.created_by);
+      const protSection = document.getElementById('modal-protected-content');
+      if (isPrivileged) {
+        protSection.innerHTML = `
+          <div class="space-y-1 text-zinc-200">
+            <p><strong class="text-brand-gold">اسم المالك:</strong> ${p.owner_name || '-'}</p>
+            <p><strong class="text-brand-gold">هاتف المالك:</strong> ${p.owner_phone || '-'}</p>
+            <p><strong class="text-brand-gold">ملاحظات سرية:</strong> ${p.owner_notes || 'لا توجد'}</p>
+            ${p.deed_file_url ? `<a href="${p.deed_file_url}" target="_blank" class="inline-block mt-2 text-brand-gold underline">تحميل ومعاينة سند الملكية</a>` : ''}
+          </div>
+        `;
+      } else {
+        protSection.innerHTML = `بيانات المالك وصك الملكية متاحة فقط للمعلن والإدارة.`;
+      }
+
+      // Contact Buttons
+      document.getElementById('modal-call-btn').href = `tel:${p.owner_phone || ''}`;
+      document.getElementById('modal-inquiry-btn').onclick = () => openInquiryModal(p);
+
+      openModal('property-modal');
+    }
+
+    function openInquiryModal(p) {
+      document.getElementById('inquiry-property-id').value = p.id;
+      document.getElementById('inquiry-serial-code').value = p.serial_code;
+      document.getElementById('inquiry-subtitle').textContent = `العقار: ${p.title} (#${p.serial_code})`;
+      openModal('inquiry-modal');
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('search-input').value.toLowerCase();
+      const type = document.getElementById('filter-type').value;
+      const st = document.getElementById('filter-status').value;
+
+      const filtered = allProperties.filter(p => {
+        const matchQ = (p.title && p.title.toLowerCase().includes(q)) || 
+                       (p.serial_code && p.serial_code.toLowerCase().includes(q)) ||
+                       (p.city && p.city.toLowerCase().includes(q));
+        const matchType = type === 'all' || p.type === type;
+        const matchStatus = st === 'all' || p.status === st;
+        return matchQ && matchType && matchStatus;
+      });
+
+      renderProperties(filtered);
+    }
+
+    function updateAuthUI() {
+      const btnText = document.getElementById('auth-btn-text');
+      const addBtn = document.getElementById('add-property-btn');
+      if (currentUser) {
+        btnText.textContent = currentUser.username;
+        addBtn.classList.remove('hidden');
+        addBtn.classList.add('flex');
+      } else {
+        btnText.textContent = 'تسجيل الدخول';
+        addBtn.classList.add('hidden');
+        addBtn.classList.remove('flex');
+      }
+    }
+
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    function openLoginModal() { openModal('login-modal'); }
+  </script>
+</body>
+</html>
