@@ -8,6 +8,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Library for HTML to Image rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -119,6 +121,8 @@
   <!-- Property View Modal -->
   <div id="property-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-4xl max-h-[92vh] rounded-2xl overflow-y-auto custom-scrollbar flex flex-col relative shadow-2xl">
+      
+      <!-- Top Action Bar -->
       <div class="sticky top-0 bg-brand-darkCard/95 backdrop-blur border-b border-brand-darkBorder p-4 flex items-center justify-between z-20">
         <div>
           <span id="modal-serial" class="text-xs font-title text-brand-gold bg-brand-gold/10 px-2.5 py-1 rounded-md border border-brand-gold/30"></span>
@@ -128,38 +132,61 @@
           <button id="modal-print-btn" onclick="window.print()" class="text-zinc-400 hover:text-brand-gold p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition" title="طباعة بطاقة العرض">
             <i data-lucide="printer" class="w-4 h-4"></i>
           </button>
-          <button id="modal-share-menu-btn" onclick="toggleShareDropdown()" class="text-zinc-400 hover:text-brand-gold p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition" title="مشاركة">
+          <button id="modal-share-menu-btn" onclick="toggleShareDropdown()" class="text-brand-gold bg-brand-gold/10 border border-brand-gold/40 p-2 rounded-xl transition flex items-center gap-1.5 text-xs font-bold" title="مشاركة كصورة">
             <i data-lucide="share-2" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">مشاركة العرض</span>
           </button>
-          <div id="share-dropdown" class="absolute left-0 top-12 w-48 bg-[#1A1A22] border border-brand-darkBorder rounded-xl shadow-2xl py-1.5 hidden flex-col z-30">
-            <button onclick="shareViaNative()" class="w-full text-right px-3.5 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2">
-              <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> مشاركة سريعة
+          
+          <!-- Share Dropdown -->
+          <div id="share-dropdown" class="absolute left-0 top-12 w-56 bg-[#1A1A22] border border-brand-darkBorder rounded-2xl shadow-2xl py-2 hidden flex-col z-30">
+            <button onclick="generateAndShareImage(true)" class="w-full text-right px-4 py-2.5 text-xs font-bold text-brand-gold hover:bg-brand-gold/10 flex items-center gap-2.5 transition">
+              <i data-lucide="image" class="w-4 h-4"></i> مشاركة كصورة احترافية
             </button>
-            <button onclick="shareViaWhatsApp()" class="w-full text-right px-3.5 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2">
-              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> إرسال عبر واتساب
+            <button onclick="generateAndShareImage(false)" class="w-full text-right px-4 py-2.5 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2.5 transition border-b border-brand-darkBorder">
+              <i data-lucide="download" class="w-4 h-4"></i> تنزيل البطاقة كصورة (PNG)
             </button>
-            <button onclick="copyPropertyCard()" class="w-full text-right px-3.5 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2">
-              <i data-lucide="copy" class="w-3.5 h-3.5"></i> نسخ نص العرض كاملاً
+            <button onclick="shareViaWhatsAppText()" class="w-full text-right px-4 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2.5 transition">
+              <i data-lucide="message-circle" class="w-4 h-4"></i> إرسال نصي عبر واتساب
             </button>
-            <button onclick="copyDirectLink()" class="w-full text-right px-3.5 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2 border-t border-brand-darkBorder">
-              <i data-lucide="link" class="w-3.5 h-3.5"></i> نسخ رابط الموقع
+            <button onclick="copyPropertyCard()" class="w-full text-right px-4 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2.5 transition">
+              <i data-lucide="copy" class="w-4 h-4"></i> نسخ نص الإعلان
+            </button>
+            <button onclick="copyDirectLink()" class="w-full text-right px-4 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2.5 transition border-t border-brand-darkBorder">
+              <i data-lucide="link" class="w-4 h-4"></i> نسخ رابط الموقع
             </button>
           </div>
+
           <button id="modal-close-btn" onclick="closeModal('property-modal')" class="text-zinc-400 hover:text-white p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
       </div>
 
-      <div class="p-6 space-y-6">
+      <!-- Printable & Exportable Canvas Container -->
+      <div id="capture-card-area" class="p-6 space-y-6 bg-brand-darkCard">
+        
+        <!-- Watermark Header for Image Export -->
+        <div class="hidden export-watermark flex justify-between items-center border-b border-brand-darkBorder pb-3">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-brand-gold flex items-center justify-center text-black font-title font-bold text-sm">EB</div>
+            <div>
+              <h4 class="font-title text-sm font-bold gold-gradient-text">ECHO BRIDGES</h4>
+              <p class="text-[9px] text-zinc-400">منظومة التسويق العقاري الفاخر</p>
+            </div>
+          </div>
+          <span id="export-serial" class="text-xs font-title text-brand-gold bg-black px-2.5 py-1 rounded border border-brand-gold/40"></span>
+        </div>
+
+        <!-- Gallery -->
         <div class="space-y-3">
           <div class="relative h-64 md:h-96 w-full rounded-2xl overflow-hidden bg-black/50 border border-brand-darkBorder">
-            <img id="modal-main-image" src="" alt="العقار" class="w-full h-full object-cover">
+            <img id="modal-main-image" crossOrigin="anonymous" src="" alt="العقار" class="w-full h-full object-cover">
             <div id="modal-status-badge" class="absolute top-4 left-4 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg"></div>
           </div>
           <div id="modal-thumbnails" class="flex gap-2 overflow-x-auto py-2 custom-scrollbar"></div>
         </div>
 
+        <!-- Technical Specs -->
         <div>
           <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-3 flex items-center gap-2">
             <i data-lucide="cpu" class="w-4 h-4"></i> المواصفات الفنية والهندسية
@@ -167,13 +194,15 @@
           <div id="modal-specs" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5"></div>
         </div>
 
+        <!-- Services -->
         <div id="modal-services-container" class="hidden">
           <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-2.5 flex items-center gap-2">
-            <i data-lucide="check-circle-2" class="w-4 h-4"></i> المرافق والخدمات
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> المرافق والخدمات المتوفرة
           </h3>
           <div id="modal-services-list" class="flex flex-wrap gap-2"></div>
         </div>
 
+        <!-- Description -->
         <div>
           <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-2 flex items-center gap-2">
             <i data-lucide="align-right" class="w-4 h-4"></i> الوصف والتفاصيل
@@ -181,6 +210,7 @@
           <p id="modal-desc" class="text-sm text-zinc-300 leading-relaxed bg-[#1A1A22] p-4 rounded-xl border border-brand-darkBorder whitespace-pre-line"></p>
         </div>
 
+        <!-- Protected Info (Excluded during image generation) -->
         <div id="modal-protected-section" class="border-t border-brand-darkBorder pt-4 space-y-3 hidden">
           <h3 class="text-sm font-semibold text-rose-400 flex items-center gap-2">
             <i data-lucide="shield-alert" class="w-4 h-4"></i>
@@ -188,21 +218,22 @@
           </h3>
           <div id="modal-protected-content" class="bg-rose-950/20 p-4 rounded-xl border border-rose-900/30 text-sm"></div>
         </div>
+      </div>
 
-        <div id="modal-actions" class="flex flex-wrap items-center gap-3 pt-4 border-t border-brand-darkBorder">
-          <a id="modal-call-btn" href="#" class="flex-1 min-w-[140px] bg-brand-gold hover:bg-brand-goldDark text-black font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-brand-gold/20">
-            <i data-lucide="phone" class="w-4 h-4"></i> اتصال بالمعلن
-          </a>
-          <a id="modal-whatsapp-btn" target="_blank" href="#" class="flex-1 min-w-[140px] bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-600/20">
-            <i data-lucide="message-circle" class="w-4 h-4"></i> محادثة واتساب
-          </a>
-          <button id="modal-inquiry-btn" class="flex-1 min-w-[140px] border border-brand-gold/50 hover:bg-brand-gold/10 text-brand-gold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition">
-            <i data-lucide="mail" class="w-4 h-4"></i> إرسال استفسار
-          </button>
-          <a id="modal-map-btn" target="_blank" href="#" class="w-full md:w-auto min-w-[130px] bg-[#1A1A22] border border-brand-darkBorder hover:border-blue-500/50 text-blue-400 text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition">
-            <i data-lucide="map-pin" class="w-4 h-4"></i> الموقع الجغرافي
-          </a>
-        </div>
+      <!-- Action Buttons -->
+      <div id="modal-actions" class="p-6 pt-0 flex flex-wrap items-center gap-3">
+        <a id="modal-call-btn" href="#" class="flex-1 min-w-[140px] bg-brand-gold hover:bg-brand-goldDark text-black font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-brand-gold/20">
+          <i data-lucide="phone" class="w-4 h-4"></i> اتصال بالمعلن
+        </a>
+        <a id="modal-whatsapp-btn" target="_blank" href="#" class="flex-1 min-w-[140px] bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-600/20">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> محادثة واتساب
+        </a>
+        <button id="modal-inquiry-btn" class="flex-1 min-w-[140px] border border-brand-gold/50 hover:bg-brand-gold/10 text-brand-gold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition">
+          <i data-lucide="mail" class="w-4 h-4"></i> إرسال استفسار
+        </button>
+        <a id="modal-map-btn" target="_blank" href="#" class="w-full md:w-auto min-w-[130px] bg-[#1A1A22] border border-brand-darkBorder hover:border-blue-500/50 text-blue-400 text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition">
+          <i data-lucide="map-pin" class="w-4 h-4"></i> الموقع الجغرافي
+        </a>
       </div>
     </div>
   </div>
@@ -290,7 +321,7 @@
     </div>
   </div>
 
-  <!-- Add/Edit Property Form Modal (With Dropdown Menus for Easy Selection) -->
+  <!-- Add/Edit Property Form Modal -->
   <div id="add-modal" class="fixed inset-0 bg-black/90 backdrop-blur z-[60] hidden flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-4xl my-auto rounded-2xl p-6 relative shadow-2xl max-h-[92vh] overflow-y-auto custom-scrollbar">
       <button onclick="closeModal('add-modal')" class="absolute top-4 left-4 text-zinc-400 hover:text-white bg-black/40 p-1.5 rounded-xl border border-brand-darkBorder">
@@ -302,7 +333,6 @@
       <form id="add-property-form" class="space-y-6">
         <input type="hidden" id="edit-prop-id">
         
-        <!-- General Info -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="md:col-span-2">
             <label class="block text-xs text-zinc-400 mb-1.5">عنوان الإعلان الرسمي *</label>
@@ -342,7 +372,7 @@
           </div>
         </div>
 
-        <!-- 1. Apartment & Villa Specs (With Dropdowns) -->
+        <!-- Apartment Specs -->
         <div id="residential-fields" class="p-4 bg-[#1A1A22]/50 border border-brand-darkBorder rounded-2xl space-y-4">
           <h4 class="text-xs font-bold text-brand-gold flex items-center gap-2">
             <i data-lucide="home" class="w-4 h-4"></i> مواصفات الشقق والفلل السكنية
@@ -442,7 +472,6 @@
             </div>
           </div>
 
-          <!-- Checkboxes for Services -->
           <div class="pt-2 border-t border-brand-darkBorder/60">
             <label class="block text-xs font-semibold text-zinc-400 mb-2">الخدمات والمرافق المتوفرة:</label>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-zinc-300">
@@ -474,7 +503,7 @@
           </div>
         </div>
 
-        <!-- 2. Land & Farm Specs (With Dropdowns) -->
+        <!-- Land Specs -->
         <div id="land-fields" class="p-4 bg-[#1A1A22]/50 border border-brand-darkBorder rounded-2xl space-y-4 hidden">
           <h4 class="text-xs font-bold text-brand-gold flex items-center gap-2">
             <i data-lucide="trees" class="w-4 h-4"></i> مواصفات الأراضي والمزارع
@@ -550,20 +579,17 @@
           </div>
         </div>
 
-        <!-- Google Maps Link -->
         <div>
           <label class="block text-xs text-zinc-400 mb-1.5">رابط خرائط جوجل (Google Maps Link)</label>
           <input id="prop-map" type="url" placeholder="https://maps.app.goo.gl/..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
         </div>
 
-        <!-- Photos -->
         <div class="p-4 bg-[#1A1A22] border border-brand-darkBorder rounded-2xl space-y-2">
           <label class="block text-sm font-bold text-brand-gold">صور العقار (يمكن تحديد مجموعة صور):</label>
           <input id="prop-images" type="file" multiple accept="image/*" class="w-full text-sm text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-gold file:text-black hover:file:bg-brand-goldDark cursor-pointer">
           <p class="text-[10px] text-zinc-500">في حالة تعديل عقار منشور سابقاً، ترك هذا الحقل فارغاً يحتفظ بالصور السابقة.</p>
         </div>
 
-        <!-- Protected Info -->
         <div class="p-4 bg-rose-950/10 border border-rose-900/30 rounded-2xl space-y-4">
           <h4 class="text-sm font-bold text-rose-400 flex items-center gap-2">
             <i data-lucide="shield" class="w-4 h-4"></i> بيانات المالك وسند الطابو (محمية ومخفية عن الزوار)
@@ -584,7 +610,6 @@
           </div>
         </div>
 
-        <!-- Notes -->
         <div>
           <label class="block text-xs text-zinc-400 mb-1.5">الوصف الإعلاني العام والملاحظات</label>
           <textarea id="prop-desc" rows="4" placeholder="اكتب وصفاً مفصلاً للعقار يبرز المزايا والموقع الاستراتيجي..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-3 text-white focus:border-brand-gold outline-none"></textarea>
@@ -681,7 +706,6 @@
   </div>
 
   <script>
-    // Supabase Configuration
     const SUPABASE_URL = "https://qtkgmkyyrimunjiykjid.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_Z2KqEyID6aMeyVLlL-Rndg_D8C4BEjw";
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -853,8 +877,8 @@
           const bathrooms = parseInt(document.getElementById('prop-bathrooms').value) || 0;
           const balconies = parseInt(document.getElementById('prop-balconies').value) || 0;
           const furnishing = document.getElementById('prop-furnishing').value;
-          const sunlight = document.getElementById('prop-ac').value; // AC
-          const furnishing_details = document.getElementById('prop-heating').value; // Heating
+          const sunlight = document.getElementById('prop-ac').value;
+          const furnishing_details = document.getElementById('prop-heating').value;
 
           // Services Checkboxes
           const services = Array.from(document.querySelectorAll('.service-cb:checked')).map(cb => cb.value);
@@ -1013,6 +1037,7 @@
       currentModalProperty = p;
 
       document.getElementById('modal-serial').textContent = `#${p.serial_code}`;
+      document.getElementById('export-serial').textContent = `#${p.serial_code}`;
       document.getElementById('modal-title').textContent = p.title;
       document.getElementById('modal-desc').textContent = p.general_notes || 'لا توجد ملاحظات إضافية.';
       
@@ -1055,7 +1080,7 @@
       };
 
       addSpecItem('المساحة الإجمالية', `${p.area} م²`, 'maximize');
-      addSpecItem('السعر الإجمالي', `${Number(p.price).toLocaleString()} $`, 'tag');
+      addSpecItem('السعر المطلوب', `${Number(p.price).toLocaleString()} $`, 'tag');
       addSpecItem('المدينة والحي', p.city, 'map-pin');
       
       if (p.type === 'land') {
@@ -1091,7 +1116,7 @@
         sContainer.classList.add('hidden');
       }
 
-      // Call & WhatsApp Actions
+      // Contact Buttons
       document.getElementById('modal-call-btn').href = `tel:${p.owner_phone || ''}`;
       
       const cleanPhone = p.owner_phone ? p.owner_phone.replace(/[^0-9]/g, '') : '';
@@ -1133,23 +1158,78 @@
       openModal('property-modal');
     }
 
-    // Share Functions
-    function shareViaNative() {
+    // High Quality Image Generation & Sharing
+    async function generateAndShareImage(shouldShareDirectly = true) {
       if (!currentModalProperty) return;
-      const shareData = {
-        title: currentModalProperty.title,
-        text: `عقار فاخر: ${currentModalProperty.title}\nالسعر: ${currentModalProperty.price}$\nالكود: #${currentModalProperty.serial_code}`,
-        url: window.location.href
-      };
-      if (navigator.share) {
-        navigator.share(shareData).catch(console.error);
-      } else {
-        copyPropertyCard();
-      }
       toggleShareDropdown();
+      showToast('جاري تجهيز صورة بطاقة العقار بدقة عالية...', 'warning');
+
+      const captureArea = document.getElementById('capture-card-area');
+      const watermark = captureArea.querySelector('.export-watermark');
+      const thumbs = document.getElementById('modal-thumbnails');
+      const protSection = document.getElementById('modal-protected-section');
+
+      // Prepare UI for clean snapshot
+      watermark.classList.remove('hidden');
+      thumbs.classList.add('hidden');
+      const wasProtHidden = protSection.classList.contains('hidden');
+      protSection.classList.add('hidden');
+
+      try {
+        const canvas = await html2canvas(captureArea, {
+          backgroundColor: '#141418',
+          scale: 2, // High resolution retina scale
+          useCORS: true,
+          logging: false
+        });
+
+        // Restore UI
+        watermark.classList.add('hidden');
+        thumbs.classList.remove('hidden');
+        if (!wasProtHidden) protSection.classList.remove('hidden');
+
+        canvas.toBlob(async (blob) => {
+          if (!blob) {
+            showToast('تعذر إنشاء الصورة.', 'error');
+            return;
+          }
+
+          const fileName = `EchoBridges_${currentModalProperty.serial_code}.png`;
+          const file = new File([blob], fileName, { type: 'image/png' });
+
+          // Web Share API (Mobile WhatsApp/Telegram native file sharing)
+          if (shouldShareDirectly && navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+              await navigator.share({
+                files: [file],
+                title: currentModalProperty.title,
+                text: `عقار فاخر: ${currentModalProperty.title} - السعر: ${currentModalProperty.price}$ | الكود: #${currentModalProperty.serial_code}`
+              });
+              showToast('تمت مشاركة صورة العقار بنجاح!');
+              return;
+            } catch (shareErr) {
+              console.log('Share canceled or fallback to download');
+            }
+          }
+
+          // Fallback: Direct Download
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = fileName;
+          link.click();
+          showToast('تم تنزيل بطاقة العقار كصورة بنجاح!');
+        }, 'image/png');
+
+      } catch (err) {
+        console.error(err);
+        watermark.classList.add('hidden');
+        thumbs.classList.remove('hidden');
+        if (!wasProtHidden) protSection.classList.remove('hidden');
+        showToast('حدث خطأ أثناء تصدير الصورة.', 'error');
+      }
     }
 
-    function shareViaWhatsApp() {
+    function shareViaWhatsAppText() {
       if (!currentModalProperty) return;
       const text = encodeURIComponent(`*${currentModalProperty.title}*\nالسعر: ${currentModalProperty.price}$\nالمساحة: ${currentModalProperty.area} م²\nالمدينة: ${currentModalProperty.city}\nالكود: #${currentModalProperty.serial_code}\nرابط العرض: ${window.location.href}`);
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
@@ -1369,7 +1449,6 @@
       document.getElementById('prop-ac').value = p.sunlight || 'بدون تكييف';
       document.getElementById('prop-heating').value = p.furnishing_details || 'بدون تدفئة';
 
-      // Checkboxes
       const pServices = p.services || [];
       document.querySelectorAll('.service-cb').forEach(cb => {
         cb.checked = pServices.includes(cb.value);
