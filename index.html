@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Echo Bridges - For Real Estate</title>
+  <title>Echo Bridges - Real Estate</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -11,7 +11,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -46,34 +46,34 @@
     .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #27272F; border-radius: 4px; }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
-    .tab-btn.active { background-color: rgba(212, 175, 55, 0.1); border-color: #D4AF37; color: #D4AF37; }
+    .tab-btn.active { background-color: rgba(212, 175, 55, 0.12); border-color: #D4AF37; color: #D4AF37; }
 
     @media print {
       body * { visibility: hidden; }
       #property-modal, #property-modal * { visibility: visible; }
-      #property-modal { position: absolute; left: 0; top: 0; width: 100%; background: white !important; color: black !important; }
-      #modal-close-btn, #modal-print-btn, #modal-share-btn, #modal-actions { display: none !important; }
-      .bg-brand-darkCard, .bg-\[\#1A1A22\], .bg-\[\#0B0B0D\] { background-color: white !important; border: 1px solid #ddd !important; color: black !important; }
-      .text-white, .text-zinc-300, .text-zinc-400, .text-zinc-500 { color: black !important; }
+      #property-modal { position: absolute; left: 0; top: 0; width: 100%; background: white !important; color: black !important; padding: 0 !important; }
+      #modal-close-btn, #modal-print-btn, #modal-share-menu-btn, #modal-actions, #share-dropdown { display: none !important; }
+      .bg-brand-darkCard, .bg-\[\#1A1A22\], .bg-\[\#0B0B0D\] { background-color: white !important; border: 1px solid #ccc !important; color: black !important; }
+      .text-white, .text-zinc-200, .text-zinc-300, .text-zinc-400 { color: black !important; }
       .text-brand-gold { color: #8C6D1F !important; }
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col custom-scrollbar">
+<body class="min-h-screen flex flex-col custom-scrollbar select-none">
 
   <!-- Header -->
   <header class="bg-brand-darkCard/90 backdrop-blur-md border-b border-brand-darkBorder sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 py-3.5 flex items-center justify-between">
       <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="window.location.reload()">
-        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-gold to-brand-goldDark flex items-center justify-center text-black font-title font-bold text-xl shadow-lg shadow-brand-gold/20">EB</div>
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-gold to-brand-goldDark flex items-center justify-center text-black font-title font-bold text-xl shadow-lg shadow-brand-gold/20">EB</div>
         <div>
           <h1 class="font-title text-xl font-bold tracking-wider gold-gradient-text leading-tight">ECHO BRIDGES</h1>
-          <p class="text-[10px] text-zinc-400 tracking-[0.25em] font-light uppercase">For Real Estate</p>
+          <p class="text-[10px] text-zinc-400 tracking-[0.25em] font-light uppercase">Real Estate Platform</p>
         </div>
       </div>
 
       <div class="flex items-center space-x-2 space-x-reverse">
-        <button id="auth-btn" onclick="handleAuthClick()" class="border border-brand-gold/50 text-brand-gold hover:bg-brand-gold/10 text-xs sm:text-sm px-4 py-2 rounded-lg flex items-center gap-1.5 transition">
+        <button id="auth-btn" onclick="handleAuthClick()" class="border border-brand-gold/50 text-brand-gold hover:bg-brand-gold/10 text-xs sm:text-sm px-4 py-2 rounded-xl flex items-center gap-2 transition shadow-sm">
           <i id="auth-icon" data-lucide="user" class="w-4 h-4"></i>
           <span id="auth-btn-text">تسجيل الدخول</span>
         </button>
@@ -85,16 +85,16 @@
   <section class="max-w-7xl mx-auto px-4 py-6 w-full">
     <div class="bg-brand-darkCard border border-brand-darkBorder rounded-2xl p-4 shadow-xl flex flex-col md:flex-row gap-3">
       <div class="relative flex-1">
-        <i data-lucide="search" class="w-4 h-4 absolute top-3.5 right-3 text-zinc-400"></i>
-        <input id="search-input" type="text" placeholder="ابحث برقم الكود، المدينة، الحي، أو نوع العقار..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl pr-9 pl-4 py-2.5 text-white placeholder-zinc-500 focus:outline-none focus:border-brand-gold transition">
+        <i data-lucide="search" class="w-4 h-4 absolute top-3.5 right-3.5 text-zinc-400"></i>
+        <input id="search-input" type="text" placeholder="ابحث برقم الكود، المدينة، الحي، أو نوع العقار..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl pr-10 pl-4 py-2.5 text-white placeholder-zinc-500 focus:outline-none focus:border-brand-gold transition">
       </div>
       <div class="flex gap-2">
         <select id="filter-type" class="bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2.5 text-zinc-300 focus:outline-none focus:border-brand-gold">
-          <option value="all">كل الأنواع</option>
-          <option value="apartment">شقة</option>
-          <option value="land">أرض</option>
+          <option value="all">كل العقارات</option>
+          <option value="apartment">شقة سكنية</option>
+          <option value="villa">فيلا مستقلة</option>
+          <option value="land">أرض / مزرعة</option>
           <option value="building">عمارة كاملة</option>
-          <option value="villa">فيلا</option>
           <option value="shop">محل تجاري</option>
         </select>
         <select id="filter-status" class="bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2.5 text-zinc-300 focus:outline-none focus:border-brand-gold">
@@ -109,133 +109,161 @@
   <!-- Main Grid -->
   <main class="max-w-7xl mx-auto px-4 pb-16 flex-1 w-full">
     <div id="properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="col-span-full py-16 text-center text-zinc-500 flex flex-col items-center justify-center">
+      <div class="col-span-full py-20 text-center text-zinc-500 flex flex-col items-center justify-center">
         <div class="w-8 h-8 border-2 border-brand-gold border-t-transparent rounded-full animate-spin mb-3"></div>
-        <p class="text-sm">جاري مزامنة العروض مع السحابة...</p>
+        <p class="text-sm">جاري مزامنة العروض العقارية مع السحابة...</p>
       </div>
     </div>
   </main>
 
-  <!-- Property View Modal (Full Details) -->
+  <!-- Property View Modal (Full Architecture Details) -->
   <div id="property-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-4xl max-h-[90vh] rounded-2xl overflow-y-auto custom-scrollbar flex flex-col relative shadow-2xl">
-      <div class="sticky top-0 bg-brand-darkCard/95 backdrop-blur border-b border-brand-darkBorder p-4 flex items-center justify-between z-10">
+    <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-4xl max-h-[92vh] rounded-2xl overflow-y-auto custom-scrollbar flex flex-col relative shadow-2xl">
+      
+      <!-- Top Bar -->
+      <div class="sticky top-0 bg-brand-darkCard/95 backdrop-blur border-b border-brand-darkBorder p-4 flex items-center justify-between z-20">
         <div>
           <span id="modal-serial" class="text-xs font-title text-brand-gold bg-brand-gold/10 px-2.5 py-1 rounded-md border border-brand-gold/30"></span>
           <h2 id="modal-title" class="text-lg font-bold text-white mt-1"></h2>
         </div>
-        <div class="flex items-center gap-2">
-          <button id="modal-print-btn" onclick="window.print()" class="text-zinc-400 hover:text-brand-gold p-1.5 rounded-lg transition" title="طباعة بطاقة العرض">
-            <i data-lucide="printer" class="w-5 h-5"></i>
+        <div class="flex items-center gap-2 relative">
+          <button id="modal-print-btn" onclick="window.print()" class="text-zinc-400 hover:text-brand-gold p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition" title="طباعة بطاقة العرض الرسمية">
+            <i data-lucide="printer" class="w-4 h-4"></i>
           </button>
-          <button id="modal-share-btn" class="text-zinc-400 hover:text-brand-gold p-1.5 rounded-lg transition" title="مشاركة">
-            <i data-lucide="share-2" class="w-5 h-5"></i>
+          
+          <!-- Share Button & Dropdown -->
+          <button id="modal-share-menu-btn" onclick="toggleShareDropdown()" class="text-zinc-400 hover:text-brand-gold p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition" title="مشاركة">
+            <i data-lucide="share-2" class="w-4 h-4"></i>
           </button>
-          <button id="modal-close-btn" onclick="closeModal('property-modal')" class="text-zinc-400 hover:text-white p-1.5 rounded-lg transition bg-black/50 border border-brand-darkBorder">
-            <i data-lucide="x" class="w-5 h-5"></i>
+          <div id="share-dropdown" class="absolute left-0 top-12 w-48 bg-[#1A1A22] border border-brand-darkBorder rounded-xl shadow-2xl py-1.5 hidden flex-col z-30">
+            <button onclick="shareViaNative()" class="w-full text-right px-3.5 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2">
+              <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> مشاركة سريعة
+            </button>
+            <button onclick="shareViaWhatsApp()" class="w-full text-right px-3.5 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> إرسال عبر واتساب
+            </button>
+            <button onclick="copyPropertyCard()" class="w-full text-right px-3.5 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> نسخ نص العرض كاملاً
+            </button>
+            <button onclick="copyDirectLink()" class="w-full text-right px-3.5 py-2 text-xs text-zinc-300 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center gap-2 border-t border-brand-darkBorder">
+              <i data-lucide="link" class="w-3.5 h-3.5"></i> نسخ رابط الموقع
+            </button>
+          </div>
+
+          <button id="modal-close-btn" onclick="closeModal('property-modal')" class="text-zinc-400 hover:text-white p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition">
+            <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
       </div>
 
       <div class="p-6 space-y-6">
-        <!-- Media Gallery -->
+        <!-- Gallery -->
         <div class="space-y-3">
-          <div class="relative h-64 md:h-96 w-full rounded-xl overflow-hidden bg-black/50 border border-brand-darkBorder">
+          <div class="relative h-64 md:h-96 w-full rounded-2xl overflow-hidden bg-black/50 border border-brand-darkBorder">
             <img id="modal-main-image" src="" alt="العقار" class="w-full h-full object-cover">
             <div id="modal-status-badge" class="absolute top-4 left-4 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg"></div>
           </div>
           <div id="modal-thumbnails" class="flex gap-2 overflow-x-auto py-2 custom-scrollbar"></div>
         </div>
 
-        <!-- Dynamic Specs Grid (Includes floor, orientation, AC, Heating, etc.) -->
+        <!-- Technical Specs -->
         <div>
-          <h3 class="text-sm font-semibold text-brand-gold mb-2.5 flex items-center gap-2">
-            <i data-lucide="layers" class="w-4 h-4"></i> المواصفات الهندسية والفنية
+          <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-3 flex items-center gap-2">
+            <i data-lucide="cpu" class="w-4 h-4"></i> المواصفات الهندسية والفنية
           </h3>
-          <div id="modal-specs" class="grid grid-cols-2 md:grid-cols-4 gap-2.5"></div>
+          <div id="modal-specs" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5"></div>
+        </div>
+
+        <!-- Services & Amenities -->
+        <div id="modal-services-container" class="hidden">
+          <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-2.5 flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> المرافق والخدمات المتوفرة
+          </h3>
+          <div id="modal-services-list" class="flex flex-wrap gap-2"></div>
         </div>
 
         <!-- Description -->
         <div>
-          <h3 class="text-sm font-semibold text-brand-gold mb-2 flex items-center gap-2">
-            <i data-lucide="align-right" class="w-4 h-4"></i> الوصف العام والملاحظات
+          <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-2 flex items-center gap-2">
+            <i data-lucide="align-right" class="w-4 h-4"></i> الوصف العام والتفاصيل
           </h3>
           <p id="modal-desc" class="text-sm text-zinc-300 leading-relaxed bg-[#1A1A22] p-4 rounded-xl border border-brand-darkBorder whitespace-pre-line"></p>
         </div>
 
-        <!-- Protected Info Box -->
+        <!-- Protected Info (Confidential) -->
         <div id="modal-protected-section" class="border-t border-brand-darkBorder pt-4 space-y-3 hidden">
-          <h3 class="text-sm font-semibold text-rose-400 flex items-center gap-1.5">
+          <h3 class="text-sm font-semibold text-rose-400 flex items-center gap-2">
             <i data-lucide="shield-alert" class="w-4 h-4"></i>
-            <span>بيانات المالك وسند الطابو (محمية للمسؤولين فقط)</span>
+            <span>بيانات المالك وسند الطابو (مشفرة ومحمية - للمسؤولين فقط)</span>
           </h3>
           <div id="modal-protected-content" class="bg-rose-950/20 p-4 rounded-xl border border-rose-900/30 text-sm"></div>
         </div>
 
         <!-- Action Buttons -->
         <div id="modal-actions" class="flex flex-wrap items-center gap-3 pt-4 border-t border-brand-darkBorder">
-          <a id="modal-call-btn" href="#" class="flex-1 min-w-[140px] bg-brand-gold hover:bg-brand-goldDark text-black font-semibold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-brand-gold/20">
-            <i data-lucide="phone" class="w-4 h-4"></i> اتصال
+          <a id="modal-call-btn" href="#" class="flex-1 min-w-[140px] bg-brand-gold hover:bg-brand-goldDark text-black font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-brand-gold/20">
+            <i data-lucide="phone" class="w-4 h-4"></i> اتصال بالمعلن
           </a>
-          <a id="modal-whatsapp-btn" target="_blank" href="#" class="flex-1 min-w-[140px] bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-600/20">
-            <i data-lucide="message-circle" class="w-4 h-4"></i> واتساب
+          <a id="modal-whatsapp-btn" target="_blank" href="#" class="flex-1 min-w-[140px] bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-600/20">
+            <i data-lucide="message-circle" class="w-4 h-4"></i> محادثة واتساب
           </a>
           <button id="modal-inquiry-btn" class="flex-1 min-w-[140px] border border-brand-gold/50 hover:bg-brand-gold/10 text-brand-gold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition">
             <i data-lucide="mail" class="w-4 h-4"></i> إرسال استفسار
           </button>
-          <a id="modal-map-btn" target="_blank" href="#" class="w-full md:w-auto min-w-[140px] bg-[#1A1A22] border border-brand-darkBorder hover:border-blue-500/50 text-blue-400 text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition">
-            <i data-lucide="map-pin" class="w-4 h-4"></i> الموقع
+          <a id="modal-map-btn" target="_blank" href="#" class="w-full md:w-auto min-w-[130px] bg-[#1A1A22] border border-brand-darkBorder hover:border-blue-500/50 text-blue-400 text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition">
+            <i data-lucide="map-pin" class="w-4 h-4"></i> الموقع الجغرافي
           </a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Profile & Management Dashboard -->
+  <!-- Profile & Comprehensive Management Dashboard -->
   <div id="profile-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-5xl max-h-[90vh] h-[90vh] rounded-2xl flex flex-col shadow-2xl relative">
+      
       <div class="bg-brand-darkCard border-b border-brand-darkBorder p-4 sm:p-6 flex flex-wrap gap-4 items-center justify-between rounded-t-2xl z-10 shrink-0">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-gold to-brand-goldDark flex items-center justify-center text-black shadow-lg">
-            <i data-lucide="user-circle" class="w-6 h-6"></i>
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-gold to-brand-goldDark flex items-center justify-center text-black shadow-lg">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
           </div>
           <div>
-            <h3 class="font-bold text-lg text-white" id="profile-welcome-name">لوحة التحكم</h3>
-            <span id="profile-role-badge" class="text-[10px] bg-brand-gold/20 border border-brand-gold/30 text-brand-gold px-2 py-0.5 rounded uppercase tracking-wider font-semibold"></span>
+            <h3 class="font-bold text-lg text-white" id="profile-welcome-name">لوحة التحكم المركزية</h3>
+            <span id="profile-role-badge" class="text-[10px] bg-brand-gold/20 border border-brand-gold/30 text-brand-gold px-2.5 py-0.5 rounded uppercase tracking-wider font-semibold"></span>
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="openAddPropertyModal()" class="bg-brand-gold hover:bg-brand-goldDark text-black text-xs font-bold px-4 py-2.5 rounded-lg flex items-center gap-1.5 transition">
+          <button onclick="openAddPropertyModal()" class="bg-brand-gold hover:bg-brand-goldDark text-black text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 transition shadow-md shadow-brand-gold/10">
             <i data-lucide="plus" class="w-4 h-4"></i> نشر عقار
           </button>
-          <button onclick="requestLogout()" class="border border-rose-500/30 text-rose-400 hover:bg-rose-500/10 text-xs px-3 py-2.5 rounded-lg transition">
+          <button onclick="requestLogout()" class="border border-rose-500/30 text-rose-400 hover:bg-rose-500/10 text-xs px-3.5 py-2.5 rounded-xl transition">
             تسجيل خروج
           </button>
-          <button onclick="closeModal('profile-modal')" class="text-zinc-500 hover:text-white p-2 rounded-lg bg-black/40 border border-brand-darkBorder">
+          <button onclick="closeModal('profile-modal')" class="text-zinc-500 hover:text-white p-2 rounded-xl bg-black/40 border border-brand-darkBorder">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
       </div>
 
-      <div class="flex gap-1 border-b border-brand-darkBorder px-4 sm:px-6 pt-2 shrink-0 bg-[#0B0B0D]/50 overflow-x-auto custom-scrollbar">
-        <button onclick="switchProfileTab('props')" id="tab-props" class="tab-btn active px-4 py-3 border-b-2 border-transparent text-sm font-semibold text-zinc-400 hover:text-brand-gold whitespace-nowrap transition flex items-center gap-2">
-          <i data-lucide="building" class="w-4 h-4"></i> إدارة العقارات
+      <div class="flex gap-2 border-b border-brand-darkBorder px-4 sm:px-6 pt-3 shrink-0 bg-[#0B0B0D]/50 overflow-x-auto custom-scrollbar">
+        <button onclick="switchProfileTab('props')" id="tab-props" class="tab-btn active px-4 py-3 border-b-2 border-transparent text-sm font-bold text-zinc-400 hover:text-brand-gold whitespace-nowrap transition flex items-center gap-2">
+          <i data-lucide="building-2" class="w-4 h-4"></i> إدارة العقارات
         </button>
-        <button onclick="switchProfileTab('inbox')" id="tab-inbox" class="tab-btn px-4 py-3 border-b-2 border-transparent text-sm font-semibold text-zinc-400 hover:text-brand-gold whitespace-nowrap transition flex items-center gap-2">
-          <i data-lucide="inbox" class="w-4 h-4"></i> صندوق البريد
+        <button onclick="switchProfileTab('inbox')" id="tab-inbox" class="tab-btn px-4 py-3 border-b-2 border-transparent text-sm font-bold text-zinc-400 hover:text-brand-gold whitespace-nowrap transition flex items-center gap-2">
+          <i data-lucide="mail" class="w-4 h-4"></i> صندوق البريد
         </button>
-        <button onclick="switchProfileTab('users')" id="tab-users" class="tab-btn hidden px-4 py-3 border-b-2 border-transparent text-sm font-semibold text-zinc-400 hover:text-brand-gold whitespace-nowrap transition flex items-center gap-2">
-          <i data-lucide="users" class="w-4 h-4"></i> إدارة المدونين
+        <button onclick="switchProfileTab('users')" id="tab-users" class="tab-btn hidden px-4 py-3 border-b-2 border-transparent text-sm font-bold text-zinc-400 hover:text-brand-gold whitespace-nowrap transition flex items-center gap-2">
+          <i data-lucide="users" class="w-4 h-4"></i> إدارة الناشرين
         </button>
       </div>
 
       <div class="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-6 bg-[#0B0B0D]/30 rounded-b-2xl">
-        <!-- Tab 1: Properties -->
+        <!-- Tab 1: Props -->
         <div id="content-props" class="space-y-4">
-          <div class="flex justify-between items-end">
+          <div class="flex justify-between items-end border-b border-brand-darkBorder/60 pb-3">
             <div>
-              <h4 class="text-sm font-bold text-white">العقارات المدرجة</h4>
-              <p class="text-xs text-zinc-500 mt-1" id="props-hint"></p>
+              <h4 class="text-sm font-bold text-white">قائمة العروض المسجلة</h4>
+              <p class="text-xs text-zinc-500 mt-0.5" id="props-hint"></p>
             </div>
           </div>
           <div id="profile-props-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -243,33 +271,33 @@
 
         <!-- Tab 2: Inbox -->
         <div id="content-inbox" class="hidden space-y-4">
-          <div>
+          <div class="border-b border-brand-darkBorder/60 pb-3">
             <h4 class="text-sm font-bold text-white">الرسائل والاستفسارات الواردة</h4>
-            <p id="inbox-hint" class="text-xs text-zinc-500 mt-1"></p>
+            <p id="inbox-hint" class="text-xs text-zinc-500 mt-0.5"></p>
           </div>
           <div id="profile-inbox-list" class="space-y-3"></div>
         </div>
 
-        <!-- Tab 3: Users -->
+        <!-- Tab 3: Users (Admin Only) -->
         <div id="content-users" class="hidden space-y-6">
           <div class="bg-brand-darkCard border border-brand-darkBorder p-5 rounded-2xl shadow-lg">
-            <h4 class="text-sm font-bold text-brand-gold mb-4 flex items-center gap-2">
-              <i data-lucide="user-plus" class="w-4 h-4"></i> إضافة ناشر / مدون جديد
+            <h4 class="text-sm font-bold text-brand-gold mb-3 flex items-center gap-2">
+              <i data-lucide="user-plus" class="w-4 h-4"></i> إنشاء حساب ناشر / مدون جديد
             </h4>
-            <form id="add-user-form" class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
+            <form id="add-user-form" class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 items-end">
               <div>
                 <label class="block text-xs text-zinc-400 mb-1.5">اسم الدخول (Username)</label>
-                <input id="new-user-name" type="text" required placeholder="مثال: ahmad" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-gold">
+                <input id="new-user-name" type="text" required placeholder="مثال: samer" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-gold">
               </div>
               <div>
                 <label class="block text-xs text-zinc-400 mb-1.5">كلمة المرور (Password)</label>
-                <input id="new-user-pass" type="text" required class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-gold">
+                <input id="new-user-pass" type="text" required placeholder="••••••••" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-brand-gold">
               </div>
-              <button type="submit" class="w-full bg-brand-gold text-black font-semibold text-sm py-2.5 rounded-xl hover:bg-brand-goldDark transition shadow-md shadow-brand-gold/10">إنشاء الحساب</button>
+              <button type="submit" class="w-full bg-brand-gold text-black font-bold text-sm py-2.5 rounded-xl hover:bg-brand-goldDark transition shadow-md shadow-brand-gold/10">إنشاء وتفعيل الحساب</button>
             </form>
           </div>
           <div>
-            <h4 class="text-sm font-bold text-white mb-3">قائمة الناشرين المسجلين</h4>
+            <h4 class="text-sm font-bold text-white mb-3">الناشرون المعتمدون في المنصة</h4>
             <div id="profile-users-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
           </div>
         </div>
@@ -277,30 +305,30 @@
     </div>
   </div>
 
-  <!-- Add/Edit Property Form Modal (With All Detailed Architecture Fields) -->
+  <!-- Add/Edit Property Form Modal (With Every Single Architectural Field) -->
   <div id="add-modal" class="fixed inset-0 bg-black/90 backdrop-blur z-[60] hidden flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-4xl my-auto rounded-2xl p-6 relative shadow-2xl max-h-[92vh] overflow-y-auto custom-scrollbar">
-      <button onclick="closeModal('add-modal')" class="absolute top-4 left-4 text-zinc-400 hover:text-white bg-black/40 p-1.5 rounded-lg border border-brand-darkBorder">
+      <button onclick="closeModal('add-modal')" class="absolute top-4 left-4 text-zinc-400 hover:text-white bg-black/40 p-1.5 rounded-xl border border-brand-darkBorder">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
       <h3 id="add-modal-title" class="font-title text-xl font-bold gold-gradient-text mb-1">إضافة عقار جديد</h3>
-      <p class="text-xs text-zinc-400 mb-6 border-b border-brand-darkBorder pb-4">تعبئة البيانات الفنية بدقة تعزز وصول العرض للعملاء.</p>
+      <p class="text-xs text-zinc-400 mb-6 border-b border-brand-darkBorder pb-4">تعبئة البيانات الفنية بدقة تعزز وصول العرض للعملاء الباحثين.</p>
 
       <form id="add-property-form" class="space-y-6">
         <input type="hidden" id="edit-prop-id">
         
-        <!-- Basic Section -->
+        <!-- General Info -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="md:col-span-2">
             <label class="block text-xs text-zinc-400 mb-1.5">عنوان الإعلان الرسمي *</label>
-            <input id="prop-title" type="text" required placeholder="مثال: شقة دوبلكس فاخرة مع تراس بانورامي" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
+            <input id="prop-title" type="text" required placeholder="مثال: شقة دوبلكس سوبر ديلوكس بإطلالة بانورامية" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
           </div>
           <div>
             <label class="block text-xs text-zinc-400 mb-1.5">نوع العقار *</label>
             <select id="prop-type" onchange="toggleFormFieldsByType()" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
               <option value="apartment">شقة سكنية</option>
               <option value="villa">فيلا مستقلة</option>
-              <option value="land">أرض</option>
+              <option value="land">أرض / مزرعة</option>
               <option value="building">عمارة كاملة</option>
               <option value="shop">محل تجاري</option>
             </select>
@@ -316,7 +344,7 @@
             </select>
           </div>
           <div>
-            <label class="block text-xs text-zinc-400 mb-1.5">السعر ($) *</label>
+            <label class="block text-xs text-zinc-400 mb-1.5">السعر المطلوب ($) *</label>
             <input id="prop-price" type="number" required placeholder="120000" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2.5 text-white focus:border-brand-gold outline-none">
           </div>
           <div>
@@ -324,99 +352,150 @@
             <input id="prop-area" type="number" required placeholder="185" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2.5 text-white focus:border-brand-gold outline-none">
           </div>
           <div>
-            <label class="block text-xs text-zinc-400 mb-1.5">المدينة / الحي *</label>
+            <label class="block text-xs text-zinc-400 mb-1.5">المدينة والحي *</label>
             <input id="prop-city" type="text" required placeholder="دمشق، المالكي" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2.5 text-white focus:border-brand-gold outline-none">
           </div>
         </div>
 
-        <!-- Specific Residential Specs (Floor, Orientation, Rooms, Bathrooms, AC, Heating, Furnishing) -->
-        <div id="residential-fields" class="p-4 bg-[#1A1A22]/50 border border-brand-darkBorder rounded-xl space-y-4">
-          <h4 class="text-xs font-bold text-brand-gold flex items-center gap-1.5">
-            <i data-lucide="home" class="w-4 h-4"></i> مواصفات الشقق والفلل
+        <!-- 1. Apartment & Villa Specs -->
+        <div id="residential-fields" class="p-4 bg-[#1A1A22]/50 border border-brand-darkBorder rounded-2xl space-y-4">
+          <h4 class="text-xs font-bold text-brand-gold flex items-center gap-2">
+            <i data-lucide="home" class="w-4 h-4"></i> مواصفات الشقق والفلل السكنية
           </h4>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div>
               <label class="block text-xs text-zinc-400 mb-1">الطابق</label>
-              <input id="prop-floor" type="text" placeholder="مثال: الثالث (مع مصعد)" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-lg px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <input id="prop-floor" type="text" placeholder="مثال: الثالث (مع مصعد)" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">الاتجاه / الواجهة</label>
-              <input id="prop-orientation" type="text" placeholder="قبلي غربي، شرقي..." class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-lg px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <input id="prop-orientation" type="text" placeholder="قبلي غربي، شمالي..." class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">عدد الغرف</label>
-              <input id="prop-rooms" type="number" placeholder="4" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-lg px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <input id="prop-rooms" type="number" placeholder="4" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">عدد الحمامات</label>
-              <input id="prop-bathrooms" type="number" placeholder="2" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-lg px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <input id="prop-bathrooms" type="number" placeholder="2" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">حالة الفرش</label>
-              <select id="prop-furnishing" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-lg px-3 py-2 text-white focus:border-brand-gold outline-none">
-                <option value="unfurnished">غير مفروش (على الهيكل / مكسي)</option>
+              <select id="prop-furnishing" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="unfurnished">غير مفروش (مكسي / على الهيكل)</option>
                 <option value="furnished">مفروش بالكامل (سوبر ديلوكس)</option>
                 <option value="semi-furnished">نصف مفروش</option>
               </select>
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">نظام التكييف</label>
-              <input id="prop-ac" type="text" placeholder="مركزي / سبليت راكب" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-lg px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <input id="prop-ac" type="text" placeholder="مركزي / سبليت راكب" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">نظام التدفئة</label>
-              <input id="prop-heating" type="text" placeholder="شوفاج مستقل / تحت البلاط" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-lg px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <input id="prop-heating" type="text" placeholder="شوفاج مستقل / تحت البلاط" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">عدد الشرفات (البلكون)</label>
-              <input id="prop-balconies" type="number" placeholder="2" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-lg px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <input id="prop-balconies" type="number" placeholder="2" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+            </div>
+          </div>
+
+          <!-- Checkboxes for Services -->
+          <div class="pt-2 border-t border-brand-darkBorder/60">
+            <label class="block text-xs font-semibold text-zinc-400 mb-2">الخدمات والمرافق المتوفرة:</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-zinc-300">
+              <label class="flex items-center gap-2 bg-[#0B0B0D] p-2 rounded-lg border border-brand-darkBorder cursor-pointer">
+                <input type="checkbox" value="مياه شبكة" class="service-cb accent-brand-gold"> مياه شبكة
+              </label>
+              <label class="flex items-center gap-2 bg-[#0B0B0D] p-2 rounded-lg border border-brand-darkBorder cursor-pointer">
+                <input type="checkbox" value="كهرباء 24/7" class="service-cb accent-brand-gold"> كهرباء 24/7
+              </label>
+              <label class="flex items-center gap-2 bg-[#0B0B0D] p-2 rounded-lg border border-brand-darkBorder cursor-pointer">
+                <input type="checkbox" value="طاقة شمسية" class="service-cb accent-brand-gold"> طاقة شمسية
+              </label>
+              <label class="flex items-center gap-2 bg-[#0B0B0D] p-2 rounded-lg border border-brand-darkBorder cursor-pointer">
+                <input type="checkbox" value="إنترنت فايبر" class="service-cb accent-brand-gold"> إنترنت فايبر
+              </label>
+              <label class="flex items-center gap-2 bg-[#0B0B0D] p-2 rounded-lg border border-brand-darkBorder cursor-pointer">
+                <input type="checkbox" value="مصعد راكب" class="service-cb accent-brand-gold"> مصعد راكب
+              </label>
+              <label class="flex items-center gap-2 bg-[#0B0B0D] p-2 rounded-lg border border-brand-darkBorder cursor-pointer">
+                <input type="checkbox" value="كراج / موقف سيارة" class="service-cb accent-brand-gold"> موقف سيارات
+              </label>
+              <label class="flex items-center gap-2 bg-[#0B0B0D] p-2 rounded-lg border border-brand-darkBorder cursor-pointer">
+                <input type="checkbox" value="غرفة مستودع" class="service-cb accent-brand-gold"> غرفة قبو / مستودع
+              </label>
+              <label class="flex items-center gap-2 bg-[#0B0B0D] p-2 rounded-lg border border-brand-darkBorder cursor-pointer">
+                <input type="checkbox" value="حراسة وأمن" class="service-cb accent-brand-gold"> حراسة وأمن
+              </label>
             </div>
           </div>
         </div>
 
-        <!-- Land Specific Fields -->
-        <div id="land-fields" class="p-4 bg-[#1A1A22]/50 border border-brand-darkBorder rounded-xl space-y-4 hidden">
-          <h4 class="text-xs font-bold text-brand-gold flex items-center gap-1.5">
+        <!-- 2. Land & Farm Specs -->
+        <div id="land-fields" class="p-4 bg-[#1A1A22]/50 border border-brand-darkBorder rounded-2xl space-y-4 hidden">
+          <h4 class="text-xs font-bold text-brand-gold flex items-center gap-2">
             <i data-lucide="trees" class="w-4 h-4"></i> مواصفات الأراضي والمزارع
           </h4>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             <div>
               <label class="block text-xs text-zinc-400 mb-1">تصنيف الأرض</label>
-              <input id="prop-land-cat" type="text" placeholder="طابو زراعي / سكني مرخص..." class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-lg px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <input id="prop-land-cat" type="text" placeholder="طابو زراعي / سكني / تجاري..." class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">الواجهة على الشارع (متر)</label>
-              <input id="prop-road-front" type="text" placeholder="واجهة 35 متر على زفت" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-lg px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <label class="block text-xs text-zinc-400 mb-1">حالة الطابو والأسهم</label>
+              <input id="prop-deed-shares" type="text" placeholder="2400 سهم ملكية تامة / حكم محكمة" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">توفر المياه والكهرباء</label>
-              <input id="prop-utilities" type="text" placeholder="بئر ماء مرخص + محولة كهرباء" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-lg px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <label class="block text-xs text-zinc-400 mb-1">الواجهة على الطريق (متر)</label>
+              <input id="prop-road-front" type="text" placeholder="واجهة 45 متر" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">نوع الطريق الموصل</label>
+              <input id="prop-road-type" type="text" placeholder="طريق معبد زفت / طريق ترابي" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">تفاصيل البئر والري</label>
+              <input id="prop-well-info" type="text" placeholder="بئر ارتوازي مرخص عمق 120م" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">الكهرباء والمحولة</label>
+              <input id="prop-electric-info" type="text" placeholder="محولة كهرباء مستقلة 50 KVA" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">السور والبوابة</label>
+              <input id="prop-fence-info" type="text" placeholder="مسورة بالكامل بحجر بازلتي" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-xs text-zinc-400 mb-1">الأشجار والإنتاج</label>
+              <input id="prop-trees-info" type="text" placeholder="مثال: 150 شجرة زيتون مثمرة + فواكه منوعة" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
           </div>
         </div>
 
-        <!-- Location URL -->
+        <!-- Google Maps Link -->
         <div>
-          <label class="block text-xs text-zinc-400 mb-1.5">رابط الموقع الجغرافي (Google Maps)</label>
+          <label class="block text-xs text-zinc-400 mb-1.5">رابط خرائط جوجل (Google Maps Link)</label>
           <input id="prop-map" type="url" placeholder="https://maps.app.goo.gl/..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
         </div>
 
         <!-- Photos -->
-        <div class="p-4 bg-[#1A1A22] border border-brand-darkBorder rounded-xl space-y-2">
-          <label class="block text-sm font-semibold text-brand-gold">صور العقار (يمكن اختيار صور متعددة):</label>
+        <div class="p-4 bg-[#1A1A22] border border-brand-darkBorder rounded-2xl space-y-2">
+          <label class="block text-sm font-bold text-brand-gold">صور العقار (يمكن تحديد مجموعة صور):</label>
           <input id="prop-images" type="file" multiple accept="image/*" class="w-full text-sm text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-gold file:text-black hover:file:bg-brand-goldDark cursor-pointer">
-          <p class="text-[10px] text-zinc-500">في حالة تعديل عقار قديم، ترك هذا الحقل فارغاً يحتفظ بالصور السابقة تلقائياً.</p>
+          <p class="text-[10px] text-zinc-500">في حالة تعديل عقار منشور سابقاً، ترك هذا الحقل فارغاً يحتفظ بالصور السابقة.</p>
         </div>
 
-        <!-- Protected Info Box -->
-        <div class="p-4 bg-rose-950/10 border border-rose-900/30 rounded-xl space-y-4">
+        <!-- Protected Info -->
+        <div class="p-4 bg-rose-950/10 border border-rose-900/30 rounded-2xl space-y-4">
           <h4 class="text-sm font-bold text-rose-400 flex items-center gap-2">
             <i data-lucide="shield" class="w-4 h-4"></i> بيانات المالك وسند الطابو (محمية ومخفية عن الزوار)
           </h4>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs text-zinc-400 mb-1.5">اسم المالك الكامل *</label>
-              <input id="prop-owner-name" type="text" required placeholder="الاسم كما في الهوية / السند" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
+              <input id="prop-owner-name" type="text" required placeholder="الاسم الكامل للمالك" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1.5">رقم هاتف المالك *</label>
@@ -424,20 +503,20 @@
             </div>
           </div>
           <div>
-            <label class="block text-xs text-zinc-400 mb-1.5">صورة سند الملكية / الطابو (PDF أو صورة)</label>
+            <label class="block text-xs text-zinc-400 mb-1.5">رفع سند الطابو / عقد الملكية (PDF أو صورة)</label>
             <input id="prop-deed-file" type="file" accept="image/*,.pdf" class="w-full text-sm text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-zinc-800 file:text-zinc-200 cursor-pointer">
           </div>
         </div>
 
         <!-- Notes -->
         <div>
-          <label class="block text-xs text-zinc-400 mb-1.5">الوصف العام والتفاصيل الإضافية</label>
-          <textarea id="prop-desc" rows="4" placeholder="اكتب وصفاً جذاباً يشمل نوع الإكساء، الإطلالة، والقرب من الخدمات الرئيسية..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-3 text-white focus:border-brand-gold outline-none"></textarea>
+          <label class="block text-xs text-zinc-400 mb-1.5">الوصف الإعلاني العام والملاحظات</label>
+          <textarea id="prop-desc" rows="4" placeholder="اكتب وصفاً مفصلاً للعقار يبرز المزايا والموقع الاستراتيجي..." class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-3 text-white focus:border-brand-gold outline-none"></textarea>
         </div>
 
-        <button id="save-prop-submit" type="submit" class="w-full bg-brand-gold hover:bg-brand-goldDark text-black font-bold text-sm py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-brand-gold/20">
+        <button id="save-prop-submit" type="submit" class="w-full bg-brand-gold hover:bg-brand-goldDark text-black font-bold text-sm py-4 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-brand-gold/20">
           <i data-lucide="upload-cloud" class="w-5 h-5"></i>
-          <span>حفظ ونشر العقار</span>
+          <span>حفظ ونشر العرض سحابياً</span>
         </button>
       </form>
     </div>
@@ -450,10 +529,10 @@
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
       <div class="text-center mb-8">
-        <div class="w-14 h-14 bg-brand-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-brand-gold/20">
-          <i data-lucide="shield-check" class="w-7 h-7 text-brand-gold"></i>
+        <div class="w-14 h-14 bg-brand-gold/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-brand-gold/20 text-brand-gold">
+          <i data-lucide="lock" class="w-7 h-7"></i>
         </div>
-        <h3 class="font-title text-2xl font-bold gold-gradient-text mb-1">دخول النظام</h3>
+        <h3 class="font-title text-2xl font-bold gold-gradient-text mb-1">بوابة الدخول</h3>
         <p class="text-xs text-zinc-400">للمديرين والناشرين المعتمدين فقط</p>
       </div>
 
@@ -475,7 +554,7 @@
 
   <!-- Inquiry Modal (Client) -->
   <div id="inquiry-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-[70] hidden flex items-center justify-center p-4">
-    <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-md rounded-2xl p-6 relative">
+    <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-md rounded-2xl p-6 relative shadow-2xl">
       <button onclick="closeModal('inquiry-modal')" class="absolute top-4 left-4 text-zinc-400 hover:text-white">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
@@ -497,8 +576,8 @@
           <label class="block text-xs text-zinc-400 mb-1.5">نص الاستفسار</label>
           <textarea id="inquiry-message" rows="3" required class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-brand-gold"></textarea>
         </div>
-        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldDark text-black font-bold text-sm py-3 rounded-xl transition">
-          إرسال الرسالة
+        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldDark text-black font-bold text-sm py-3 rounded-xl transition shadow-md shadow-brand-gold/10">
+          إرسال الرسالة للمعلن
         </button>
       </form>
     </div>
@@ -532,6 +611,7 @@
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let allProperties = [];
+    let currentModalProperty = null;
     let currentUser = JSON.parse(localStorage.getItem('eb_user') || 'null');
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -590,7 +670,18 @@
     }
 
     function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    function closeModal(id) { 
+      document.getElementById(id).classList.add('hidden');
+      if (id === 'property-modal') {
+        document.getElementById('share-dropdown').classList.add('hidden');
+      }
+    }
+
+    function toggleShareDropdown() {
+      const dd = document.getElementById('share-dropdown');
+      dd.classList.toggle('hidden');
+      dd.classList.toggle('flex');
+    }
 
     function setupEventListeners() {
       document.getElementById('search-input').addEventListener('input', applyFilters);
@@ -629,7 +720,7 @@
         btn.innerHTML = 'تسجيل الدخول';
       });
 
-      // Inquiry Logic
+      // Inquiry Submission
       document.getElementById('inquiry-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const propId = document.getElementById('inquiry-property-id').value;
@@ -651,19 +742,19 @@
         if (error) {
           showToast('تعذر الإرسال. تأكد من تفعيل قواعد البيانات.', 'error');
         } else {
-          showToast('تم إرسال استفسارك بنجاح! سنتواصل معك قريباً.');
+          showToast('تم إرسال استفسارك بنجاح للمعلن!');
           closeModal('inquiry-modal');
           document.getElementById('inquiry-form').reset();
         }
-        btn.innerHTML = 'إرسال الرسالة';
+        btn.innerHTML = 'إرسال الرسالة للمعلن';
       });
 
-      // Add/Edit Property Logic (Capturing all technical architectural fields)
+      // Add/Edit Property Submission
       document.getElementById('add-property-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const submitBtn = document.getElementById('save-prop-submit');
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> <span>جاري الحفظ والرفع...</span>`;
+        submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> <span>جاري حفظ العقار ورفع الصور...</span>`;
         lucide.createIcons();
 
         try {
@@ -679,18 +770,28 @@
           const owner_phone = document.getElementById('prop-owner-phone').value.trim();
           const general_notes = document.getElementById('prop-desc').value.trim();
 
-          // Technical fields
+          // Residential Specs
           const floor = document.getElementById('prop-floor').value.trim();
           const orientation = document.getElementById('prop-orientation').value.trim();
           const rooms = parseInt(document.getElementById('prop-rooms').value) || 0;
           const bathrooms = parseInt(document.getElementById('prop-bathrooms').value) || 0;
           const balconies = parseInt(document.getElementById('prop-balconies').value) || 0;
           const furnishing = document.getElementById('prop-furnishing').value;
-          const sunlight = document.getElementById('prop-ac').value.trim(); // AC stored
-          const furnishing_details = document.getElementById('prop-heating').value.trim(); // Heating stored
+          const sunlight = document.getElementById('prop-ac').value.trim(); // AC
+          const furnishing_details = document.getElementById('prop-heating').value.trim(); // Heating
+
+          // Services Checkboxes
+          const services = Array.from(document.querySelectorAll('.service-cb:checked')).map(cb => cb.value);
+
+          // Land Specs
           const land_category = document.getElementById('prop-land-cat').value.trim();
+          const deed_shares = document.getElementById('prop-deed-shares').value.trim();
           const road_frontage = document.getElementById('prop-road-front').value.trim();
-          const water_source = document.getElementById('prop-utilities').value.trim();
+          const road_type = document.getElementById('prop-road-type').value.trim();
+          const water_source = document.getElementById('prop-well-info').value.trim();
+          const electricity_source = document.getElementById('prop-electric-info').value.trim();
+          const trees_info = document.getElementById('prop-trees-info').value.trim();
+          const fence_info = document.getElementById('prop-fence-info').value.trim();
 
           let serial_code = editId ? allProperties.find(p=>p.id===editId).serial_code : 'EB-' + Math.floor(1000 + Math.random() * 9000);
           let prop_id = editId ? editId : 'prop_' + Date.now();
@@ -698,10 +799,12 @@
           let propData = {
             title, type, status, price, area, city, location_url, owner_name, owner_phone, general_notes,
             floor, orientation, rooms, bathrooms, balconies, furnishing,
-            sunlight, furnishing_details, land_category, road_frontage, water_source
+            sunlight, furnishing_details, services,
+            land_category, deed_shares, road_frontage, road_type, water_source, electricity_source, trees_info,
+            building_status: fence_info // stored safely
           };
 
-          // Handle Images
+          // Images
           const imageFiles = document.getElementById('prop-images').files;
           if (imageFiles.length > 0) {
             let imageUrls = [];
@@ -717,7 +820,7 @@
             propData.images = imageUrls;
           }
 
-          // Handle Deed
+          // Deed
           const deedFileInput = document.getElementById('prop-deed-file');
           if (deedFileInput.files.length > 0) {
             const dFile = deedFileInput.files[0];
@@ -739,7 +842,7 @@
             propData.created_by = currentUser.username;
             const { error } = await supabaseClient.from('properties').insert([propData]);
             if (error) throw error;
-            showToast(`تم النشر الفوري! الرمز: #${serial_code}`);
+            showToast(`تم النشر! الكود: #${serial_code}`);
           }
 
           closeModal('add-modal');
@@ -749,15 +852,15 @@
           
         } catch (err) {
           console.error(err);
-          showToast('حدث خطأ أثناء الحفظ السحابي.', 'error');
+          showToast('حدث خطأ أثناء الحفظ.', 'error');
         } finally {
           submitBtn.disabled = false;
-          submitBtn.innerHTML = `<i data-lucide="upload-cloud" class="w-5 h-5"></i> <span>حفظ ونشر العقار</span>`;
+          submitBtn.innerHTML = `<i data-lucide="upload-cloud" class="w-5 h-5"></i> <span>حفظ ونشر العرض سحابياً</span>`;
           lucide.createIcons();
         }
       });
 
-      // Add New User Form (Admin)
+      // Add New User (Admin Only)
       document.getElementById('add-user-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const u = document.getElementById('new-user-name').value.trim();
@@ -768,13 +871,13 @@
         const { error } = await supabaseClient.from('app_users').insert([{ username: u, password: p, role: 'agent' }]);
         
         if(error) {
-          showToast('تعذر الإنشاء، ربما الاسم مسجل مسبقاً', 'error');
+          showToast('تعذر الإنشاء، ربما اسم المستخدم مسجل مسبقاً', 'error');
         } else {
           showToast('تمت إضافة المدون بنجاح!');
           document.getElementById('add-user-form').reset();
           loadUsersList();
         }
-        btn.innerHTML = 'إنشاء الحساب';
+        btn.innerHTML = 'إنشاء وتفعيل الحساب';
       });
     }
 
@@ -783,7 +886,7 @@
       const grid = document.getElementById('properties-grid');
       
       if (error || !data || data.length === 0) {
-        grid.innerHTML = `<div class="col-span-full py-16 text-center text-zinc-500"><i data-lucide="home" class="w-10 h-10 mx-auto mb-2 opacity-40"></i><p>لا توجد عقارات متاحة حالياً.</p></div>`;
+        grid.innerHTML = `<div class="col-span-full py-20 text-center text-zinc-500"><i data-lucide="home" class="w-10 h-10 mx-auto mb-2 opacity-30"></i><p>لا توجد عقارات منشورة حالياً في المنصة.</p></div>`;
         lucide.createIcons();
         return;
       }
@@ -801,7 +904,7 @@
         const stClass = p.status === 'rent' ? 'bg-amber-600' : 'bg-emerald-600';
         
         grid.innerHTML += `
-          <div class="bg-brand-darkCard border border-brand-darkBorder rounded-2xl overflow-hidden hover:border-brand-gold/40 transition duration-300 flex flex-col group shadow-lg">
+          <div class="bg-brand-darkCard border border-brand-darkBorder rounded-2xl overflow-hidden hover:border-brand-gold/40 transition duration-300 flex flex-col group shadow-xl">
             <div class="relative h-56 w-full overflow-hidden bg-black/40 cursor-pointer" onclick="openPropertyModal('${p.id}')">
               <img src="${coverImg}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
               <div class="absolute top-3 right-3 bg-brand-darkCard/90 border border-brand-gold/40 text-brand-gold text-xs font-title px-2.5 py-1 rounded-md shadow">#${p.serial_code}</div>
@@ -809,18 +912,18 @@
             </div>
             <div class="p-4 space-y-2 flex-1 flex flex-col">
               <div class="flex justify-between items-center text-xs">
-                <span class="text-zinc-400 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> ${p.city || 'المدينة'}</span>
+                <span class="text-zinc-400 flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-gold"></i> ${p.city || 'المدينة'}</span>
                 <span class="text-base font-bold text-brand-gold">${Number(p.price).toLocaleString()} $</span>
               </div>
               <h3 class="font-bold text-white text-base line-clamp-1 cursor-pointer hover:text-brand-gold transition" onclick="openPropertyModal('${p.id}')">${p.title}</h3>
-              <div class="grid grid-cols-3 gap-2 mt-auto pt-3 border-t border-brand-darkBorder/50 text-center text-xs text-zinc-400">
-                <div><span class="block text-[10px] text-zinc-500">المساحة</span><span class="font-semibold text-white">${p.area || 0}م²</span></div>
-                <div class="border-x border-brand-darkBorder"><span class="block text-[10px] text-zinc-500">النوع</span><span class="font-semibold text-white">${p.type === 'apartment'?'شقة':p.type==='villa'?'فيلا':p.type==='land'?'أرض':'أخرى'}</span></div>
-                <div><span class="block text-[10px] text-zinc-500">الناشر</span><span class="font-semibold text-white truncate px-1">${p.created_by || '-'}</span></div>
+              <div class="grid grid-cols-3 gap-2 mt-auto pt-3 border-t border-brand-darkBorder/60 text-center text-xs text-zinc-400">
+                <div><span class="block text-[10px] text-zinc-500">المساحة</span><span class="font-bold text-white">${p.area || 0} م²</span></div>
+                <div class="border-x border-brand-darkBorder"><span class="block text-[10px] text-zinc-500">النوع</span><span class="font-bold text-white">${p.type === 'apartment'?'شقة':p.type==='villa'?'فيلا':p.type==='land'?'أرض':'أخرى'}</span></div>
+                <div><span class="block text-[10px] text-zinc-500">الناشر</span><span class="font-bold text-white truncate px-1">${p.created_by || '-'}</span></div>
               </div>
             </div>
             <div class="p-4 pt-0">
-              <button onclick="openPropertyModal('${p.id}')" class="w-full bg-[#1A1A22] border border-brand-darkBorder hover:border-brand-gold text-zinc-200 hover:text-brand-gold text-xs font-semibold py-2.5 rounded-xl transition flex items-center justify-center gap-1.5"><i data-lucide="eye" class="w-4 h-4"></i> عرض التفاصيل</button>
+              <button onclick="openPropertyModal('${p.id}')" class="w-full bg-[#1A1A22] border border-brand-darkBorder hover:border-brand-gold text-zinc-200 hover:text-brand-gold text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-1.5"><i data-lucide="eye" class="w-4 h-4"></i> عرض التفاصيل الكاملة</button>
             </div>
           </div>
         `;
@@ -831,6 +934,7 @@
     function openPropertyModal(id) {
       const p = allProperties.find(item => item.id === id);
       if (!p) return;
+      currentModalProperty = p;
 
       document.getElementById('modal-serial').textContent = `#${p.serial_code}`;
       document.getElementById('modal-title').textContent = p.title;
@@ -850,12 +954,12 @@
       imgs.forEach(url => {
         const thumb = document.createElement('img');
         thumb.src = url;
-        thumb.className = 'w-16 h-16 shrink-0 rounded-lg object-cover cursor-pointer border-2 border-transparent hover:border-brand-gold transition';
+        thumb.className = 'w-16 h-16 shrink-0 rounded-xl object-cover cursor-pointer border-2 border-transparent hover:border-brand-gold transition';
         thumb.onclick = () => { mainImg.src = url; };
         thumbs.appendChild(thumb);
       });
 
-      // Build Technical Engineering Specs (AC, Heating, Floor, Orientation, Rooms, etc.)
+      // Specifications Grid
       const specsContainer = document.getElementById('modal-specs');
       specsContainer.innerHTML = '';
 
@@ -874,22 +978,44 @@
         `;
       };
 
-      addSpecItem('المساحة', `${p.area} م²`, 'maximize');
+      addSpecItem('المساحة الإجمالية', `${p.area} م²`, 'maximize');
       addSpecItem('السعر الإجمالي', `${Number(p.price).toLocaleString()} $`, 'tag');
-      addSpecItem('المدينة والمنطقة', p.city, 'map-pin');
-      addSpecItem('الطابق', p.floor, 'layers');
-      addSpecItem('الاتجاه والواجهة', p.orientation, 'compass');
-      addSpecItem('عدد الغرف', p.rooms ? `${p.rooms} غرف` : null, 'door-closed');
-      addSpecItem('الحمامات', p.bathrooms ? `${p.bathrooms} حمامات` : null, 'bath');
-      addSpecItem('الشرفات', p.balconies ? `${p.balconies} بلكون` : null, 'sun');
-      addSpecItem('حالة الفرش', p.furnishing === 'furnished' ? 'مفروش بالكامل' : p.furnishing === 'semi-furnished' ? 'نصف مفروش' : 'غير مفروش', 'sofa');
-      addSpecItem('نظام التكييف', p.sunlight, 'wind');
-      addSpecItem('نظام التدفئة', p.furnishing_details, 'flame');
-      addSpecItem('تصنيف العقار / الأرض', p.land_category, 'file-text');
-      addSpecItem('الواجهة على الطريق', p.road_frontage, 'milestone');
-      addSpecItem('الخدمات والمرافق', p.water_source, 'zap');
+      addSpecItem('المدينة والحي', p.city, 'map-pin');
+      
+      if (p.type === 'land') {
+        addSpecItem('تصنيف الأرض', p.land_category, 'file-text');
+        addSpecItem('الطابو والأسهم', p.deed_shares, 'award');
+        addSpecItem('الواجهة على الشارع', p.road_frontage, 'milestone');
+        addSpecItem('نوع الطريق', p.road_type, 'navigation');
+        addSpecItem('البئر والري', p.water_source, 'droplet');
+        addSpecItem('الكهرباء والمحولة', p.electricity_source, 'zap');
+        addSpecItem('السور والبوابة', p.building_status, 'shield');
+        addSpecItem('الأشجار والإنتاج', p.trees_info, 'trees');
+      } else {
+        addSpecItem('الطابق', p.floor, 'layers');
+        addSpecItem('الاتجاه والواجهة', p.orientation, 'compass');
+        addSpecItem('عدد الغرف', p.rooms ? `${p.rooms} غرف` : null, 'door-closed');
+        addSpecItem('دورات المياه', p.bathrooms ? `${p.bathrooms} حمامات` : null, 'bath');
+        addSpecItem('الشرفات (بلكون)', p.balconies ? `${p.balconies} بلكون` : null, 'sun');
+        addSpecItem('حالة الفرش', p.furnishing === 'furnished' ? 'مفروش بالكامل' : p.furnishing === 'semi-furnished' ? 'نصف مفروش' : 'غير مفروش', 'sofa');
+        addSpecItem('نظام التكييف', p.sunlight, 'wind');
+        addSpecItem('نظام التدفئة', p.furnishing_details, 'flame');
+      }
 
-      // Contact Buttons
+      // Services List
+      const sContainer = document.getElementById('modal-services-container');
+      const sList = document.getElementById('modal-services-list');
+      sList.innerHTML = '';
+      if (p.services && p.services.length > 0) {
+        sContainer.classList.remove('hidden');
+        p.services.forEach(s => {
+          sList.innerHTML += `<span class="bg-[#1A1A22] border border-brand-gold/30 text-brand-gold text-xs px-3 py-1 rounded-lg flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5"></i> ${s}</span>`;
+        });
+      } else {
+        sContainer.classList.add('hidden');
+      }
+
+      // Call & WhatsApp Actions
       document.getElementById('modal-call-btn').href = `tel:${p.owner_phone || ''}`;
       
       const cleanPhone = p.owner_phone ? p.owner_phone.replace(/[^0-9]/g, '') : '';
@@ -897,10 +1023,12 @@
       document.getElementById('modal-whatsapp-btn').href = cleanPhone ? `https://wa.me/${cleanPhone}?text=${waMsg}` : '#';
       document.getElementById('modal-whatsapp-btn').style.display = cleanPhone ? 'flex' : 'none';
 
+      // Map Button
       const mapBtn = document.getElementById('modal-map-btn');
       if (p.location_url) { mapBtn.style.display = 'flex'; mapBtn.href = p.location_url; }
       else { mapBtn.style.display = 'none'; }
 
+      // Inquiry Form Button
       document.getElementById('modal-inquiry-btn').onclick = () => {
         document.getElementById('inquiry-property-id').value = p.id;
         document.getElementById('inquiry-serial-code').value = p.serial_code;
@@ -908,17 +1036,7 @@
         openModal('inquiry-modal');
       };
 
-      // Advanced Share Button
-      document.getElementById('modal-share-btn').onclick = () => {
-        const shareData = { title: p.title, text: `عقار فاخر: ${p.title} - السعر: ${p.price}$ | الكود: #${p.serial_code}`, url: window.location.href };
-        if (navigator.share) { navigator.share(shareData).catch(console.error); } 
-        else {
-          navigator.clipboard.writeText(`${shareData.text}\nالرابط: ${shareData.url}`);
-          showToast('تم نسخ تفاصيل العقار للحافظة لمشاركتها.');
-        }
-      };
-
-      // Protected Info (Visible to Admin or the Publisher Only)
+      // Protected Info
       const isPrivileged = currentUser && (currentUser.role === 'developer' || currentUser.role === 'admin' || currentUser.username === p.created_by);
       const protSection = document.getElementById('modal-protected-section');
       if (isPrivileged) {
@@ -929,7 +1047,7 @@
             <p><strong class="text-rose-400">رقم الهاتف:</strong> ${p.owner_phone || '-'}</p>
             <p><strong class="text-rose-400">الناشر المسؤول:</strong> ${p.created_by}</p>
           </div>
-          ${p.deed_file_url ? `<div class="mt-3"><a href="${p.deed_file_url}" target="_blank" class="inline-flex items-center gap-1 bg-rose-900/50 hover:bg-rose-900 text-rose-200 px-3 py-1.5 rounded-lg text-xs font-bold transition border border-rose-800"><i data-lucide="file-text" class="w-3 h-3"></i> استعراض وتحميل سند الطابو</a></div>` : '<p class="text-xs text-rose-500/50 mt-2">لا يوجد سند طابو مرفوع</p>'}
+          ${p.deed_file_url ? `<div class="mt-3"><a href="${p.deed_file_url}" target="_blank" class="inline-flex items-center gap-1.5 bg-rose-900/50 hover:bg-rose-900 text-rose-200 px-3.5 py-1.5 rounded-xl text-xs font-bold transition border border-rose-800"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> استعراض وتحميل سند الطابو الرسمي</a></div>` : '<p class="text-xs text-rose-500/60 mt-2">لا يوجد سند طابو مرفوع لهذا العرض</p>'}
         `;
       } else {
         protSection.classList.add('hidden');
@@ -937,6 +1055,43 @@
 
       lucide.createIcons();
       openModal('property-modal');
+    }
+
+    // Share Functions
+    function shareViaNative() {
+      if (!currentModalProperty) return;
+      const shareData = {
+        title: currentModalProperty.title,
+        text: `عقار فاخر: ${currentModalProperty.title}\nالسعر: ${currentModalProperty.price}$\nالكود: #${currentModalProperty.serial_code}`,
+        url: window.location.href
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(console.error);
+      } else {
+        copyPropertyCard();
+      }
+      toggleShareDropdown();
+    }
+
+    function shareViaWhatsApp() {
+      if (!currentModalProperty) return;
+      const text = encodeURIComponent(`*${currentModalProperty.title}*\nالسعر: ${currentModalProperty.price}$\nالمساحة: ${currentModalProperty.area} م²\nالمدينة: ${currentModalProperty.city}\nالكود: #${currentModalProperty.serial_code}\nرابط العرض: ${window.location.href}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+      toggleShareDropdown();
+    }
+
+    function copyPropertyCard() {
+      if (!currentModalProperty) return;
+      const text = `عقار من Echo Bridges:\nالعنوان: ${currentModalProperty.title}\nالسعر: ${currentModalProperty.price}$\nالمساحة: ${currentModalProperty.area} م²\nالمدينة: ${currentModalProperty.city}\nالكود: #${currentModalProperty.serial_code}\nالرابط: ${window.location.href}`;
+      navigator.clipboard.writeText(text);
+      showToast('تم نسخ نص بطاقة العقار لمشاركتها.');
+      toggleShareDropdown();
+    }
+
+    function copyDirectLink() {
+      navigator.clipboard.writeText(window.location.href);
+      showToast('تم نسخ رابط الموقع للحافظة.');
+      toggleShareDropdown();
     }
 
     function applyFilters() {
@@ -970,7 +1125,7 @@
     }
 
     function requestLogout() {
-      showConfirm('تسجيل الخروج', 'هل أنت متأكد من تسجيل الخروج من حسابك؟', () => {
+      showConfirm('تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج من النظام؟', () => {
         localStorage.removeItem('eb_user');
         currentUser = null;
         updateAuthUI();
@@ -983,7 +1138,7 @@
       const isAdmin = currentUser.role === 'developer' || currentUser.role === 'admin';
       
       document.getElementById('profile-welcome-name').textContent = `أهلاً بك، ${currentUser.username}`;
-      document.getElementById('profile-role-badge').textContent = isAdmin ? 'مدير النظام' : 'ناشر معتمد';
+      document.getElementById('profile-role-badge').textContent = isAdmin ? 'مدير عام النظام' : 'ناشر معتمد';
       
       const usersTab = document.getElementById('tab-users');
       if (isAdmin) { usersTab.classList.remove('hidden'); } else { usersTab.classList.add('hidden'); }
@@ -1013,21 +1168,21 @@
       
       document.getElementById('props-hint').textContent = isAdmin ? 'تظهر لك كافة العقارات في النظام بصفتك مديراً عاماً.' : 'تظهر هنا العقارات التي قمت بنشرها أنت فقط.';
 
-      if (myProps.length === 0) { list.innerHTML = `<div class="col-span-full py-6 text-center text-zinc-500 text-sm">لا توجد عقارات حالياً.</div>`; return; }
+      if (myProps.length === 0) { list.innerHTML = `<div class="col-span-full py-8 text-center text-zinc-500 text-sm">لا توجد عقارات مضافة حتى الآن.</div>`; return; }
 
       list.innerHTML = myProps.map(p => `
-        <div class="bg-[#1A1A22] border border-brand-darkBorder p-4 rounded-xl flex flex-col justify-between h-full">
+        <div class="bg-[#1A1A22] border border-brand-darkBorder p-4 rounded-xl flex flex-col justify-between h-full shadow-lg">
           <div>
             <div class="flex justify-between items-start mb-2">
               <span class="font-mono text-xs bg-black px-2 py-1 rounded border border-brand-darkBorder text-brand-gold">#${p.serial_code}</span>
-              ${isAdmin ? `<span class="text-[10px] text-zinc-500 bg-zinc-900 px-2 py-0.5 rounded">الناشر: ${p.created_by}</span>` : ''}
+              ${isAdmin ? `<span class="text-[10px] text-zinc-400 bg-zinc-900 px-2 py-0.5 rounded">الناشر: ${p.created_by}</span>` : ''}
             </div>
             <h5 class="font-bold text-white text-sm line-clamp-1 mb-1">${p.title}</h5>
-            <p class="text-xs text-brand-gold font-bold">${Number(p.price).toLocaleString()}$</p>
+            <p class="text-xs text-brand-gold font-bold">${Number(p.price).toLocaleString()} $</p>
           </div>
           <div class="flex gap-2 mt-4 pt-3 border-t border-brand-darkBorder">
-            <button onclick="editProperty('${p.id}')" class="flex-1 px-2 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-semibold flex items-center justify-center gap-1 transition"><i data-lucide="edit" class="w-3.5 h-3.5"></i> تعديل</button>
-            <button onclick="deleteProperty('${p.id}')" class="flex-1 px-2 py-1.5 bg-rose-950/40 hover:bg-rose-900 text-rose-400 rounded-lg text-xs font-semibold flex items-center justify-center gap-1 transition"><i data-lucide="trash" class="w-3.5 h-3.5"></i> حذف</button>
+            <button onclick="editProperty('${p.id}')" class="flex-1 px-2 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl text-xs font-semibold flex items-center justify-center gap-1 transition"><i data-lucide="edit" class="w-3.5 h-3.5"></i> تعديل</button>
+            <button onclick="deleteProperty('${p.id}')" class="flex-1 px-2 py-2 bg-rose-950/40 hover:bg-rose-900 text-rose-400 rounded-xl text-xs font-semibold flex items-center justify-center gap-1 transition"><i data-lucide="trash" class="w-3.5 h-3.5"></i> حذف</button>
           </div>
         </div>
       `).join('');
@@ -1037,7 +1192,7 @@
     async function loadProfileInbox() {
       const list = document.getElementById('profile-inbox-list');
       const isAdmin = currentUser.role === 'developer' || currentUser.role === 'admin';
-      list.innerHTML = `<div class="py-6 text-center text-zinc-500 text-sm"><i data-lucide="loader-2" class="w-5 h-5 animate-spin mx-auto mb-2"></i> جاري مزامنة الرسائل...</div>`;
+      list.innerHTML = `<div class="py-8 text-center text-zinc-500 text-sm"><i data-lucide="loader-2" class="w-5 h-5 animate-spin mx-auto mb-2"></i> جاري مزامنة الرسائل...</div>`;
       lucide.createIcons();
 
       const { data, error } = await supabaseClient.from('inquiries').select('*').order('created_at', { ascending: false });
@@ -1052,7 +1207,7 @@
         document.getElementById('inbox-hint').textContent = 'بصفتك مديراً عاماً، تتلقى نسخة من كافة الرسائل الواردة لجميع الناشرين.';
       }
 
-      if (myInquiries.length === 0) { list.innerHTML = `<div class="py-6 text-center text-zinc-500 text-sm">صندوق الوارد فارغ.</div>`; return; }
+      if (myInquiries.length === 0) { list.innerHTML = `<div class="py-8 text-center text-zinc-500 text-sm">صندوق الوارد فارغ.</div>`; return; }
 
       list.innerHTML = myInquiries.map(item => {
         const dateStr = new Date(item.created_at).toLocaleString('ar-EG');
@@ -1060,7 +1215,7 @@
           <div class="bg-[#1A1A22] border border-brand-darkBorder p-4 rounded-xl space-y-2">
             <div class="flex flex-wrap justify-between items-center text-xs border-b border-brand-darkBorder pb-2 gap-2">
               <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded bg-brand-gold/10 text-brand-gold flex items-center justify-center"><i data-lucide="user" class="w-4 h-4"></i></div>
+                <div class="w-7 h-7 rounded-lg bg-brand-gold/10 text-brand-gold flex items-center justify-center"><i data-lucide="user" class="w-4 h-4"></i></div>
                 <div>
                   <span class="font-bold text-white block">${item.client_name}</span>
                   <a href="tel:${item.client_phone}" class="text-brand-gold hover:underline font-mono" dir="ltr">${item.client_phone}</a>
@@ -1086,16 +1241,16 @@
       if (error || !data) return;
 
       list.innerHTML = data.map(u => `
-        <div class="bg-[#1A1A22] border border-brand-darkBorder p-3 rounded-xl flex justify-between items-center text-sm">
+        <div class="bg-[#1A1A22] border border-brand-darkBorder p-3.5 rounded-xl flex justify-between items-center text-sm">
           <div class="flex items-center gap-3">
-            <div class="w-8 h-8 bg-zinc-800 rounded-full flex items-center justify-center text-zinc-400"><i data-lucide="${u.role==='admin'?'shield':'user'}" class="w-4 h-4"></i></div>
+            <div class="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-400"><i data-lucide="${u.role==='admin'?'shield':'user'}" class="w-4 h-4"></i></div>
             <div>
               <div class="font-bold text-white">${u.username}</div>
               <div class="text-[10px] text-zinc-500 uppercase">${u.role}</div>
             </div>
           </div>
-          <div class="text-xs bg-black px-2 py-1 rounded text-brand-gold border border-brand-darkBorder font-mono flex items-center gap-1" title="كلمة المرور">
-            <i data-lucide="key" class="w-3 h-3"></i> ${u.password}
+          <div class="text-xs bg-black px-2.5 py-1 rounded-lg text-brand-gold border border-brand-darkBorder font-mono flex items-center gap-1.5" title="كلمة المرور">
+            <i data-lucide="key" class="w-3.5 h-3.5"></i> ${u.password}
           </div>
         </div>
       `).join('');
@@ -1106,6 +1261,7 @@
       document.getElementById('add-property-form').reset();
       document.getElementById('edit-prop-id').value = '';
       document.getElementById('add-modal-title').textContent = 'إضافة عقار جديد';
+      document.querySelectorAll('.service-cb').forEach(cb => cb.checked = false);
       toggleFormFieldsByType();
       closeModal('profile-modal');
       openModal('add-modal');
@@ -1136,9 +1292,21 @@
       document.getElementById('prop-furnishing').value = p.furnishing || 'unfurnished';
       document.getElementById('prop-ac').value = p.sunlight || '';
       document.getElementById('prop-heating').value = p.furnishing_details || '';
+
+      // Checkboxes
+      const pServices = p.services || [];
+      document.querySelectorAll('.service-cb').forEach(cb => {
+        cb.checked = pServices.includes(cb.value);
+      });
+
       document.getElementById('prop-land-cat').value = p.land_category || '';
+      document.getElementById('prop-deed-shares').value = p.deed_shares || '';
       document.getElementById('prop-road-front').value = p.road_frontage || '';
-      document.getElementById('prop-utilities').value = p.water_source || '';
+      document.getElementById('prop-road-type').value = p.road_type || '';
+      document.getElementById('prop-well-info').value = p.water_source || '';
+      document.getElementById('prop-electric-info').value = p.electricity_source || '';
+      document.getElementById('prop-fence-info').value = p.building_status || '';
+      document.getElementById('prop-trees-info').value = p.trees_info || '';
       
       toggleFormFieldsByType();
       closeModal('profile-modal');
@@ -1146,7 +1314,7 @@
     }
 
     function deleteProperty(id) {
-      showConfirm('حذف العقار', 'هل أنت متأكد من حذف هذا العقار بالكامل؟ لا يمكن استرجاع البيانات بعد الحذف.', async () => {
+      showConfirm('حذف العقار نهائياً', 'هل أنت متأكد من حذف هذا العرض العقاري؟ لا يمكن التراجع عن الحذف.', async () => {
         try {
           const { error } = await supabaseClient.from('properties').delete().eq('id', id);
           if (error) throw error;
@@ -1154,7 +1322,7 @@
           fetchProperties();
           setTimeout(loadProfileProps, 500);
         } catch(e) {
-          showToast('تعذر الحذف.', 'error');
+          showToast('تعذر حذف العقار.', 'error');
         }
       });
     }
