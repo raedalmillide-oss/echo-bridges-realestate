@@ -116,22 +116,18 @@
     </div>
   </main>
 
-  <!-- Property View Modal (Full Architecture Details) -->
+  <!-- Property View Modal -->
   <div id="property-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-4xl max-h-[92vh] rounded-2xl overflow-y-auto custom-scrollbar flex flex-col relative shadow-2xl">
-      
-      <!-- Top Bar -->
       <div class="sticky top-0 bg-brand-darkCard/95 backdrop-blur border-b border-brand-darkBorder p-4 flex items-center justify-between z-20">
         <div>
           <span id="modal-serial" class="text-xs font-title text-brand-gold bg-brand-gold/10 px-2.5 py-1 rounded-md border border-brand-gold/30"></span>
           <h2 id="modal-title" class="text-lg font-bold text-white mt-1"></h2>
         </div>
         <div class="flex items-center gap-2 relative">
-          <button id="modal-print-btn" onclick="window.print()" class="text-zinc-400 hover:text-brand-gold p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition" title="طباعة بطاقة العرض الرسمية">
+          <button id="modal-print-btn" onclick="window.print()" class="text-zinc-400 hover:text-brand-gold p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition" title="طباعة بطاقة العرض">
             <i data-lucide="printer" class="w-4 h-4"></i>
           </button>
-          
-          <!-- Share Button & Dropdown -->
           <button id="modal-share-menu-btn" onclick="toggleShareDropdown()" class="text-zinc-400 hover:text-brand-gold p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition" title="مشاركة">
             <i data-lucide="share-2" class="w-4 h-4"></i>
           </button>
@@ -149,7 +145,6 @@
               <i data-lucide="link" class="w-3.5 h-3.5"></i> نسخ رابط الموقع
             </button>
           </div>
-
           <button id="modal-close-btn" onclick="closeModal('property-modal')" class="text-zinc-400 hover:text-white p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
@@ -157,7 +152,6 @@
       </div>
 
       <div class="p-6 space-y-6">
-        <!-- Gallery -->
         <div class="space-y-3">
           <div class="relative h-64 md:h-96 w-full rounded-2xl overflow-hidden bg-black/50 border border-brand-darkBorder">
             <img id="modal-main-image" src="" alt="العقار" class="w-full h-full object-cover">
@@ -166,31 +160,27 @@
           <div id="modal-thumbnails" class="flex gap-2 overflow-x-auto py-2 custom-scrollbar"></div>
         </div>
 
-        <!-- Technical Specs -->
         <div>
           <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-3 flex items-center gap-2">
-            <i data-lucide="cpu" class="w-4 h-4"></i> المواصفات الهندسية والفنية
+            <i data-lucide="cpu" class="w-4 h-4"></i> المواصفات الفنية والهندسية
           </h3>
           <div id="modal-specs" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5"></div>
         </div>
 
-        <!-- Services & Amenities -->
         <div id="modal-services-container" class="hidden">
           <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-2.5 flex items-center gap-2">
-            <i data-lucide="check-circle-2" class="w-4 h-4"></i> المرافق والخدمات المتوفرة
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> المرافق والخدمات
           </h3>
           <div id="modal-services-list" class="flex flex-wrap gap-2"></div>
         </div>
 
-        <!-- Description -->
         <div>
           <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-2 flex items-center gap-2">
-            <i data-lucide="align-right" class="w-4 h-4"></i> الوصف العام والتفاصيل
+            <i data-lucide="align-right" class="w-4 h-4"></i> الوصف والتفاصيل
           </h3>
           <p id="modal-desc" class="text-sm text-zinc-300 leading-relaxed bg-[#1A1A22] p-4 rounded-xl border border-brand-darkBorder whitespace-pre-line"></p>
         </div>
 
-        <!-- Protected Info (Confidential) -->
         <div id="modal-protected-section" class="border-t border-brand-darkBorder pt-4 space-y-3 hidden">
           <h3 class="text-sm font-semibold text-rose-400 flex items-center gap-2">
             <i data-lucide="shield-alert" class="w-4 h-4"></i>
@@ -199,7 +189,6 @@
           <div id="modal-protected-content" class="bg-rose-950/20 p-4 rounded-xl border border-rose-900/30 text-sm"></div>
         </div>
 
-        <!-- Action Buttons -->
         <div id="modal-actions" class="flex flex-wrap items-center gap-3 pt-4 border-t border-brand-darkBorder">
           <a id="modal-call-btn" href="#" class="flex-1 min-w-[140px] bg-brand-gold hover:bg-brand-goldDark text-black font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-brand-gold/20">
             <i data-lucide="phone" class="w-4 h-4"></i> اتصال بالمعلن
@@ -218,10 +207,9 @@
     </div>
   </div>
 
-  <!-- Profile & Comprehensive Management Dashboard -->
+  <!-- Profile & Management Dashboard -->
   <div id="profile-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-5xl max-h-[90vh] h-[90vh] rounded-2xl flex flex-col shadow-2xl relative">
-      
       <div class="bg-brand-darkCard border-b border-brand-darkBorder p-4 sm:p-6 flex flex-wrap gap-4 items-center justify-between rounded-t-2xl z-10 shrink-0">
         <div class="flex items-center gap-3">
           <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-gold to-brand-goldDark flex items-center justify-center text-black shadow-lg">
@@ -258,7 +246,6 @@
       </div>
 
       <div class="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-6 bg-[#0B0B0D]/30 rounded-b-2xl">
-        <!-- Tab 1: Props -->
         <div id="content-props" class="space-y-4">
           <div class="flex justify-between items-end border-b border-brand-darkBorder/60 pb-3">
             <div>
@@ -269,7 +256,6 @@
           <div id="profile-props-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </div>
 
-        <!-- Tab 2: Inbox -->
         <div id="content-inbox" class="hidden space-y-4">
           <div class="border-b border-brand-darkBorder/60 pb-3">
             <h4 class="text-sm font-bold text-white">الرسائل والاستفسارات الواردة</h4>
@@ -278,7 +264,6 @@
           <div id="profile-inbox-list" class="space-y-3"></div>
         </div>
 
-        <!-- Tab 3: Users (Admin Only) -->
         <div id="content-users" class="hidden space-y-6">
           <div class="bg-brand-darkCard border border-brand-darkBorder p-5 rounded-2xl shadow-lg">
             <h4 class="text-sm font-bold text-brand-gold mb-3 flex items-center gap-2">
@@ -305,14 +290,14 @@
     </div>
   </div>
 
-  <!-- Add/Edit Property Form Modal (With Every Single Architectural Field) -->
+  <!-- Add/Edit Property Form Modal (With Dropdown Menus for Easy Selection) -->
   <div id="add-modal" class="fixed inset-0 bg-black/90 backdrop-blur z-[60] hidden flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-4xl my-auto rounded-2xl p-6 relative shadow-2xl max-h-[92vh] overflow-y-auto custom-scrollbar">
       <button onclick="closeModal('add-modal')" class="absolute top-4 left-4 text-zinc-400 hover:text-white bg-black/40 p-1.5 rounded-xl border border-brand-darkBorder">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
       <h3 id="add-modal-title" class="font-title text-xl font-bold gold-gradient-text mb-1">إضافة عقار جديد</h3>
-      <p class="text-xs text-zinc-400 mb-6 border-b border-brand-darkBorder pb-4">تعبئة البيانات الفنية بدقة تعزز وصول العرض للعملاء الباحثين.</p>
+      <p class="text-xs text-zinc-400 mb-6 border-b border-brand-darkBorder pb-4">حدد الخيارات والمواصفات من القوائم الجاهزة بسهولة وسرعة.</p>
 
       <form id="add-property-form" class="space-y-6">
         <input type="hidden" id="edit-prop-id">
@@ -357,7 +342,7 @@
           </div>
         </div>
 
-        <!-- 1. Apartment & Villa Specs -->
+        <!-- 1. Apartment & Villa Specs (With Dropdowns) -->
         <div id="residential-fields" class="p-4 bg-[#1A1A22]/50 border border-brand-darkBorder rounded-2xl space-y-4">
           <h4 class="text-xs font-bold text-brand-gold flex items-center gap-2">
             <i data-lucide="home" class="w-4 h-4"></i> مواصفات الشقق والفلل السكنية
@@ -365,39 +350,95 @@
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div>
               <label class="block text-xs text-zinc-400 mb-1">الطابق</label>
-              <input id="prop-floor" type="text" placeholder="مثال: الثالث (مع مصعد)" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <select id="prop-floor" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="">اختر الطابق...</option>
+                <option value="طابق أرضي">طابق أرضي</option>
+                <option value="طابق أرضي مع حديقة">طابق أرضي مع حديقة</option>
+                <option value="طابق قبو أول">طابق قبو أول</option>
+                <option value="طابق أول">طابق أول</option>
+                <option value="طابق ثاني">طابق ثاني</option>
+                <option value="طابق ثالث">طابق ثالث</option>
+                <option value="طابق رابع">طابق رابع</option>
+                <option value="طابق خامس">طابق خامس</option>
+                <option value="طابق سادس فما فوق">طابق سادس فما فوق</option>
+                <option value="دوبلكس">دوبلكس</option>
+                <option value="روف / ملحق أخير">روف / ملحق أخير</option>
+              </select>
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">الاتجاه / الواجهة</label>
-              <input id="prop-orientation" type="text" placeholder="قبلي غربي، شمالي..." class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <label class="block text-xs text-zinc-400 mb-1">الاتجاه والواجهة</label>
+              <select id="prop-orientation" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="">اختر الاتجاه...</option>
+                <option value="قبلي (جنوبي)">قبلي (جنوبي)</option>
+                <option value="غربي">غربي</option>
+                <option value="شرقي">شرقي</option>
+                <option value="شمالي">شمالي</option>
+                <option value="قبلي غربي">قبلي غربي</option>
+                <option value="قبلي شرقي">قبلي شرقي</option>
+                <option value="شمالي غربي">شمالي غربي</option>
+                <option value="شمالي شرقي">شمالي شرقي</option>
+                <option value="3 اتجاهات">3 اتجاهات</option>
+                <option value="4 اتجاهات مفتوحة">4 اتجاهات مفتوحة</option>
+              </select>
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">عدد الغرف</label>
-              <input id="prop-rooms" type="number" placeholder="4" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <select id="prop-rooms" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="1">1 غرفة وصالون</option>
+                <option value="2">2 غرف وصالون</option>
+                <option value="3">3 غرف وصالون</option>
+                <option value="4" selected>4 غرف وصالون</option>
+                <option value="5">5 غرف وصالون</option>
+                <option value="6">6 غرف فأكثر</option>
+              </select>
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">عدد الحمامات</label>
-              <input id="prop-bathrooms" type="number" placeholder="2" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <label class="block text-xs text-zinc-400 mb-1">دورات المياه (الحمامات)</label>
+              <select id="prop-bathrooms" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="1">حمام واحد</option>
+                <option value="2" selected>2 حمام</option>
+                <option value="3">3 حمامات</option>
+                <option value="4">4 حمامات فأكثر</option>
+              </select>
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">حالة الفرش</label>
+              <label class="block text-xs text-zinc-400 mb-1">حالة الفرش والإكساء</label>
               <select id="prop-furnishing" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
-                <option value="unfurnished">غير مفروش (مكسي / على الهيكل)</option>
+                <option value="unfurnished">غير مفروش (مكسي)</option>
                 <option value="furnished">مفروش بالكامل (سوبر ديلوكس)</option>
                 <option value="semi-furnished">نصف مفروش</option>
+                <option value="raw">على الهيكل الأسود</option>
               </select>
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">نظام التكييف</label>
-              <input id="prop-ac" type="text" placeholder="مركزي / سبليت راكب" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <select id="prop-ac" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="بدون تكييف">بدون تكييف</option>
+                <option value="تكييف سبليت راكب">تكييف سبليت راكب</option>
+                <option value="تكييف مركزي شامل">تكييف مركزي شامل</option>
+                <option value="تكييف صحراوي / دكت">تكييف صحراوي / دكت</option>
+                <option value="تأسيس شبكة تكييف فقط">تأسيس شبكة تكييف فقط</option>
+              </select>
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">نظام التدفئة</label>
-              <input id="prop-heating" type="text" placeholder="شوفاج مستقل / تحت البلاط" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <select id="prop-heating" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="بدون تدفئة">بدون تدفئة</option>
+                <option value="شوفاج مركزي مستقل (رادياتيرات)">شوفاج مركزي مستقل (رادياتيرات)</option>
+                <option value="تدفئة أرضية (Underfloor)">تدفئة أرضية (Underfloor)</option>
+                <option value="مدافئ غاز / ديزل">مدافئ غاز / ديزل</option>
+                <option value="طاقة شمسية للتدفئة">طاقة شمسية للتدفئة</option>
+              </select>
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">عدد الشرفات (البلكون)</label>
-              <input id="prop-balconies" type="number" placeholder="2" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <select id="prop-balconies" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="0">بدون شرفة</option>
+                <option value="1">شرفة واحدة</option>
+                <option value="2" selected>2 شرفة</option>
+                <option value="3">3 شرفات</option>
+                <option value="4">تراس كبير وشرفات</option>
+              </select>
             </div>
           </div>
 
@@ -433,7 +474,7 @@
           </div>
         </div>
 
-        <!-- 2. Land & Farm Specs -->
+        <!-- 2. Land & Farm Specs (With Dropdowns) -->
         <div id="land-fields" class="p-4 bg-[#1A1A22]/50 border border-brand-darkBorder rounded-2xl space-y-4 hidden">
           <h4 class="text-xs font-bold text-brand-gold flex items-center gap-2">
             <i data-lucide="trees" class="w-4 h-4"></i> مواصفات الأراضي والمزارع
@@ -441,31 +482,66 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             <div>
               <label class="block text-xs text-zinc-400 mb-1">تصنيف الأرض</label>
-              <input id="prop-land-cat" type="text" placeholder="طابو زراعي / سكني / تجاري..." class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <select id="prop-land-cat" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="">اختر التصنيف...</option>
+                <option value="طابو أخضر سكني داخل المخطط">طابو أخضر سكني داخل المخطط</option>
+                <option value="طابو أخضر زراعي مفرز">طابو أخضر زراعي مفرز</option>
+                <option value="أرض تجارية استثمارية">أرض تجارية استثمارية</option>
+                <option value="منطقة صناعية مرخصة">منطقة صناعية مرخصة</option>
+                <option value="مزرعة سياحية مرخصة">مزرعة سياحية مرخصة</option>
+              </select>
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">حالة الطابو والأسهم</label>
-              <input id="prop-deed-shares" type="text" placeholder="2400 سهم ملكية تامة / حكم محكمة" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <select id="prop-deed-shares" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="2400 سهم ملكية تامة (فراغ مباشر)">2400 سهم ملكية تامة (فراغ مباشر)</option>
+                <option value="أسهم مشاع قابلة للإفراز">أسهم مشاع قابلة للإفراز</option>
+                <option value="حكم محكمة قطعي مبرم">حكم محكمة قطعي مبرم</option>
+                <option value="وكالة غير قابلة للعزل كاتب عدل">وكالة غير قابلة للعزل كاتب عدل</option>
+                <option value="طابو زراعي رسمي">طابو زراعي رسمي</option>
+              </select>
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">الواجهة على الطريق (متر)</label>
-              <input id="prop-road-front" type="text" placeholder="واجهة 45 متر" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <label class="block text-xs text-zinc-400 mb-1">الواجهة على الشارع</label>
+              <input id="prop-road-front" type="text" placeholder="مثال: واجهة 45 متر على الشارع" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">نوع الطريق الموصل</label>
-              <input id="prop-road-type" type="text" placeholder="طريق معبد زفت / طريق ترابي" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <select id="prop-road-type" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="طريق معبد رئيسي (زفت)">طريق معبد رئيسي (زفت)</option>
+                <option value="طريق معبد فرعي">طريق معبد فرعي</option>
+                <option value="طريق ترابي ممهد">طريق ترابي ممهد</option>
+                <option value="طريق خاص بالمزرعة">طريق خاص بالمزرعة</option>
+              </select>
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">تفاصيل البئر والري</label>
-              <input id="prop-well-info" type="text" placeholder="بئر ارتوازي مرخص عمق 120م" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <label class="block text-xs text-zinc-400 mb-1">مصدر المياه والري</label>
+              <select id="prop-well-info" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="بئر ارتوازي مرخص بالكامل">بئر ارتوازي مرخص بالكامل</option>
+                <option value="بئر مياه سطحي">بئر مياه سطحي</option>
+                <option value="شبكة ري حكومية (قناة)">شبكة ري حكومية (قناة)</option>
+                <option value="اشتراك مياه شبكة">اشتراك مياه شبكة</option>
+                <option value="لا يوجد بئر حالياً">لا يوجد بئر حالياً</option>
+              </select>
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">الكهرباء والمحولة</label>
-              <input id="prop-electric-info" type="text" placeholder="محولة كهرباء مستقلة 50 KVA" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <label class="block text-xs text-zinc-400 mb-1">الكهرباء والطاقة</label>
+              <select id="prop-electric-info" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="محولة كهرباء مستقلة">محولة كهرباء مستقلة</option>
+                <option value="خط كهرباء زراعي واصل">خط كهرباء زراعي واصل</option>
+                <option value="شبكة كهرباء عامة">شبكة كهرباء عامة</option>
+                <option value="منظومة طاقة شمسية كاملة">منظومة طاقة شمسية كاملة</option>
+                <option value="بدون كهرباء حالياً">بدون كهرباء حالياً</option>
+              </select>
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">السور والبوابة</label>
-              <input id="prop-fence-info" type="text" placeholder="مسورة بالكامل بحجر بازلتي" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <label class="block text-xs text-zinc-400 mb-1">حالة السور والبوابة</label>
+              <select id="prop-fence-info" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+                <option value="مسورة بالكامل بحجر بازلتي / بيتون">مسورة بالكامل بحجر بازلتي / بيتون</option>
+                <option value="مسورة بسياج شبك حديدي وبوابة">مسورة بسياج شبك حديدي وبوابة</option>
+                <option value="مسورة جزئياً">مسورة جزئياً</option>
+                <option value="غير مسورة">غير مسورة</option>
+              </select>
             </div>
             <div class="sm:col-span-2">
               <label class="block text-xs text-zinc-400 mb-1">الأشجار والإنتاج</label>
@@ -771,27 +847,27 @@
           const general_notes = document.getElementById('prop-desc').value.trim();
 
           // Residential Specs
-          const floor = document.getElementById('prop-floor').value.trim();
-          const orientation = document.getElementById('prop-orientation').value.trim();
+          const floor = document.getElementById('prop-floor').value;
+          const orientation = document.getElementById('prop-orientation').value;
           const rooms = parseInt(document.getElementById('prop-rooms').value) || 0;
           const bathrooms = parseInt(document.getElementById('prop-bathrooms').value) || 0;
           const balconies = parseInt(document.getElementById('prop-balconies').value) || 0;
           const furnishing = document.getElementById('prop-furnishing').value;
-          const sunlight = document.getElementById('prop-ac').value.trim(); // AC
-          const furnishing_details = document.getElementById('prop-heating').value.trim(); // Heating
+          const sunlight = document.getElementById('prop-ac').value; // AC
+          const furnishing_details = document.getElementById('prop-heating').value; // Heating
 
           // Services Checkboxes
           const services = Array.from(document.querySelectorAll('.service-cb:checked')).map(cb => cb.value);
 
           // Land Specs
-          const land_category = document.getElementById('prop-land-cat').value.trim();
-          const deed_shares = document.getElementById('prop-deed-shares').value.trim();
+          const land_category = document.getElementById('prop-land-cat').value;
+          const deed_shares = document.getElementById('prop-deed-shares').value;
           const road_frontage = document.getElementById('prop-road-front').value.trim();
-          const road_type = document.getElementById('prop-road-type').value.trim();
-          const water_source = document.getElementById('prop-well-info').value.trim();
-          const electricity_source = document.getElementById('prop-electric-info').value.trim();
+          const road_type = document.getElementById('prop-road-type').value;
+          const water_source = document.getElementById('prop-well-info').value;
+          const electricity_source = document.getElementById('prop-electric-info').value;
           const trees_info = document.getElementById('prop-trees-info').value.trim();
-          const fence_info = document.getElementById('prop-fence-info').value.trim();
+          const fence_info = document.getElementById('prop-fence-info').value;
 
           let serial_code = editId ? allProperties.find(p=>p.id===editId).serial_code : 'EB-' + Math.floor(1000 + Math.random() * 9000);
           let prop_id = editId ? editId : 'prop_' + Date.now();
@@ -801,7 +877,7 @@
             floor, orientation, rooms, bathrooms, balconies, furnishing,
             sunlight, furnishing_details, services,
             land_category, deed_shares, road_frontage, road_type, water_source, electricity_source, trees_info,
-            building_status: fence_info // stored safely
+            building_status: fence_info
           };
 
           // Images
@@ -1286,12 +1362,12 @@
 
       document.getElementById('prop-floor').value = p.floor || '';
       document.getElementById('prop-orientation').value = p.orientation || '';
-      document.getElementById('prop-rooms').value = p.rooms || '';
-      document.getElementById('prop-bathrooms').value = p.bathrooms || '';
-      document.getElementById('prop-balconies').value = p.balconies || '';
+      document.getElementById('prop-rooms').value = p.rooms || '4';
+      document.getElementById('prop-bathrooms').value = p.bathrooms || '2';
+      document.getElementById('prop-balconies').value = p.balconies || '2';
       document.getElementById('prop-furnishing').value = p.furnishing || 'unfurnished';
-      document.getElementById('prop-ac').value = p.sunlight || '';
-      document.getElementById('prop-heating').value = p.furnishing_details || '';
+      document.getElementById('prop-ac').value = p.sunlight || 'بدون تكييف';
+      document.getElementById('prop-heating').value = p.furnishing_details || 'بدون تدفئة';
 
       // Checkboxes
       const pServices = p.services || [];
@@ -1300,12 +1376,12 @@
       });
 
       document.getElementById('prop-land-cat').value = p.land_category || '';
-      document.getElementById('prop-deed-shares').value = p.deed_shares || '';
+      document.getElementById('prop-deed-shares').value = p.deed_shares || '2400 سهم ملكية تامة (فراغ مباشر)';
       document.getElementById('prop-road-front').value = p.road_frontage || '';
-      document.getElementById('prop-road-type').value = p.road_type || '';
-      document.getElementById('prop-well-info').value = p.water_source || '';
-      document.getElementById('prop-electric-info').value = p.electricity_source || '';
-      document.getElementById('prop-fence-info').value = p.building_status || '';
+      document.getElementById('prop-road-type').value = p.road_type || 'طريق معبد رئيسي (زفت)';
+      document.getElementById('prop-well-info').value = p.water_source || 'بئر ارتوازي مرخص بالكامل';
+      document.getElementById('prop-electric-info').value = p.electricity_source || 'محولة كهرباء مستقلة';
+      document.getElementById('prop-fence-info').value = p.building_status || 'مسورة بالكامل بحجر بازلتي / بيتون';
       document.getElementById('prop-trees-info').value = p.trees_info || '';
       
       toggleFormFieldsByType();
