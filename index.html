@@ -96,6 +96,14 @@
       </div>
 
       <div class="flex items-center space-x-2 space-x-reverse">
+        <!-- Favorites Filter Button -->
+        <button id="fav-filter-btn" onclick="toggleFavoritesFilter()" class="border border-brand-gold/30 bg-[#1A1A22] text-zinc-300 hover:text-brand-gold hover:border-brand-gold/60 text-xs sm:text-sm px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition shadow-sm">
+          <i id="fav-header-icon" data-lucide="star" class="w-4 h-4 text-amber-400"></i>
+          <span class="hidden sm:inline">المفضلة</span>
+          <span id="fav-counter" class="bg-brand-gold/20 text-brand-gold px-1.5 py-0.2 rounded-full text-[11px] font-bold">0</span>
+        </button>
+
+        <!-- Auth Button -->
         <button id="auth-btn" onclick="handleAuthClick()" class="border border-brand-gold/50 text-brand-gold hover:bg-brand-gold/10 text-xs sm:text-sm px-4 py-2 rounded-xl flex items-center gap-2 transition shadow-sm">
           <i id="auth-icon" data-lucide="user" class="w-4 h-4"></i>
           <span id="auth-btn-text">تسجيل الدخول</span>
@@ -164,7 +172,7 @@
     </div>
   </section>
 
-  <!-- Interactive Quick-Filter Category Icons (الأيقونات التفاعلية للإيجار والتصنيفات) -->
+  <!-- Interactive Quick-Filter Category Icons -->
   <section class="max-w-7xl mx-auto px-4 pt-4 w-full">
     <div class="flex items-center justify-between mb-2.5">
       <h3 class="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
@@ -174,7 +182,6 @@
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
       
-      <!-- 1. Daily Rent Resorts -->
       <button onclick="quickFilterCategory('daily_rent')" id="qf-daily_rent" class="category-card bg-brand-darkCard border border-brand-darkBorder p-3.5 rounded-2xl flex flex-col items-center justify-center text-center transition duration-200 hover:border-brand-gold/60 group relative overflow-hidden">
         <div class="w-11 h-11 rounded-2xl bg-rose-500/10 text-rose-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
           <i data-lucide="palmtree" class="w-6 h-6"></i>
@@ -184,7 +191,6 @@
         <span id="badge-daily-count" class="text-[9px] bg-rose-950/60 text-rose-300 border border-rose-800/40 px-2 py-0.5 rounded-full mt-1.5">0 متاح</span>
       </button>
 
-      <!-- 2. Regular Rent (Apartments/Villas) -->
       <button onclick="quickFilterCategory('rent')" id="qf-rent" class="category-card bg-brand-darkCard border border-brand-darkBorder p-3.5 rounded-2xl flex flex-col items-center justify-center text-center transition duration-200 hover:border-brand-gold/60 group">
         <div class="w-11 h-11 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
           <i data-lucide="key" class="w-6 h-6"></i>
@@ -194,7 +200,6 @@
         <span id="badge-rent-count" class="text-[9px] bg-amber-950/60 text-amber-300 border border-amber-800/40 px-2 py-0.5 rounded-full mt-1.5">0 متاح</span>
       </button>
 
-      <!-- 3. Properties for Sale -->
       <button onclick="quickFilterCategory('sale')" id="qf-sale" class="category-card bg-brand-darkCard border border-brand-darkBorder p-3.5 rounded-2xl flex flex-col items-center justify-center text-center transition duration-200 hover:border-brand-gold/60 group">
         <div class="w-11 h-11 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
           <i data-lucide="badge-dollar-sign" class="w-6 h-6"></i>
@@ -204,7 +209,6 @@
         <span id="badge-sale-count" class="text-[9px] bg-emerald-950/60 text-emerald-300 border border-emerald-800/40 px-2 py-0.5 rounded-full mt-1.5">0 متاح</span>
       </button>
 
-      <!-- 4. Commercial & Shops -->
       <button onclick="quickFilterCategory('commercial')" id="qf-commercial" class="category-card bg-brand-darkCard border border-brand-darkBorder p-3.5 rounded-2xl flex flex-col items-center justify-center text-center transition duration-200 hover:border-brand-gold/60 group">
         <div class="w-11 h-11 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
           <i data-lucide="store" class="w-6 h-6"></i>
@@ -214,7 +218,6 @@
         <span id="badge-comm-count" class="text-[9px] bg-purple-950/60 text-purple-300 border border-purple-800/40 px-2 py-0.5 rounded-full mt-1.5">0 متاح</span>
       </button>
 
-      <!-- 5. All Listings -->
       <button onclick="quickFilterCategory('all')" id="qf-all" class="category-card active bg-brand-darkCard border border-brand-darkBorder p-3.5 rounded-2xl flex flex-col items-center justify-center text-center transition duration-200 hover:border-brand-gold/60 group col-span-2 sm:col-span-1">
         <div class="w-11 h-11 rounded-2xl bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-2 group-hover:scale-110 transition">
           <i data-lucide="layers" class="w-6 h-6"></i>
@@ -242,7 +245,7 @@
           <option value="villa">فيلا مستقلة</option>
           <option value="land">أرض زراعية / سكنية</option>
           <option value="building">عمارة كاملة</option>
-          <option value="shop">محل تجاري</option>
+          <option value="shop">محل تجاري / مكتب</option>
         </select>
         <select id="filter-status" class="bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2.5 text-zinc-300 focus:outline-none focus:border-brand-gold">
           <option value="all">كل الحالات</option>
@@ -275,6 +278,11 @@
           <h2 id="modal-title" class="text-lg font-bold text-white mt-1"></h2>
         </div>
         <div class="flex items-center gap-2 relative">
+          <!-- Favorite Star in Modal -->
+          <button id="modal-fav-btn" onclick="toggleFavoriteFromModal()" class="text-zinc-400 hover:text-amber-400 p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition" title="إضافة إلى المفضلة">
+            <i id="modal-fav-icon" data-lucide="star" class="w-4 h-4"></i>
+          </button>
+
           <button id="modal-print-btn" onclick="window.print()" class="text-zinc-400 hover:text-brand-gold p-2 rounded-xl border border-brand-darkBorder bg-[#1A1A22] transition" title="طباعة بطاقة العرض">
             <i data-lucide="printer" class="w-4 h-4"></i>
           </button>
@@ -329,7 +337,7 @@
           </div>
         </div>
 
-        <!-- Technical Specs -->
+        <!-- Technical Specs Grid -->
         <div>
           <h3 class="text-xs font-bold text-brand-gold uppercase tracking-wider mb-3 flex items-center gap-2">
             <i data-lucide="cpu" class="w-4 h-4"></i> المواصفات الفنية والهندسية
@@ -501,7 +509,7 @@
     </div>
   </div>
 
-  <!-- Add/Edit Property Form Modal -->
+  <!-- Add/Edit Property Form Modal (With New Global Fields) -->
   <div id="add-modal" class="fixed inset-0 bg-black/90 backdrop-blur z-[60] hidden flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-brand-darkCard border border-brand-darkBorder w-full max-w-4xl my-auto rounded-2xl p-6 relative shadow-2xl max-h-[92vh] overflow-y-auto custom-scrollbar">
       <button onclick="closeModal('add-modal')" class="absolute top-4 left-4 text-zinc-400 hover:text-white bg-black/40 p-1.5 rounded-xl border border-brand-darkBorder">
@@ -516,7 +524,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="md:col-span-2">
             <label class="block text-xs text-zinc-400 mb-1.5">عنوان الإعلان الرسمي *</label>
-            <input id="prop-title" type="text" required placeholder="مثال: مزرعة سياحية VIP مع مسبح مفلتر ومشوى باربكيو" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
+            <input id="prop-title" type="text" required placeholder="مثال: مزرعة سياحية VIP مع مسبح مفلتر وشلال" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
           </div>
           <div>
             <label class="block text-xs text-zinc-400 mb-1.5">نوع العقار *</label>
@@ -526,7 +534,7 @@
               <option value="villa">فيلا مستقلة</option>
               <option value="land">أرض زراعية / سكنية</option>
               <option value="building">عمارة كاملة</option>
-              <option value="shop">محل تجاري</option>
+              <option value="shop">محل تجاري / مكتب</option>
             </select>
           </div>
         </div>
@@ -550,24 +558,58 @@
           </div>
           <div>
             <label class="block text-xs text-zinc-400 mb-1.5">المدينة والمنطقة *</label>
-            <input id="prop-city" type="text" required placeholder="ريف دمشق، يعفور" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-4 py-2.5 text-white focus:border-brand-gold outline-none">
+            <input id="prop-city" type="text" required placeholder="حماة، مزارع غرب المشتل" class="w-full bg-[#1A1A22] border border-brand-darkBorder text-sm rounded-xl px-3 py-2.5 text-white focus:border-brand-gold outline-none">
           </div>
         </div>
 
-        <!-- 1. Special Resort / Farm Fields -->
+        <!-- Extra Common Fields: Landmarks & Payment terms -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#141418] p-4 rounded-2xl border border-brand-darkBorder">
+          <div>
+            <label class="block text-xs text-brand-gold mb-1.5 flex items-center gap-1.5">
+              <i data-lucide="compass" class="w-3.5 h-3.5"></i> المعالم القريبة ونقاط الجذب
+            </label>
+            <input id="prop-landmarks" type="text" placeholder="مثال: تبعد 5 دقائق عن ساحة العاصي، بجانب فندق الأندلس" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+          </div>
+          <div>
+            <label class="block text-xs text-brand-gold mb-1.5 flex items-center gap-1.5">
+              <i data-lucide="credit-card" class="w-3.5 h-3.5"></i> طريقة الدفع والتفاوض
+            </label>
+            <select id="prop-payment-terms" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+              <option value="كاش نقداً عند التسليم">كاش نقداً عند التسليم</option>
+              <option value="السعر نهائي وغير قابل للتفاوض">السعر نهائي وغير قابل للتفاوض</option>
+              <option value="قابل للتفاوض البسيط للجادين">قابل للتفاوض البسيط للجادين</option>
+              <option value="إمكانية مقايضة مع عقار أو سيارة">إمكانية مقايضة مع عقار أو سيارة</option>
+              <option value="دفعة أولى وتسهيلات دفع">دفعة أولى وتسهيلات دفع</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 1. Special Resort / Farm Fields (مزارع وشاليهات للإيجار اليومي) -->
         <div id="resort-farm-fields" class="p-4 bg-[#1A1A22]/60 border border-brand-gold/30 rounded-2xl space-y-4">
           <h4 class="text-xs font-bold text-brand-gold flex items-center gap-2">
             <i data-lucide="palmtree" class="w-4 h-4"></i> مواصفات المزارع السياحية والشاليهات (إيجار يومي)
           </h4>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">المسبح</label>
+              <label class="block text-xs text-zinc-400 mb-1">المسبح والفلترة</label>
               <select id="prop-resort-pool" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
                 <option value="مسبح خارجي مفلتر كبير">مسبح خارجي مفلتر كبير</option>
                 <option value="مسبح داخلي دافئ / مغلق">مسبح داخلي دافئ / مغلق</option>
                 <option value="مسبح للكبار + مسبح أطفال">مسبح للكبار + مسبح أطفال</option>
                 <option value="بدون مسبح">بدون مسبح</option>
               </select>
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">أبعاد وعمق المسبح</label>
+              <input id="prop-pool-dimensions" type="text" placeholder="مثال: 5×12م عمق 1 إلى 2.2م" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">الطاقة الاستيعابية</label>
+              <input id="prop-resort-capacity" type="text" placeholder="مثال: تتسع حتى 40 شخصاً" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">أوقات الدخول والمغادرة</label>
+              <input id="prop-resort-timing" type="text" placeholder="مثال: دخول 10ص - مغادرة 8ص" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">مشوى الباربكيو والفرن</label>
@@ -594,6 +636,10 @@
                 <option value="ملعب كرة قدم / طائرة معشب">ملعب كرة قدم / طائرة معشب</option>
                 <option value="بدون منطقة ألعاب">بدون منطقة ألعاب</option>
               </select>
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">مبلغ التأمين المسترد</label>
+              <input id="prop-resort-deposit" type="text" placeholder="مثال: 50$ تأمين نظافة وأضرار" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
             </div>
           </div>
 
@@ -628,7 +674,28 @@
           </div>
         </div>
 
-        <!-- 2. Apartment & Villa Specs -->
+        <!-- 2. Commercial / Office Specs (المكاتب والمحلات التجارية) -->
+        <div id="commercial-fields" class="p-4 bg-[#1A1A22]/50 border border-brand-darkBorder rounded-2xl space-y-4 hidden">
+          <h4 class="text-xs font-bold text-brand-gold flex items-center gap-2">
+            <i data-lucide="store" class="w-4 h-4"></i> مواصفات المحلات والمكاتب التجارية
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">النشاط المناسب أو المسموح به</label>
+              <input id="prop-comm-activity" type="text" placeholder="مثال: مكتب محاماة، عيادة، شركة، كافيه" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">عرض الواجهة وارتفاع السقف</label>
+              <input id="prop-comm-facade" type="text" placeholder="مثال: واجهة 5م، ارتفاع 3.8م" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-400 mb-1">الطابق وموقع المجمع</label>
+              <input id="prop-comm-floor" type="text" placeholder="مثال: قبو أول في مجمع تجاري" class="w-full bg-[#0B0B0D] border border-brand-darkBorder text-xs rounded-xl px-3 py-2 text-white focus:border-brand-gold outline-none">
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Apartment & Villa Specs -->
         <div id="residential-fields" class="p-4 bg-[#1A1A22]/50 border border-brand-darkBorder rounded-2xl space-y-4 hidden">
           <h4 class="text-xs font-bold text-brand-gold flex items-center gap-2">
             <i data-lucide="home" class="w-4 h-4"></i> مواصفات الشقق والفلل السكنية
@@ -727,7 +794,7 @@
           </div>
         </div>
 
-        <!-- 3. Agricultural Land Specs -->
+        <!-- 4. Agricultural Land Specs -->
         <div id="land-fields" class="p-4 bg-[#1A1A22]/50 border border-brand-darkBorder rounded-2xl space-y-4 hidden">
           <h4 class="text-xs font-bold text-brand-gold flex items-center gap-2">
             <i data-lucide="trees" class="w-4 h-4"></i> مواصفات الأراضي والمزارع الاستثمارية
@@ -930,6 +997,10 @@
     let currentModalProperty = null;
     let currentUser = JSON.parse(localStorage.getItem('eb_user') || 'null');
     let activeQuickFilter = 'all';
+    let showOnlyFavorites = false;
+
+    // Local Favorites
+    let savedFavorites = JSON.parse(localStorage.getItem('eb_favorites') || '[]');
 
     let adBannerState = JSON.parse(localStorage.getItem('eb_ad_banner') || JSON.stringify({
       enabled: true,
@@ -940,6 +1011,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       updateAuthUI();
+      updateFavoritesUI();
       applyAdBannerState();
       fetchProperties();
       setupEventListeners();
@@ -959,7 +1031,73 @@
       }
     }
 
-    // Dynamic High-Quality SVG Placeholder if NO photo is uploaded
+    // Favorite System
+    function updateFavoritesUI() {
+      const counter = document.getElementById('fav-counter');
+      if (counter) counter.textContent = savedFavorites.length;
+      
+      const filterBtn = document.getElementById('fav-filter-btn');
+      if (filterBtn) {
+        if (showOnlyFavorites) {
+          filterBtn.classList.add('border-brand-gold', 'bg-brand-gold/15', 'text-brand-gold');
+        } else {
+          filterBtn.classList.remove('border-brand-gold', 'bg-brand-gold/15', 'text-brand-gold');
+        }
+      }
+    }
+
+    function toggleFavorite(id, e) {
+      if (e) e.stopPropagation();
+      const index = savedFavorites.indexOf(id);
+      if (index > -1) {
+        savedFavorites.splice(index, 1);
+        showToast('تمت إزالة العقار من قائمتك المفضلة', 'warning');
+      } else {
+        savedFavorites.push(id);
+        showToast('تمت إضافة العقار إلى قائمتك المفضلة بنجاح!');
+      }
+      localStorage.setItem('eb_favorites', JSON.stringify(savedFavorites));
+      updateFavoritesUI();
+      applyFilters();
+
+      if (currentModalProperty && currentModalProperty.id === id) {
+        updateModalFavButton();
+      }
+    }
+
+    function toggleFavoriteFromModal() {
+      if (!currentModalProperty) return;
+      toggleFavorite(currentModalProperty.id);
+    }
+
+    function updateModalFavButton() {
+      if (!currentModalProperty) return;
+      const isFav = savedFavorites.includes(currentModalProperty.id);
+      const favIcon = document.getElementById('modal-fav-icon');
+      const favBtn = document.getElementById('modal-fav-btn');
+
+      if (isFav) {
+        favIcon.setAttribute('data-lucide', 'star');
+        favIcon.classList.add('fill-amber-400', 'text-amber-400');
+        favBtn.classList.add('border-amber-400/50');
+      } else {
+        favIcon.setAttribute('data-lucide', 'star');
+        favIcon.classList.remove('fill-amber-400', 'text-amber-400');
+        favBtn.classList.remove('border-amber-400/50');
+      }
+      lucide.createIcons();
+    }
+
+    function toggleFavoritesFilter() {
+      showOnlyFavorites = !showOnlyFavorites;
+      if (showOnlyFavorites && savedFavorites.length === 0) {
+        showToast('قائمة المفضلة فارغة حالياً. انقر على النجمة في أي عقار لحفظه!', 'warning');
+      }
+      updateFavoritesUI();
+      applyFilters();
+    }
+
+    // Dynamic High-Quality SVG Placeholder
     function getPropertyPlaceholderSVG(type) {
       let icon = 'home';
       let title = 'عقار استثماري';
@@ -984,7 +1122,7 @@
         gradientStart = '#161F2E';
       } else if (type === 'shop') {
         icon = 'store';
-        title = 'محل تجاري';
+        title = 'محل تجاري / مكتب';
         gradientStart = '#24142B';
       }
 
@@ -1019,7 +1157,6 @@
       document.getElementById('stat-farms').textContent = farmCount;
       document.getElementById('stat-daily-sale').textContent = `${dailyCount} يومي / ${saleCount} بيع`;
 
-      // Update category badges
       document.getElementById('badge-daily-count').textContent = `${dailyCount} متاح`;
       document.getElementById('badge-rent-count').textContent = `${rentCount} متاح`;
       document.getElementById('badge-sale-count').textContent = `${saleCount} متاح`;
@@ -1027,9 +1164,11 @@
       document.getElementById('badge-all-count').textContent = `${props.length} متاح`;
     }
 
-    // Quick Filter Category Action
     function quickFilterCategory(cat) {
       activeQuickFilter = cat;
+      showOnlyFavorites = false;
+      updateFavoritesUI();
+
       document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
       const activeBtn = document.getElementById(`qf-${cat}`);
       if (activeBtn) activeBtn.classList.add('active');
@@ -1062,15 +1201,19 @@
       const resFields = document.getElementById('residential-fields');
       const landFields = document.getElementById('land-fields');
       const resortFields = document.getElementById('resort-farm-fields');
+      const commFields = document.getElementById('commercial-fields');
 
       resFields.classList.add('hidden');
       landFields.classList.add('hidden');
       resortFields.classList.add('hidden');
+      commFields.classList.add('hidden');
 
       if (type === 'resort_farm') {
         resortFields.classList.remove('hidden');
       } else if (type === 'land') {
         landFields.classList.remove('hidden');
+      } else if (type === 'shop' || type === 'building') {
+        commFields.classList.remove('hidden');
       } else {
         resFields.classList.remove('hidden');
       }
@@ -1276,26 +1419,45 @@
           const owner_phone = document.getElementById('prop-owner-phone').value.trim();
           const general_notes = document.getElementById('prop-desc').value.trim();
 
-          const floor = document.getElementById('prop-floor').value;
-          const orientation = document.getElementById('prop-orientation').value;
-          const rooms = parseInt(document.getElementById('prop-rooms').value) || 0;
-          const bathrooms = parseInt(document.getElementById('prop-bathrooms').value) || 0;
-          const balconies = parseInt(document.getElementById('prop-balconies').value) || 0;
-          const furnishing = document.getElementById('prop-furnishing').value;
-          const sunlight = document.getElementById('prop-ac').value;
-          const furnishing_details = document.getElementById('prop-heating').value;
+          // New Advanced Fields
+          const landmarks = document.getElementById('prop-landmarks').value.trim();
+          const payment_terms = document.getElementById('prop-payment-terms').value;
+
+          let floor = document.getElementById('prop-floor').value;
+          let orientation = document.getElementById('prop-orientation').value;
+          let rooms = parseInt(document.getElementById('prop-rooms').value) || 0;
+          let bathrooms = parseInt(document.getElementById('prop-bathrooms').value) || 0;
+          let balconies = parseInt(document.getElementById('prop-balconies').value) || 0;
+          let furnishing = document.getElementById('prop-furnishing').value;
+          let sunlight = document.getElementById('prop-ac').value;
+          let furnishing_details = document.getElementById('prop-heating').value;
 
           const services = Array.from(document.querySelectorAll('.service-cb:checked')).map(cb => cb.value);
 
-          // Land & Resort inputs
-          const land_category = document.getElementById('prop-land-cat').value;
-          const deed_shares = document.getElementById('prop-deed-shares').value;
-          const road_frontage = document.getElementById('prop-road-front').value.trim();
-          const road_type = document.getElementById('prop-road-type').value;
-          const water_source = type === 'resort_farm' ? document.getElementById('prop-resort-pool').value : document.getElementById('prop-well-info').value;
-          const electricity_source = type === 'resort_farm' ? document.getElementById('prop-resort-bbq').value : document.getElementById('prop-electric-info').value;
-          const trees_info = type === 'resort_farm' ? document.getElementById('prop-resort-kids').value : '';
-          const fence_info = type === 'resort_farm' ? document.getElementById('prop-resort-seating').value : '';
+          let land_category = document.getElementById('prop-land-cat').value;
+          let deed_shares = document.getElementById('prop-deed-shares').value;
+          let road_frontage = document.getElementById('prop-road-front').value.trim();
+          let road_type = document.getElementById('prop-road-type').value;
+          let water_source = document.getElementById('prop-well-info').value;
+          let electricity_source = document.getElementById('prop-electric-info').value;
+          let trees_info = '';
+          let building_status = '';
+
+          if (type === 'resort_farm') {
+            water_source = document.getElementById('prop-resort-pool').value;
+            electricity_source = document.getElementById('prop-resort-bbq').value;
+            building_status = document.getElementById('prop-resort-seating').value;
+            trees_info = document.getElementById('prop-resort-kids').value;
+            // Store dimensions, timing, capacity and deposit in dedicated or meta slots
+            road_frontage = document.getElementById('prop-pool-dimensions').value.trim(); // used for pool dimensions
+            road_type = document.getElementById('prop-resort-timing').value.trim(); // used for check-in/out
+            land_category = document.getElementById('prop-resort-capacity').value.trim(); // used for capacity
+            deed_shares = document.getElementById('prop-resort-deposit').value.trim(); // used for deposit
+          } else if (type === 'shop' || type === 'building') {
+            land_category = document.getElementById('prop-comm-activity').value.trim(); // suitable activity
+            road_frontage = document.getElementById('prop-comm-facade').value.trim(); // facade
+            floor = document.getElementById('prop-comm-floor').value.trim();
+          }
 
           let serial_code = editId ? allProperties.find(p=>p.id===editId).serial_code : 'EB-' + Math.floor(1000 + Math.random() * 9000);
           let prop_id = editId ? editId : 'prop_' + Date.now();
@@ -1305,10 +1467,10 @@
             floor, orientation, rooms, bathrooms, balconies, furnishing,
             sunlight, furnishing_details, services,
             land_category, deed_shares, road_frontage, road_type, water_source, electricity_source, trees_info,
-            building_status: fence_info
+            building_status,
+            landmarks, payment_terms
           };
 
-          // Upload Images (Optional)
           const imageFiles = document.getElementById('prop-images').files;
           if (imageFiles.length > 0) {
             let imageUrls = [];
@@ -1324,7 +1486,6 @@
             propData.images = imageUrls;
           }
 
-          // Upload Video (Optional)
           const videoFile = document.getElementById('prop-video').files[0];
           if (videoFile) {
             const vPath = `${prop_id}/video_${Date.now()}_${videoFile.name}`;
@@ -1335,7 +1496,6 @@
             }
           }
 
-          // Upload Deed
           const deedFileInput = document.getElementById('prop-deed-file');
           if (deedFileInput.files.length > 0) {
             const dFile = deedFileInput.files[0];
@@ -1414,9 +1574,16 @@
       const grid = document.getElementById('properties-grid');
       grid.innerHTML = '';
 
+      if (props.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-16 text-center text-zinc-500"><i data-lucide="star-off" class="w-10 h-10 mx-auto mb-2 opacity-30"></i><p>لا توجد نتائج تطابق بحثك أو قائمة المفضلة.</p></div>`;
+        lucide.createIcons();
+        return;
+      }
+
       props.forEach(p => {
         const hasCustomImg = (p.images && p.images.length > 0 && p.images[0]);
         const coverImg = hasCustomImg ? p.images[0] : getPropertyPlaceholderSVG(p.type);
+        const isFav = savedFavorites.includes(p.id);
         
         let stLabel = 'للبيع';
         let stClass = 'bg-emerald-600';
@@ -1433,22 +1600,38 @@
         else if (p.type === 'apartment') typeName = 'شقة';
         else if (p.type === 'villa') typeName = 'فيلا';
         else if (p.type === 'land') typeName = 'أرض';
-        else if (p.type === 'shop') typeName = 'محل';
+        else if (p.type === 'shop') typeName = 'مكتب / محل';
         
         grid.innerHTML += `
-          <div class="bg-brand-darkCard border border-brand-darkBorder rounded-2xl overflow-hidden hover:border-brand-gold/40 transition duration-300 flex flex-col group shadow-xl">
+          <div class="bg-brand-darkCard border border-brand-darkBorder rounded-2xl overflow-hidden hover:border-brand-gold/40 transition duration-300 flex flex-col group shadow-xl relative">
             <div class="relative h-56 w-full overflow-hidden bg-black/40 cursor-pointer" onclick="openPropertyModal('${p.id}')">
               <img src="${coverImg}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              
+              <!-- Top Left: Serial Badge -->
               <div class="absolute top-3 right-3 bg-brand-darkCard/90 border border-brand-gold/40 text-brand-gold text-xs font-title px-2.5 py-1 rounded-md shadow">#${p.serial_code}</div>
+              
+              <!-- Top Right: Star Favorite Button -->
+              <button onclick="toggleFavorite('${p.id}', event)" class="absolute top-3 left-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur border border-white/20 flex items-center justify-center text-zinc-300 hover:text-amber-400 hover:scale-110 transition shadow-lg z-10" title="إضافة إلى المفضلة">
+                <i data-lucide="star" class="w-4 h-4 ${isFav ? 'fill-amber-400 text-amber-400' : ''}"></i>
+              </button>
+
+              <!-- Bottom Left: Status -->
               <div class="absolute bottom-3 left-3 ${stClass} text-white text-xs font-bold px-3 py-1 rounded-lg shadow">${stLabel}</div>
-              ${p.video_url ? `<div class="absolute bottom-3 right-3 bg-black/80 border border-brand-gold/50 text-brand-gold px-2 py-1 rounded-lg shadow flex items-center gap-1 text-[11px] font-bold"><i data-lucide="play" class="w-3.5 h-3.5 fill-brand-gold"></i> فيديو</div>` : ''}
+              
+              <!-- Bottom Right: Verified Badge & Video Icon -->
+              <div class="absolute bottom-3 right-3 flex items-center gap-1.5">
+                ${p.deed_file_url ? `<span class="bg-emerald-950/80 border border-emerald-600/50 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-md backdrop-blur flex items-center gap-1"><i data-lucide="badge-check" class="w-3 h-3"></i> موثق</span>` : ''}
+                ${p.video_url ? `<span class="bg-black/80 border border-brand-gold/50 text-brand-gold px-2 py-0.5 rounded-md shadow flex items-center gap-1 text-[10px] font-bold"><i data-lucide="play" class="w-3 h-3 fill-brand-gold"></i> فيديو</span>` : ''}
+              </div>
             </div>
+            
             <div class="p-4 space-y-2 flex-1 flex flex-col">
               <div class="flex justify-between items-center text-xs">
-                <span class="text-zinc-400 flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-gold"></i> ${p.city || 'المدينة'}</span>
-                <span class="text-base font-bold text-brand-gold">${Number(p.price).toLocaleString()} $ ${p.status==='daily_rent'?'/ يومياً':''}</span>
+                <span class="text-zinc-400 flex items-center gap-1 truncate max-w-[60%]"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-gold shrink-0"></i> ${p.city || 'المدينة'}</span>
+                <span class="text-base font-bold text-brand-gold whitespace-nowrap">${Number(p.price).toLocaleString()} $ ${p.status==='daily_rent'?'/ يومياً':''}</span>
               </div>
               <h3 class="font-bold text-white text-base line-clamp-1 cursor-pointer hover:text-brand-gold transition" onclick="openPropertyModal('${p.id}')">${p.title}</h3>
+              ${p.landmarks ? `<p class="text-[11px] text-zinc-400 line-clamp-1 flex items-center gap-1"><i data-lucide="compass" class="w-3 h-3 text-brand-gold shrink-0"></i> ${p.landmarks}</p>` : ''}
               <div class="grid grid-cols-3 gap-2 mt-auto pt-3 border-t border-brand-darkBorder/60 text-center text-xs text-zinc-400">
                 <div><span class="block text-[10px] text-zinc-500">المساحة</span><span class="font-bold text-white">${p.area || 0} م²</span></div>
                 <div class="border-x border-brand-darkBorder"><span class="block text-[10px] text-zinc-500">النوع</span><span class="font-bold text-white truncate px-1">${typeName}</span></div>
@@ -1485,7 +1668,6 @@
         badge.className = 'absolute top-4 left-4 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg text-white bg-emerald-600';
       }
 
-      // Gallery Images & Fallback Check
       const hasImages = (p.images && p.images.length > 0);
       const mainImg = document.getElementById('modal-main-image');
       const zoomHint = document.getElementById('modal-zoom-hint');
@@ -1518,7 +1700,7 @@
         vPlayer.src = '';
       }
 
-      // Specs
+      // Specs Grid
       const specsContainer = document.getElementById('modal-specs');
       specsContainer.innerHTML = '';
 
@@ -1539,13 +1721,20 @@
 
       addSpecItem('المساحة الإجمالية', `${p.area} م²`, 'maximize');
       addSpecItem('السعر المطلوب', `${Number(p.price).toLocaleString()} $ ${p.status==='daily_rent'?'/ اليوم':''}`, 'tag');
-      addSpecItem('المدينة والحي', p.city, 'map-pin');
+      addSpecItem('المدينة والمنطقة', p.city, 'map-pin');
       
+      if (p.landmarks) addSpecItem('المعالم القريبة', p.landmarks, 'compass');
+      if (p.payment_terms) addSpecItem('طريقة الدفع', p.payment_terms, 'credit-card');
+
       if (p.type === 'resort_farm') {
         addSpecItem('المسبح', p.water_source, 'waves');
+        addSpecItem('عمق وأبعاد المسبح', p.road_frontage, 'ruler');
+        addSpecItem('الطاقة الاستيعابية', p.land_category, 'users');
+        addSpecItem('أوقات الدخول والمغادرة', p.road_type, 'clock');
         addSpecItem('الباربكيو والفرن', p.electricity_source, 'flame');
         addSpecItem('الجلسات والتراس', p.building_status, 'armchair');
         addSpecItem('الألعاب والترفيه', p.trees_info, 'gamepad-2');
+        addSpecItem('مبلغ التأمين المسترد', p.deed_shares, 'shield-check');
       } else if (p.type === 'land') {
         addSpecItem('تصنيف الأرض', p.land_category, 'file-text');
         addSpecItem('الطابو والأسهم', p.deed_shares, 'award');
@@ -1553,6 +1742,10 @@
         addSpecItem('نوع الطريق', p.road_type, 'navigation');
         addSpecItem('البئر والري', p.water_source, 'droplet');
         addSpecItem('الكهرباء والمحولة', p.electricity_source, 'zap');
+      } else if (p.type === 'shop' || p.type === 'building') {
+        addSpecItem('النشاط المسموح', p.land_category, 'briefcase');
+        addSpecItem('الواجهة والارتفاع', p.road_frontage, 'layout');
+        addSpecItem('الطابق', p.floor, 'layers');
       } else {
         addSpecItem('الطابق', p.floor, 'layers');
         addSpecItem('الاتجاه والواجهة', p.orientation, 'compass');
@@ -1580,7 +1773,7 @@
       // Buttons
       document.getElementById('modal-call-btn').href = `tel:${p.owner_phone || ''}`;
       const cleanPhone = p.owner_phone ? p.owner_phone.replace(/[^0-9]/g, '') : '';
-      const waMsg = encodeURIComponent(`مرحباً، أود الاستفسار عن العقار رقم #${p.serial_code} (${p.title}) المعروض بسعر ${p.price}$`);
+      const waMsg = encodeURIComponent(`مرحباً صدى الجسور، أود الاستفسار عن العقار رقم #${p.serial_code} (${p.title})\nالسعر: ${p.price}$\nالرابط: ${window.location.href}`);
       document.getElementById('modal-whatsapp-btn').href = cleanPhone ? `https://wa.me/${cleanPhone}?text=${waMsg}` : '#';
       document.getElementById('modal-whatsapp-btn').style.display = cleanPhone ? 'flex' : 'none';
 
@@ -1595,7 +1788,9 @@
         openModal('inquiry-modal');
       };
 
-      // Protected
+      updateModalFavButton();
+
+      // Protected Info
       const isPrivileged = currentUser && (currentUser.role === 'developer' || currentUser.role === 'admin' || currentUser.username === p.created_by);
       const protSection = document.getElementById('modal-protected-section');
       if (isPrivileged) {
@@ -1616,7 +1811,7 @@
       openModal('property-modal');
     }
 
-    // High Precision Canvas Poster Generator
+    // Canvas Poster Generator
     async function generateAndShareImage() {
       if (!currentModalProperty) return;
       toggleShareDropdown();
@@ -1638,7 +1833,6 @@
       const coverUrl = hasCustomImg ? p.images[0] : getPropertyPlaceholderSVG(p.type);
 
       img.onload = () => {
-        // 1. Property Image Area
         ctx.save();
         ctx.beginPath();
         ctx.roundRect(40, 120, 1000, 620, 20);
@@ -1650,7 +1844,6 @@
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
         ctx.restore();
 
-        // 2. Header Branding
         ctx.fillStyle = '#D4AF37';
         ctx.font = 'bold 32px "Cairo", sans-serif';
         ctx.textAlign = 'right';
@@ -1660,7 +1853,6 @@
         ctx.font = '19px "Cairo", sans-serif';
         ctx.fillText('منظومة التسويق والاستثمار العقاري الفاخر', 1040, 96);
 
-        // Code Badge
         ctx.fillStyle = '#141418';
         ctx.strokeStyle = '#D4AF37';
         ctx.lineWidth = 1.8;
@@ -1674,7 +1866,6 @@
         ctx.textAlign = 'center';
         ctx.fillText(`#${p.serial_code}`, 125, 74);
 
-        // Status Badge
         let stText = 'للبيع';
         let stColor = '#059669';
         if (p.status === 'daily_rent') { stText = 'إيجار يومي'; stColor = '#E11D48'; }
@@ -1688,7 +1879,6 @@
         ctx.font = 'bold 20px "Cairo", sans-serif';
         ctx.fillText(stText, 130, 174);
 
-        // 3. Title and Price
         ctx.textAlign = 'right';
         ctx.fillStyle = '#FFFFFF';
         ctx.font = 'bold 34px "Cairo", sans-serif';
@@ -1700,12 +1890,12 @@
         ctx.textAlign = 'left';
         ctx.fillText(`${Number(p.price).toLocaleString()} $ ${p.status==='daily_rent'?'/ اليوم':''}`, 40, 790);
 
-        // 4. Exact Right-To-Left 4-Box Technical Spec Grid
         let typeLabel = 'عقار';
         if (p.type === 'resort_farm') typeLabel = 'مزرعة سياحية';
         else if (p.type === 'land') typeLabel = 'أرض';
         else if (p.type === 'villa') typeLabel = 'فيلا';
         else if (p.type === 'apartment') typeLabel = 'شقة';
+        else if (p.type === 'shop') typeLabel = 'مكتب / محل';
 
         const specs = [
           { label: p.type === 'resort_farm' ? 'المسبح' : (p.type === 'land' ? 'الطابو' : 'الطابق'), val: p.type === 'resort_farm' ? (p.water_source || 'مسبح مفلتر') : (p.type === 'land' ? (p.deed_shares || 'طابو تامة') : (p.floor || 'طابق متكرر')) },
@@ -1747,7 +1937,6 @@
           ctx.fillText(txt, bX + boxW / 2, boxY + 72);
         });
 
-        // 5. General Description Box
         ctx.fillStyle = '#141418';
         ctx.strokeStyle = '#27272F';
         ctx.beginPath();
@@ -1781,12 +1970,13 @@
         }
         ctx.fillText(line, 1010, lineY);
 
-        // Technical Sub-line
         let extraDetail = '';
         if (p.type === 'resort_farm') {
           extraDetail = `الباربكيو: ${p.electricity_source || 'متوفر'} | الجلسات: ${p.building_status || 'تراس ومظلات'} | الألعاب: ${p.trees_info || 'متوفرة'}`;
         } else if (p.type === 'land') {
           extraDetail = `الواجهة: ${p.road_frontage || '-'} | الطريق: ${p.road_type || '-'} | الري: ${p.water_source || '-'}`;
+        } else if (p.type === 'shop') {
+          extraDetail = `النشاط: ${p.land_category || 'تجاري'} | الواجهة: ${p.road_frontage || 'مكتملة'}`;
         } else {
           extraDetail = `الاتجاه: ${p.orientation || '-'} | التكييف: ${p.sunlight || '-'} | التدفئة: ${p.furnishing_details || '-'}`;
         }
@@ -1794,7 +1984,6 @@
         ctx.font = '17px "Cairo", sans-serif';
         ctx.fillText(extraDetail, 1010, 1195);
 
-        // 6. Footer CTA Bar
         ctx.fillStyle = '#D4AF37';
         ctx.beginPath();
         ctx.roundRect(40, 1265, 1000, 75, 16);
@@ -1861,11 +2050,14 @@
       const q = document.getElementById('search-input').value.toLowerCase();
       const type = document.getElementById('filter-type').value;
       const st = document.getElementById('filter-status').value;
+
       const filtered = allProperties.filter(p => {
-        const matchQ = (p.title && p.title.toLowerCase().includes(q)) || (p.serial_code && p.serial_code.toLowerCase().includes(q)) || (p.city && p.city.toLowerCase().includes(q));
+        const matchQ = (p.title && p.title.toLowerCase().includes(q)) || (p.serial_code && p.serial_code.toLowerCase().includes(q)) || (p.city && p.city.toLowerCase().includes(q)) || (p.landmarks && p.landmarks.toLowerCase().includes(q));
         const matchType = type === 'all' || p.type === type;
         const matchStatus = st === 'all' || p.status === st;
-        return matchQ && matchType && matchStatus;
+        const matchFav = !showOnlyFavorites || savedFavorites.includes(p.id);
+
+        return matchQ && matchType && matchStatus && matchFav;
       });
       renderProperties(filtered);
     }
@@ -2078,11 +2270,18 @@
       document.getElementById('prop-owner-phone').value = p.owner_phone;
       document.getElementById('prop-desc').value = p.general_notes || '';
 
+      document.getElementById('prop-landmarks').value = p.landmarks || '';
+      document.getElementById('prop-payment-terms').value = p.payment_terms || 'كاش نقداً عند التسليم';
+
       if (p.type === 'resort_farm') {
         document.getElementById('prop-resort-pool').value = p.water_source || 'مسبح خارجي مفلتر كبير';
         document.getElementById('prop-resort-bbq').value = p.electricity_source || 'ركن باربكيو حجري متكامل';
         document.getElementById('prop-resort-seating').value = p.building_status || 'تراس واسع مع برجولة ومظلات';
         document.getElementById('prop-resort-kids').value = p.trees_info || 'منطقة ألعاب ومراجيح للأطفال';
+        document.getElementById('prop-pool-dimensions').value = p.road_frontage || '';
+        document.getElementById('prop-resort-timing').value = p.road_type || '';
+        document.getElementById('prop-resort-capacity').value = p.land_category || '';
+        document.getElementById('prop-resort-deposit').value = p.deed_shares || '';
       } else if (p.type === 'land') {
         document.getElementById('prop-land-cat').value = p.land_category || '';
         document.getElementById('prop-deed-shares').value = p.deed_shares || '2400 سهم ملكية تامة (فراغ مباشر)';
@@ -2090,6 +2289,10 @@
         document.getElementById('prop-road-type').value = p.road_type || 'طريق معبد رئيسي (زفت)';
         document.getElementById('prop-well-info').value = p.water_source || 'بئر ارتوازي مرخص بالكامل';
         document.getElementById('prop-electric-info').value = p.electricity_source || 'محولة كهرباء مستقلة';
+      } else if (p.type === 'shop' || p.type === 'building') {
+        document.getElementById('prop-comm-activity').value = p.land_category || '';
+        document.getElementById('prop-comm-facade').value = p.road_frontage || '';
+        document.getElementById('prop-comm-floor').value = p.floor || '';
       } else {
         document.getElementById('prop-floor').value = p.floor || '';
         document.getElementById('prop-orientation').value = p.orientation || '';
